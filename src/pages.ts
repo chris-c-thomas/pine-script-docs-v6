@@ -29,13 +29,19 @@ export async function discoverPages(page: Page): Promise<PageInfo[]> {
       const title = link.textContent?.trim() || "";
       if (!href || !href.startsWith(docsRoot)) return;
 
-      // Determine section from path
-      const pathAfterRoot = href.replace(docsRoot + "/", "");
+      // Normalize: strip trailing slashes (except the root itself)
+      const normalizedPath =
+        href.endsWith("/") && href !== docsRoot + "/"
+          ? href.replace(/\/+$/, "")
+          : href.replace(/\/+$/, "");
+
+      // Determine section from normalized path
+      const pathAfterRoot = normalizedPath.replace(docsRoot + "/", "");
       const section = pathAfterRoot.includes("/")
         ? pathAfterRoot.split("/")[0]
         : undefined;
 
-      results.push({ path: href, title, section });
+      results.push({ path: normalizedPath, title, section });
     });
 
     // Deduplicate by path (there may be multiple sidebars: mobile + desktop)

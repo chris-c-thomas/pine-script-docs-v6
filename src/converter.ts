@@ -47,9 +47,13 @@ export async function convertPage(scraped: ScrapedPage): Promise<ConvertedPage> 
   markdown = cleanMarkdown(markdown);
 
   // Determine output file path
-  const pathAfterRoot = scraped.info.path
-    .replace(DOCS_ROOT + "/", "")
-    .replace(/\/$/, "");
+  const normalizedPath = scraped.info.path.replace(/\/+$/, "");
+  let pathAfterRoot = normalizedPath.startsWith(DOCS_ROOT + "/")
+    ? normalizedPath.slice(DOCS_ROOT.length + 1)
+    : normalizedPath.replace(/^\/+/, "");
+  if (!pathAfterRoot) {
+    pathAfterRoot = "index";
+  }
   const outputPath = `pine-script-docs/${pathAfterRoot}.md`;
 
   return {
@@ -65,47 +69,41 @@ export async function convertPage(scraped: ScrapedPage): Promise<ConvertedPage> 
  * - Cleans up heading anchor artifacts
  * - Normalizes whitespace
  */
+// Matches a single-backtick fence opener: exactly "`" or "`lang" with no
+// spaces or other content (e.g. "`pine", "`js"). Won't match inline code
+// like "`foo` is a variable".
+const singleBacktickFenceOpenRe = /^`[A-Za-z0-9+-]*$/;
+
 function fixSingleBacktickFences(md: string): string {
   // remark-stringify sometimes uses single-backtick fences for code blocks.
-  // We need to detect these and convert to triple-backtick fences.
-  // A single-backtick fence is: a line starting with ` followed by code,
-  // with a matching closing ` on its own line.
+  // We detect these and convert to triple-backtick fences.
   const lines = md.split("\n");
   const result: string[] = [];
   let inCodeBlock = false;
+
+  // Precompute whether a future closing single-backtick fence exists from
+  // each index. This avoids an O(n²) forward scan per opening fence.
+  const hasFutureClosing = new Array<boolean>(lines.length);
+  let seenClosing = false;
+  for (let i = lines.length - 1; i >= 0; i--) {
+    if (lines[i] === "`") {
+      seenClosing = true;
+    }
+    hasFutureClosing[i] = seenClosing;
+  }
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
 
     if (!inCodeBlock) {
-      // Detect opening single-backtick fence: line starts with exactly one
-      // backtick (not two or more), and is NOT inline code (which has
-      // a closing backtick on the same line after text)
-      if (
-        line.startsWith("`") &&
-        !line.startsWith("``") &&
-        !line.startsWith("```")
-      ) {
+      // Only treat dedicated fence lines (exactly "`" or "`lang") as openers
+      if (singleBacktickFenceOpenRe.test(line)) {
         const content = line.slice(1);
-        // Check if this looks like a fenced code block opening
-        // (no closing backtick on same line, or the content has multiple lines worth)
-        const closingIdx = content.indexOf("`");
-        if (closingIdx === -1 || closingIdx === content.length - 1) {
-          // No closing backtick or backtick at very end — check if next lines
-          // form a code block (look for a line that is just `)
-          let foundClose = false;
-          for (let j = i + 1; j < lines.length; j++) {
-            if (lines[j] === "`") {
-              foundClose = true;
-              break;
-            }
-          }
-          if (foundClose) {
-            // This is a single-backtick fenced code block
-            inCodeBlock = true;
-            result.push("```" + content);
-            continue;
-          }
+        // Only treat this as a fence if there is a matching closing ` later
+        if (hasFutureClosing[i + 1]) {
+          inCodeBlock = true;
+          result.push("```" + content);
+          continue;
         }
       }
     } else {
@@ -136,11 +134,12 @@ function cleanMarkdown(md: string): string {
       // Remove "Copied" artifacts from code block copy buttons
       .replace(/^Copied\n\n/gm, "")
       // Remove Pine Script code block labels (link before code blocks)
-      .replace(/\[Pine Script®\]\(https:\/\/tradingview\.com\/pine-script-docs\)\n\n/g, "")
+      .replace(/\[Pine Script®\]\(https:\/\/(?:www\.)?tradingview\.com\/pine-script-docs\)\n\n/g, "")
       // Normalize double-backtick fences to triple-backtick fences
       .replace(/^``(?!`)/gm, "```")
-      // Add pine language tag to fenced code blocks starting with //@version=
+      // Add pine language tag to fenced code blocks whose first line is //@version=
       .replace(/^```(\/\/@version=)/gm, "```pine\n$1")
+      .replace(/^```(?=\n\/\/@version=)/gm, "```pine")
       // Convert relative image paths to full URLs
       .replace(/!\[([^\]]*)\]\(\//g, "![$1](https://www.tradingview.com/")
       // Fix note/warning callouts that merge with text

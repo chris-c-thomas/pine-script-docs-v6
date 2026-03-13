@@ -37,7 +37,8 @@ async function scrape() {
 
     if (pages.length === 0) {
       console.error("No pages discovered. The site structure may have changed.");
-      process.exit(1);
+      process.exitCode = 1;
+      return;
     }
 
     // Step 2: Scrape all pages
