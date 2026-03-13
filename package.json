@@ -1,0 +1,27 @@
+{
+  "name": "pine-script-docs-v6",
+  "version": "1.0.0",
+  "description": "CLI tool to scrape Pine Script v6 documentation into structured Markdown",
+  "type": "module",
+  "bin": {
+    "pine-docs": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node --enable-source-maps dist/cli.js",
+    "scrape": "node --enable-source-maps dist/cli.js scrape",
+    "dev": "tsc && node --enable-source-maps dist/cli.js"
+  },
+  "dependencies": {
+    "playwright": "^1.50.0",
+    "rehype-parse": "^9.0.1",
+    "rehype-remark": "^10.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-stringify": "^11.0.0",
+    "unified": "^11.0.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  }
+}
