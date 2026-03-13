@@ -58,15 +58,15 @@ This is the [compiler annotation](/pine-script-docs/language/script-structure/#c
 //@version=6
 ```
 
-### \<declaration\_statement>
+### \<declaration_statement>
 
 This is the mandatory declaration statement which defines the type of your script. It must be a call to either [indicator()](https://www.tradingview.com/pine-script-reference/v6/#fun_indicator), [strategy()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy), or [library()](https://www.tradingview.com/pine-script-reference/v6/#fun_library).
 
-### \<import\_statements>
+### \<import_statements>
 
 If your script uses one or more Pine Script [libraries](/pine-script-docs/concepts/libraries/), your [import](https://www.tradingview.com/pine-script-reference/v6/#kw_import) statements belong here.
 
-### \<constant\_declarations>
+### \<constant_declarations>
 
 Scripts can declare variables qualified as “const”, i.e., ones referencing a constant value.
 
@@ -138,11 +138,11 @@ int     fixedPeriodInput        = input.int(20,         �
 string  ltfModeInput            = input.string(LTF3,        "Intrabar precision",               inline = "03", options = [LTF1, LTF2, LTF3, LTF4])
 ```
 
-### \<function\_declarations>
+### \<function_declarations>
 
 All user-defined functions must be defined in the script’s global scope; nested function definitions are not allowed in Pine Script.
 
-Optimal function design should minimize the use of global variables in the function’s scope, as they undermine function portability. When it can’t be avoided, those functions must follow the global variable declarations in the code, which entails they can’t always be placed in the \<function\_declarations> section. Such dependencies on global variables should ideally be documented in the function’s comments.
+Optimal function design should minimize the use of global variables in the function’s scope, as they undermine function portability. When it can’t be avoided, those functions must follow the global variable declarations in the code, which entails they can’t always be placed in the \<function_declarations> section. Such dependencies on global variables should ideally be documented in the function’s comments.
 
 It will also help readers if you document the function’s objective, parameters and result. The same syntax used in [libraries](/pine-script-docs/concepts/libraries/) can be used to document your functions. This can make it easier to port your functions to a library should you ever decide to do so:
 
@@ -176,7 +176,7 @@ if ta.rising(close, 3)
 
 This is where the script’s core calculations and logic should be placed. Code can be easier to read when variable declarations are placed near the code segment using the variables. Some programmers prefer to place all their non-constant variable declarations at the beginning of this section, which is not always possible for all variables, as some may require some calculations to have been executed before their declaration.
 
-### \<strategy\_calls>
+### \<strategy_calls>
 
 Strategies are easier to read when strategy calls are grouped in the same section of the script.
 

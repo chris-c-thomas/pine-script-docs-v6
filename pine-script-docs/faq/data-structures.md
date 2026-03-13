@@ -39,6 +39,7 @@ float c = request.security(syminfo.tickerid, "D", close)
 Using a tuple can consolidate these calls into a single [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) function call, reducing performance overhead:
 
 ```[o, h, l, c] = request.security(syminfo.tickerid, "D", [open, high, low, close])
+
 ```
 
 See the [Tuples](/pine-script-docs/language/type-system/#tuples) section in the User Manual for more information.
@@ -161,7 +162,7 @@ if barstate.islastconfirmedhistory
     log.info(logText)
 ```
 
-Here, we use [request.earnings()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.earnings) with the barmerge parameter set to [barmerge.gaps\_on](https://www.tradingview.com/pine-script-reference/v6/#const_barmerge.gaps_on) to return the earnings value on bars where earnings data is available, and return [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) otherwise. We add non-na values to the map, associating the dates that earnings occurred with the earnings numbers. Finally, on the last historical bar, the script [loops through the map](/pine-script-docs/language/maps/#looping-through-a-map), logging each key-value pair to display the map’s contents.
+Here, we use [request.earnings()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.earnings) with the barmerge parameter set to [barmerge.gaps_on](https://www.tradingview.com/pine-script-reference/v6/#const_barmerge.gaps_on) to return the earnings value on bars where earnings data is available, and return [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) otherwise. We add non-na values to the map, associating the dates that earnings occurred with the earnings numbers. Finally, on the last historical bar, the script [loops through the map](/pine-script-docs/language/maps/#looping-through-a-map), logging each key-value pair to display the map’s contents.
 
 To learn more about working with maps, refer to the [Maps](/pine-script-docs/language/maps/) section in the User Manual.
 
@@ -432,7 +433,7 @@ If the script’s logic requires the position of the element in the array, use t
 
 This first example script uses an array as a [queue](/pine-script-docs/language/arrays/#using-an-array-as-a-queue) to store [lines](/pine-script-docs/visuals/lines-and-boxes/#lines) representing the latest four pivot highs and lows. The [for…in](https://www.tradingview.com/pine-script-reference/v6/#kw_for...in) loop performs two tasks:
 
-- It adjusts the `x2` endpoint of each line to the current [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index).
+- It adjusts the `x2` endpoint of each line to the current [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index).
 - It changes the colors of the lines to blue for support or orange for resistance, based on their position relative to the [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) price.
 
 Note that neither of these operations requires knowing the index of the array element.
@@ -571,9 +572,9 @@ if barstate.islast
 
 ### Binary search
 
-If the script requires the position of the element in a sorted array, the function [array.binary\_search()](https://www.tradingview.com/pine-script-reference/v6/#fun_array.binary_search) returns the index of a value more efficiently than [array.indexof()](https://www.tradingview.com/pine-script-reference/v6/#fun_array.indexof). The performance improvement is significant for large arrays. If the value is not found, the function returns `-1`.
+If the script requires the position of the element in a sorted array, the function [array.binary_search()](https://www.tradingview.com/pine-script-reference/v6/#fun_array.binary_search) returns the index of a value more efficiently than [array.indexof()](https://www.tradingview.com/pine-script-reference/v6/#fun_array.indexof). The performance improvement is significant for large arrays. If the value is not found, the function returns `-1`.
 
-NoticeThe [array.binary\_search()](https://www.tradingview.com/pine-script-reference/v6/#fun_array.binary_search) function requires arrays of “int” or “float” values, and the values must be [sorted](/pine-script-docs/language/arrays/#sorting) in _ascending order_ for correct results.
+NoticeThe [array.binary_search()](https://www.tradingview.com/pine-script-reference/v6/#fun_array.binary_search) function requires arrays of “int” or “float” values, and the values must be [sorted](/pine-script-docs/language/arrays/#sorting) in _ascending order_ for correct results.
 
 This script uses a binary search to find the value `100.5` within an array of prices. The script displays the original array, the sorted array, the target value (100.5), and the result of the search. If the value is found, it displays “found”, along with the index of the value. If the value is not found, it displays “not found”.
 
@@ -604,7 +605,7 @@ if barstate.islast
      )
 ```
 
-If a script does not need the exact value, the functions [array.binary\_search\_leftmost()](https://www.tradingview.com/pine-script-reference/v6/#fun_array.binary_search_leftmost) and [array.binary\_search\_rightmost()](https://www.tradingview.com/pine-script-reference/v6/#fun_array.binary_search_rightmost) provide an effective way to locate the nearest index to a given value in sorted arrays. These functions return the index of the value, if it is present. If the value is not present, they return the index of the element that is closest to the search value on the left (smaller) or right (larger) side.
+If a script does not need the exact value, the functions [array.binary_search_leftmost()](https://www.tradingview.com/pine-script-reference/v6/#fun_array.binary_search_leftmost) and [array.binary_search_rightmost()](https://www.tradingview.com/pine-script-reference/v6/#fun_array.binary_search_rightmost) provide an effective way to locate the nearest index to a given value in sorted arrays. These functions return the index of the value, if it is present. If the value is not present, they return the index of the element that is closest to the search value on the left (smaller) or right (larger) side.
 
 ## How can I debug arrays?
 
@@ -636,7 +637,7 @@ plot(ohlc.get(3), "Close", color.green)
 
 ### Using labels
 
-Using [labels](/pine-script-docs/visuals/text-and-shapes/#labels) to display array values on certain bars is particularly useful for non-continuous data points or to view all elements of an array simultaneously. Scripts can create labels within any local scope, including [functions](/pine-script-docs/language/user-defined-functions/) and [methods](/pine-script-docs/language/methods/#user-defined-methods). Scripts can also position drawings at any available chart location, irrespective of the current [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index). Unlike plots, labels can display the contents of a variety of array types, including boolean and string arrays.
+Using [labels](/pine-script-docs/visuals/text-and-shapes/#labels) to display array values on certain bars is particularly useful for non-continuous data points or to view all elements of an array simultaneously. Scripts can create labels within any local scope, including [functions](/pine-script-docs/language/user-defined-functions/) and [methods](/pine-script-docs/language/methods/#user-defined-methods). Scripts can also position drawings at any available chart location, irrespective of the current [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index). Unlike plots, labels can display the contents of a variety of array types, including boolean and string arrays.
 
 Limitations of using labels include:
 

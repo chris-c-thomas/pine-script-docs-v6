@@ -23,7 +23,7 @@ maxLen
 3barsDown  // NOT VALID!
 ```
 
-The Pine Script® [Style Guide](/pine-script-docs/writing/style-guide/) recommends using uppercase SNAKE\_CASE for constants, and camelCase for other identifiers:
+The Pine Script® [Style Guide](/pine-script-docs/writing/style-guide/) recommends using uppercase SNAKE_CASE for constants, and camelCase for other identifiers:
 
 ```GREEN_COLOR = #4CAF50
 MAX_LOOKBACK = 100

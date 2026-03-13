@@ -63,6 +63,7 @@ varip float highLevel = na
 // These statements declare variables to hold "plot" IDs, which the script can use in `fill()` function calls.
 ratioPlot = plot(ratio, "Ratio", ratioColor, 3)
 basisPlot = plot(0, "Zero")
+
 ```
 
 Regardless of format, several key characteristics and limitations apply to user-defined variables:
@@ -79,8 +80,10 @@ Regardless of format, several key characteristics and limitations apply to user-
 A single-variable declaration is a statement that creates one new variable, names it, and assigns it an initial value or reference. The statement can include _keywords_ to specify the variable’s qualified type and declaration mode, or to export the variable. The syntax is as follows:
 
 ```
+
 [export ][var |varip ][[qualifier ]<type> ]<identifier> = <expression>|<structure>
-```
+
+````
 
 Where:
 
@@ -95,7 +98,7 @@ The example below demonstrates a single-variable declaration that declares a “
 
 ```//@variable  Holds the 20-bar median of `hl2` values as of the current bar.
 float median = ta.median(hl2, 20)
-```
+````
 
 Note that:
 
@@ -191,7 +194,8 @@ Some built-in functions in the `ta` namespace return a tuple instead of a single
 
 ```// Declares three variables named `bbMiddle`, `bbUpper`, and `bbLower` to hold the values returned by `ta.bb()`.
 // `bbMiddle` stores the middle band (SMA), `bbUpper` stores the upper band, and `bbLower` stores the lower band. [bbMiddle, bbUpper, bbLower] = ta.bb(close, 5, 4)
-```
+
+````
 
 **Tip**
 
@@ -213,7 +217,7 @@ calcWidthAndGradient(float upper, float lower, int length, color upperCol
 
 // Declares two variables named `bandWidth` and `widthColor` to store the values returned by `calcWidthAndGradient()`.
 // `bandWidth` stores the returned `width` value, and `widthColor` stores the returned `gradient` value. [bandWidth, widthColor] = calcWidthAndGradient(bbUpper, bbLower, 5, color.orange, color.purple)
-```
+````
 
 Note that:
 
@@ -345,13 +349,13 @@ A variable declaration that prefixes the variable’s identifier with a _type ke
 
 Programmers can use any of the following as the type keyword in a [single-variable declaration](/pine-script-docs/language/variable-declarations/#single-variable-declarations) to set the variable’s type:
 
-- Built-in type keywords: [int](https://www.tradingview.com/pine-script-reference/v6/#type_int), [float](https://www.tradingview.com/pine-script-reference/v6/#type_float), [bool](https://www.tradingview.com/pine-script-reference/v6/#type_bool), [color](https://www.tradingview.com/pine-script-reference/v6/#type_color), [string](https://www.tradingview.com/pine-script-reference/v6/#type_string), [line](https://www.tradingview.com/pine-script-reference/v6/#type_line), [linefill](https://www.tradingview.com/pine-script-reference/v6/#type_linefill), [box](https://www.tradingview.com/pine-script-reference/v6/#type_box), [polyline](https://www.tradingview.com/pine-script-reference/v6/#type_polyline), [label](https://www.tradingview.com/pine-script-reference/v6/#type_label), [table](https://www.tradingview.com/pine-script-reference/v6/#type_table), [chart.point](https://www.tradingview.com/pine-script-reference/v6/#type_chart.point), [footprint](https://www.tradingview.com/pine-script-reference/v6/#type_footprint), and [volume\_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row).
+- Built-in type keywords: [int](https://www.tradingview.com/pine-script-reference/v6/#type_int), [float](https://www.tradingview.com/pine-script-reference/v6/#type_float), [bool](https://www.tradingview.com/pine-script-reference/v6/#type_bool), [color](https://www.tradingview.com/pine-script-reference/v6/#type_color), [string](https://www.tradingview.com/pine-script-reference/v6/#type_string), [line](https://www.tradingview.com/pine-script-reference/v6/#type_line), [linefill](https://www.tradingview.com/pine-script-reference/v6/#type_linefill), [box](https://www.tradingview.com/pine-script-reference/v6/#type_box), [polyline](https://www.tradingview.com/pine-script-reference/v6/#type_polyline), [label](https://www.tradingview.com/pine-script-reference/v6/#type_label), [table](https://www.tradingview.com/pine-script-reference/v6/#type_table), [chart.point](https://www.tradingview.com/pine-script-reference/v6/#type_chart.point), [footprint](https://www.tradingview.com/pine-script-reference/v6/#type_footprint), and [volume_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row).
 - [Collection](/pine-script-docs/language/type-system/#collections) type identifiers, which contain the [array](https://www.tradingview.com/pine-script-reference/v6/#type_array), [matrix](https://www.tradingview.com/pine-script-reference/v6/#type_matrix), or [map](https://www.tradingview.com/pine-script-reference/v6/#type_map) keyword followed by a _type template_ (e.g., `array<int>`, `matrix<float>`, `map<string, color>`).
 - The names of [enum types](/pine-script-docs/language/type-system/#enum-types) or [user-defined types](/pine-script-docs/language/type-system/#user-defined-types).
 
 **Note**
 
-Not all built-in types have corresponding keywords. For example, there are no keywords for the [“plot” and “hline”](/pine-script-docs/language/type-system/#plot-and-hline) types, or for the unique value types such as “plot\_style”.
+Not all built-in types have corresponding keywords. For example, there are no keywords for the [“plot” and “hline”](/pine-script-docs/language/type-system/#plot-and-hline) types, or for the unique value types such as “plot_style”.
 
 Including a type keyword in a variable declaration is usually _optional_, because the Pine Script compiler can automatically determine a variable’s type based on its assigned value or reference. However, a variable declaration _requires_ a type keyword if any of the following conditions apply:
 
@@ -435,7 +439,7 @@ A [single-variable declaration](/pine-script-docs/language/variable-declarations
 
 Below, we list how each qualifier keyword affects declared variables of [value types](/pine-script-docs/language/type-system/#value-types):
 
-```const`
+`const`
 
 The variable has the [“const” qualifier](/pine-script-docs/language/type-system/#const). It accepts only a “const” value, which is a compile-time constant that never changes at runtime. Additionally, the keyword _prevents_ the script from [reassigning](/pine-script-docs/language/variable-declarations/#variable-reassignment) the variable. Other code that requires any value of the type specified by the type keyword can use the variable, because the “const” qualifier is the _weakest_ in Pine’s [qualifier hierarchy](/pine-script-docs/language/type-system/#qualifiers).
 
@@ -581,7 +585,8 @@ For example, the following script declares a variable named `myVar` with an init
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Variable-declarations-Variable-reassignment-1.DHorLz5I_Z1M8zh3.webp)
 
-`//@version=6
+```pine
+//@version=6
 indicator("Variable reassignment demo")
 
 //@variable Stores an initial value of 0.
@@ -622,7 +627,7 @@ Scripts can also reassign variables of specific [value types](/pine-script-docs/
 
 **Note**
 
-Most compound assignment operators are compatible with variables or fields of only the “int” and “float” types. However, the [+=](https://www.tradingview.com/pine-script-reference/v6/#op_+=) operator is also compatible with variables of the “string” type. Additionally, scripts can use the [+=](https://www.tradingview.com/pine-script-reference/v6/#op_+=) and [-=](https://www.tradingview.com/pine-script-reference/v6/#op_-=) operators to modify variables that store “plot\_display” values from expressions that use the built-in `display.*` constants.
+Most compound assignment operators are compatible with variables or fields of only the “int” and “float” types. However, the [+=](https://www.tradingview.com/pine-script-reference/v6/#op_+=) operator is also compatible with variables of the “string” type. Additionally, scripts can use the [+=](https://www.tradingview.com/pine-script-reference/v6/#op_+=) and [-=](https://www.tradingview.com/pine-script-reference/v6/#op_-=) operators to modify variables that store “plot_display” values from expressions that use the built-in `display.*` constants.
 
 The following example calculates an EMA of the [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) series with a user-specified length using reassignment and compound assignment operations. It declares a variable named `ema` and initializes it with a value of 0, and then reassigns the variable to store the value of `nz(ema[1], close)`. Afterward, the script uses the [\*=](https://www.tradingview.com/pine-script-reference/v6/#op_*=) operator to multiply the variable’s value by the value of `(1.0 - alpha)`, and then calculates the final value by using the [+=](https://www.tradingview.com/pine-script-reference/v6/#op_+=) operator to add the result of `alpha * close`:
 
@@ -1101,7 +1106,7 @@ else if newPeriod
     currLine := line.new(openTime[1], openPrice[1], time[1], close[1], xloc.bar_time)
 ```
 
-The following script version demonstrates a simpler and more efficient way to achieve the same result. It uses the [var](https://www.tradingview.com/pine-script-reference/v6/#kw_var) keyword in the `currLine` variable declaration to initialize the variable on only the first bar. On historical bars where a new period starts, the script calls [line.set\_xy2()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_xy2) to update the end coordinates of the current line referenced by the `currLine` variable, and then creates a new line for the current bar and reassigns the variable to store that line’s ID. On the latest bar where the current period is open, the script passes the variable to a [line.set\_xy2()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_xy2) call to update the current line instead of deleting that line and creating a new one:
+The following script version demonstrates a simpler and more efficient way to achieve the same result. It uses the [var](https://www.tradingview.com/pine-script-reference/v6/#kw_var) keyword in the `currLine` variable declaration to initialize the variable on only the first bar. On historical bars where a new period starts, the script calls [line.set_xy2()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_xy2) to update the end coordinates of the current line referenced by the `currLine` variable, and then creates a new line for the current bar and reassigns the variable to store that line’s ID. On the latest bar where the current period is open, the script passes the variable to a [line.set_xy2()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_xy2) call to update the current line instead of deleting that line and creating a new one:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Variable-declarations-Declaration-modes-Var-4.Bsi0Kf73_Z2rfFCa.webp)
 
@@ -1215,13 +1220,13 @@ The [varip](https://www.tradingview.com/pine-script-reference/v6/#kw_varip) keyw
 
 - Values of any [fundamental type](/pine-script-docs/language/type-system/#types) (“int”, “float”, “bool”, “color”, or “string”).
 - Members of [enum types](/pine-script-docs/language/type-system/#enum-types).
-- IDs of the [chart.point](https://www.tradingview.com/pine-script-reference/v6/#type_chart.point), [footprint](https://www.tradingview.com/pine-script-reference/v6/#type_footprint), or [volume\_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row) type.
+- IDs of the [chart.point](https://www.tradingview.com/pine-script-reference/v6/#type_chart.point), [footprint](https://www.tradingview.com/pine-script-reference/v6/#type_footprint), or [volume_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row) type.
 - The IDs for [objects](/pine-script-docs/language/objects/) of [user-defined types (UDTs)](/pine-script-docs/language/type-system/#user-defined-types).
 
 The keyword is also compatible with variables that store the IDs of [collections](/pine-script-docs/language/type-system/#collections), but only if those collections store the following types of data:
 
 - Values of a fundamental type.
-- IDs of the [chart.point](https://www.tradingview.com/pine-script-reference/v6/#type_chart.point), [footprint](https://www.tradingview.com/pine-script-reference/v6/#type_footprint), or [volume\_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row) type.
+- IDs of the [chart.point](https://www.tradingview.com/pine-script-reference/v6/#type_chart.point), [footprint](https://www.tradingview.com/pine-script-reference/v6/#type_footprint), or [volume_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row) type.
 - IDs for objects of a user-defined type with fields for storing data of only the above types or the IDs of other collections that contain elements of only these types.
 
 A variable declared with [varip](https://www.tradingview.com/pine-script-reference/v6/#kw_varip) typically behaves the same as a variable declared with [var](https://www.tradingview.com/pine-script-reference/v6/#kw_var) on _historical bars_ (where the value of the [barstate.ishistory](https://www.tradingview.com/pine-script-reference/v6/#var_barstate.ishistory) variable is `true`), because by default, all scripts execute _once per bar_ on that part of the dataset. However, on [realtime bars](/pine-script-docs/language/execution-model/#realtime-bars), which form over time as new ticks become available from the data feed, [indicator](https://www.tradingview.com/pine-script-reference/v6/#fun_indicator) and [library](https://www.tradingview.com/pine-script-reference/v6/#fun_library) scripts execute _once per tick_ instead of once per bar. Variables declared with [var](https://www.tradingview.com/pine-script-reference/v6/#kw_var) and [varip](https://www.tradingview.com/pine-script-reference/v6/#kw_varip) typically behave differently on these bars.

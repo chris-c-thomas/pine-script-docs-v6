@@ -35,6 +35,7 @@ When initializing a matrix variable using [na](https://www.tradingview.com/pine-
 The following line of code declares a `myMatrix` variable with an initial reference of [na](https://www.tradingview.com/pine-script-reference/v6/#var_na). It uses `matrix<float>` as the type identifier, telling the compiler that the variable can accept the ID of a matrix containing “float” elements:
 
 ```matrix<float> myMatrix = na
+
 ```
 
 If a matrix variable is not initialized with [na](https://www.tradingview.com/pine-script-reference/v6/#var_na), specifying a type identifier is optional, because the compiler can automatically determine the variable’s accepted type from the assigned matrix ID.
@@ -42,6 +43,7 @@ If a matrix variable is not initialized with [na](https://www.tradingview.com/pi
 This code line declares a `myMatrix` variable to store the result of a call to `matrix.new<float>()`. The call creates a two-row, two-column “float” matrix with all initial elements set to 0, and then returns the ID of that matrix. An explicit type identifier is optional in this variable declaration, because the compiler uses the assigned ID to determine that the variable’s type is `matrix<float>`:
 
 ```myMatrix = matrix.new<float>(2, 2, 0.0)
+
 ```
 
 ### Using ​`var`​ and ​`varip`​ keywords
@@ -74,7 +76,7 @@ Notice
 Matrix variables declared using [varip](https://www.tradingview.com/pine-script-reference/v6/#kw_varip) behave similarly to those declared using [var](https://www.tradingview.com/pine-script-reference/v6/#kw_var), with two key differences. Firstly, the matrices that they reference can finalize updates to their elements on _any_ available tick — not only on a bar’s closing tick. Secondly, matrices referenced by [varip](https://www.tradingview.com/pine-script-reference/v6/#kw_varip) variables can contain only the following data:
 
 - Values of any [fundamental type](/pine-script-docs/language/type-system/#types).
-- IDs of the [chart.point](https://www.tradingview.com/pine-script-reference/v6/#type_chart.point), [footprint](https://www.tradingview.com/pine-script-reference/v6/#type_footprint), or [volume\_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row) type.
+- IDs of the [chart.point](https://www.tradingview.com/pine-script-reference/v6/#type_chart.point), [footprint](https://www.tradingview.com/pine-script-reference/v6/#type_footprint), or [volume_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row) type.
 - References to objects of a [user-defined type](/pine-script-docs/language/type-system/#user-defined-types) that have fields for storing only data of either of the above types or the IDs of other [collections](/pine-script-docs/language/type-system/#collections) containing only these types.
 
 ## Reading and writing matrix elements
@@ -116,7 +118,7 @@ myMatrix.fill(math.random())
 
 Note when using [matrix.fill()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.fill) with matrices of _reference types_ ([line](https://www.tradingview.com/pine-script-reference/v6/#type_line), [linefill](https://www.tradingview.com/pine-script-reference/v6/#type_linefill), [box](https://www.tradingview.com/pine-script-reference/v6/#type_box), [polyline](https://www.tradingview.com/pine-script-reference/v6/#type_polyline), [label](https://www.tradingview.com/pine-script-reference/v6/#type_label), [table](https://www.tradingview.com/pine-script-reference/v6/#type_table), or [chart.point](https://www.tradingview.com/pine-script-reference/v6/#type_chart.point)) or [UDTs](/pine-script-docs/language/type-system/#user-defined-types), all replaced elements will point to the same object passed in the function call.
 
-This script declares a matrix with four rows and columns of [label](https://www.tradingview.com/pine-script-reference/v6/#type_label) references, which it fills with a new [label](https://www.tradingview.com/pine-script-reference/v6/#type_label) reference on the first bar. On each bar, the script sets the `x` property of the label referenced at row 0, column 0 to [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index), and the `text` property of the one referenced at row 3, column 3 to the number of labels on the chart. Although the matrix can reference 16 (4x4) labels, each element refers to the _same_ label object, resulting in only one label on the chart with coordinates and displayed text that update on each bar:
+This script declares a matrix with four rows and columns of [label](https://www.tradingview.com/pine-script-reference/v6/#type_label) references, which it fills with a new [label](https://www.tradingview.com/pine-script-reference/v6/#type_label) reference on the first bar. On each bar, the script sets the `x` property of the label referenced at row 0, column 0 to [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index), and the `text` property of the one referenced at row 3, column 3 to the number of labels on the chart. Although the matrix can reference 16 (4x4) labels, each element refers to the _same_ label object, resulting in only one label on the chart with coordinates and displayed text that update on each bar:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Matrices-Reading-and-writing-matrix-elements-2.EKhiO87r_27PkSE.webp)
 
@@ -244,9 +246,9 @@ plot(m.get(0, 0).value, linewidth = 3) // Plot the `value` of the `my
 
 ### Inserting
 
-Scripts can add new rows and columns to a matrix via [matrix.add\_row()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.add_row) and [matrix.add\_col()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.add_col). These functions insert the values or references from an [array](https://www.tradingview.com/pine-script-reference/v6/#type_array) into a matrix at the specified `row/column` index. If the `id` matrix is empty (has no rows or columns), the array referenced by `array_id` in the call can be of any size. If a row/column exists at the specified index, the matrix increases the index value for the existing row/column and all after it by one.
+Scripts can add new rows and columns to a matrix via [matrix.add_row()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.add_row) and [matrix.add_col()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.add_col). These functions insert the values or references from an [array](https://www.tradingview.com/pine-script-reference/v6/#type_array) into a matrix at the specified `row/column` index. If the `id` matrix is empty (has no rows or columns), the array referenced by `array_id` in the call can be of any size. If a row/column exists at the specified index, the matrix increases the index value for the existing row/column and all after it by one.
 
-The script below declares an empty `m` matrix and inserts rows and columns by calling [matrix.add\_row()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.add_row) and [matrix.add\_col()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.add_col) as methods. It first inserts an array with three elements at row 0, turning `m` into a 1x3 matrix, then another at row 1, changing the shape to 2x3. After that, the script inserts another array at row 0, which changes the shape of `m` to 3x3 and shifts the index of all rows previously at index 0 and higher. It inserts another array at the last column index, changing the shape to 3x4. Finally, it adds an array with four values at the end row index.
+The script below declares an empty `m` matrix and inserts rows and columns by calling [matrix.add_row()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.add_row) and [matrix.add_col()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.add_col) as methods. It first inserts an array with three elements at row 0, turning `m` into a 1x3 matrix, then another at row 1, changing the shape to 2x3. After that, the script inserts another array at row 0, which changes the shape of `m` to 3x3 and shifts the index of all rows previously at index 0 and higher. It inserts another array at the last column index, changing the shape to 3x4. Finally, it adds an array with four values at the end row index.
 
 The resulting matrix has four rows and columns and contains values 1-16 in ascending order. The script displays the rows of the matrix after each row/column insertion with a user-defined `debugLabel()` function to visualize the process:
 
@@ -305,7 +307,7 @@ NoticeJust as the row or column arrays [retrieved](/pine-script-docs/language/ma
 
 ### Removing
 
-To remove a specific row or column from a matrix, use [matrix.remove\_row()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.remove_row) and [matrix.remove\_col()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.remove_col). These functions remove the specified row/column and decrease the index values of all rows/columns after it by one.
+To remove a specific row or column from a matrix, use [matrix.remove_row()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.remove_row) and [matrix.remove_col()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.remove_col). These functions remove the specified row/column and decrease the index values of all rows/columns after it by one.
 
 For this example, we’ve added these lines of code to our “Rows and columns demo” script from the [Inserting](/pine-script-docs/language/matrices/#inserting) section above:
 
@@ -317,13 +319,13 @@ For this example, we’ve added these lines of code to our “Rows and columns d
     debugLabel(m, bar_index + 30, color.red, note = "Removed row 0\nand column 3")
 ```
 
-This code removes the first row and the last column of the `m` matrix using [matrix.remove\_row()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.remove_row) and [matrix.remove\_col()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.remove_col) method calls, then displays the rows in a label at `bar_index + 30`. As we can see, the matrix has a 3x3 shape after the script executes this block, and the index values for all existing rows are reduced by 1:
+This code removes the first row and the last column of the `m` matrix using [matrix.remove_row()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.remove_row) and [matrix.remove_col()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.remove_col) method calls, then displays the rows in a label at `bar_index + 30`. As we can see, the matrix has a 3x3 shape after the script executes this block, and the index values for all existing rows are reduced by 1:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Matrices-Rows-and-columns-Removing-1.Bi1zJWmd_ZpgTSa.webp)
 
 ### Swapping
 
-To swap the rows and columns of a matrix without altering its dimensions, use [matrix.swap\_rows()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.swap_rows) and [matrix.swap\_columns()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.swap_columns). These functions swap the positions of the elements at the `row1/column1` and `row2/column2` indices.
+To swap the rows and columns of a matrix without altering its dimensions, use [matrix.swap_rows()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.swap_rows) and [matrix.swap_columns()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.swap_columns). These functions swap the positions of the elements at the `row1/column1` and `row2/column2` indices.
 
 Let’s add another set of code lines to the example from the [removing](/pine-script-docs/language/matrices/#removing) section. The following lines swap the first and last rows of the `m` matrix and display the changes in a label at `bar_index + 40`:
 
@@ -342,7 +344,7 @@ In the new label, we see the matrix has the same number of rows as before, and t
 
 It may be desirable in some cases to completely _replace_ a row or column in a matrix. To do so, [insert](/pine-script-docs/language/matrices/#inserting) another array’s elements at the desired `row/column` and [remove](/pine-script-docs/language/matrices/#removing) the old elements previously at that index.
 
-In the following code, we’ve defined a `replaceRow()` method that uses the [matrix.add\_row()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.add_row) function to insert the new `values` at the `row` index, and the [matrix.remove\_row()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.remove_row) method to remove the old row that moved to the `row + 1` index. This script uses the `replaceRow()` method to fill the rows of a 3x3 matrix with the numbers 1-9. It draws a label on the chart before and after replacing the rows using the custom `debugLabel()` method:
+In the following code, we’ve defined a `replaceRow()` method that uses the [matrix.add_row()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.add_row) function to insert the new `values` at the `row` index, and the [matrix.remove_row()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.remove_row) method to remove the old row that moved to the `row + 1` index. This script uses the `replaceRow()` method to fill the rows of a 3x3 matrix with the numbers 1-9. It draws a label on the chart before and after replacing the rows using the custom `debugLabel()` method:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Matrices-Rows-and-columns-Replacing-1.DOIpvAMN_ZBuSGC.webp)
 
@@ -393,6 +395,7 @@ if bar_index == last_bar_index - 1
 When a script only needs to iterate over the row/column indices in a matrix, the most common method is to use [for](https://www.tradingview.com/pine-script-reference/v6/#kw_for) loops. For example, this line creates a loop with a `row` value that starts at 0 and increases by one until it reaches one less than the number of rows in the `m` matrix (i.e., the last row index):
 
 ```for row = 0 to m.rows() - 1
+
 ```
 
 To iterate over all index values in the `m` matrix, we can create a _nested_ loop that iterates over each `column` index on each `row` value:
@@ -465,11 +468,12 @@ if bar_index == 0
 When a script needs to iterate over and retrieve the rows of a matrix, using the [for…in](https://www.tradingview.com/pine-script-reference/v6/#op_for...in) structure is often preferred over the standard [for](https://www.tradingview.com/pine-script-reference/v6/#kw_for) loop. This structure directly references the row [arrays](/pine-script-docs/language/arrays/) in a matrix, making it a more convenient option for such use cases. For example, this line creates a loop that returns the reference of an array representing a row in the `m` matrix on each iteration:
 
 ```for row in m
+
 ```
 
 The following indicator calculates the moving average of OHLC data with an input `length` and displays the values on the chart. The custom `rowWiseAvg()` method loops through the rows of a matrix using a [for…in](https://www.tradingview.com/pine-script-reference/v6/#op_for...in) structure to produce an array containing the [array.avg()](https://www.tradingview.com/pine-script-reference/v6/#fun_array.avg) value for each `row` array.
 
-On the first chart bar, the script creates a new `m` matrix with four rows and `length` columns, which it queues a new column of OHLC data into by calling [matrix.add\_col()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.add_col) and [matrix.remove\_col()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.remove_col) as methods on each subsequent bar. It uses `m.rowWiseAvg()` to calculate the array of row-wise averages, then it plots the value of each array element on the chart:
+On the first chart bar, the script creates a new `m` matrix with four rows and `length` columns, which it queues a new column of OHLC data into by calling [matrix.add_col()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.add_col) and [matrix.remove_col()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.remove_col) as methods on each subsequent bar. It uses `m.rowWiseAvg()` to calculate the array of row-wise averages, then it plots the value of each array element on the chart:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Matrices-Looping-through-a-matrix-For-in-1.DsFiIU_K_Z1Fdgid.webp)
 
@@ -772,7 +776,7 @@ Note that:
 
 ## Inspecting a matrix
 
-The ability to inspect the shape of a matrix and patterns within its elements is crucial, as it helps reveal important information about a matrix and its compatibility with various calculations and transformations. Pine Script includes several built-ins for matrix inspection, including [matrix.is\_square()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.is_square), [matrix.is\_identity()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.is_identity), [matrix.is\_diagonal()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.is_diagonal), [matrix.is\_antidiagonal()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.is_antidiagonal), [matrix.is\_symmetric()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.is_symmetric), [matrix.is\_antisymmetric()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.is_antisymmetric), [matrix.is\_triangular()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.is_triangular), [matrix.is\_stochastic()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.is_stochastic), [matrix.is\_binary()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.is_binary), and [matrix.is\_zero()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.is_zero).
+The ability to inspect the shape of a matrix and patterns within its elements is crucial, as it helps reveal important information about a matrix and its compatibility with various calculations and transformations. Pine Script includes several built-ins for matrix inspection, including [matrix.is_square()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.is_square), [matrix.is_identity()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.is_identity), [matrix.is_diagonal()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.is_diagonal), [matrix.is_antidiagonal()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.is_antidiagonal), [matrix.is_symmetric()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.is_symmetric), [matrix.is_antisymmetric()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.is_antisymmetric), [matrix.is_triangular()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.is_triangular), [matrix.is_stochastic()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.is_stochastic), [matrix.is_binary()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.is_binary), and [matrix.is_zero()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.is_zero).
 
 To demonstrate these features, this example contains a custom `inspect()` method that uses conditional blocks with `matrix.is_*()` functions to return information about a matrix. It displays a string representation of an `m` matrix and the description returned from `m.inspect()` in labels on the chart:
 
@@ -883,7 +887,7 @@ if bar_index == last_bar_index - 1
 Note that:
 
 - The order of elements in `m` does not change with each `m.reshape()` call.
-- When reshaping a matrix, the product of the `rows` and `columns` arguments must equal the [matrix.elements\_count()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.elements_count) value, as [matrix.reshape()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.reshape) cannot change the number of elements in a matrix.
+- When reshaping a matrix, the product of the `rows` and `columns` arguments must equal the [matrix.elements_count()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.elements_count) value, as [matrix.reshape()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.reshape) cannot change the number of elements in a matrix.
 
 ### Reversing
 
@@ -1194,7 +1198,7 @@ plot(ohlc4Value, "Current OHLC4", color.blue)
 Note that:
 
 - In this example, we used `array.*()` and `matrix.*()` methods interchangeably to demonstrate their similarities in syntax and behavior.
-- Users can calculate the matrix equivalent of [array.sum()](https://www.tradingview.com/pine-script-reference/v6/#fun_array.sum) by multiplying the values of [matrix.avg()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.avg) and [matrix.elements\_count()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.elements_count).
+- Users can calculate the matrix equivalent of [array.sum()](https://www.tradingview.com/pine-script-reference/v6/#fun_array.sum) by multiplying the values of [matrix.avg()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.avg) and [matrix.elements_count()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.elements_count).
 
 ### Special calculations
 
@@ -1254,7 +1258,7 @@ if bar_index == last_bar_index - 1
 Note that:
 
 - In this example, we’ve labeled the original matrix as “A” and the transpose as “Aᵀ”.
-- Adding “A” and “Aᵀ” produces a _symmetric_ matrix, and subtracting them produces an _antisymmetric_ matrix. The functions [matrix.is\_symmetric()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.is_symmetric) and [matrix.is\_antisymmetric()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.is_antisymmetric) test a matrix for these conditions.
+- Adding “A” and “Aᵀ” produces a _symmetric_ matrix, and subtracting them produces an _antisymmetric_ matrix. The functions [matrix.is_symmetric()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.is_symmetric) and [matrix.is_antisymmetric()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.is_antisymmetric) test a matrix for these conditions.
 
 #### ​`matrix.mult()`​
 
@@ -1520,7 +1524,7 @@ Users can avoid this error in their scripts by ensuring their function calls do 
 
 ### The array size does not match the number of rows or columns in the matrix.
 
-When using [matrix.add\_row()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.add_row) and [matrix.add\_col()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.add_col) functions to [insert](/pine-script-docs/language/matrices/#inserting) rows and columns into a non-empty matrix, the size of the inserted array must align with the matrix dimensions. The size of an inserted row must match the number of columns, and the size of an inserted column must match the number of rows. Otherwise, the script will raise this runtime error. For example:
+When using [matrix.add_row()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.add_row) and [matrix.add_col()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.add_col) functions to [insert](/pine-script-docs/language/matrices/#inserting) rows and columns into a non-empty matrix, the size of the inserted array must align with the matrix dimensions. The size of an inserted row must match the number of columns, and the size of an inserted column must match the number of rows. Otherwise, the script will raise this runtime error. For example:
 
 ```pine
 //@version=6
@@ -1560,7 +1564,7 @@ To resolve this error, assign `m` to a valid matrix instance before using `matri
 
 ### Matrix is too large. Maximum size of the matrix is 100,000 elements.
 
-The total number of elements in a matrix ([matrix.elements\_count()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.elements_count)) cannot exceed **100,000**, regardless of its shape. For example, this script will raise an error because it [inserts](/pine-script-docs/language/matrices/#inserting) 1000 rows with 101 elements into the `m` matrix:
+The total number of elements in a matrix ([matrix.elements_count()](https://www.tradingview.com/pine-script-reference/v6/#fun_matrix.elements_count)) cannot exceed **100,000**, regardless of its shape. For example, this script will raise an error because it [inserts](/pine-script-docs/language/matrices/#inserting) 1000 rows with 101 elements into the `m` matrix:
 
 ```pine
 //@version=6
@@ -1577,7 +1581,7 @@ if bar_index == 0
 plot(m.get(0, 0))
 ```
 
-### The row/column index must be 0 <= from\_row/column < to\_row/column.
+### The row/column index must be 0 <= from_row/column < to_row/column.
 
 When using `matrix.*()` functions with `from_row/column` and `to_row/column` indices, the `from_*` values must be less than the corresponding `to_*` values, with the minimum possible value being 0. Otherwise, the script will raise a runtime error.
 

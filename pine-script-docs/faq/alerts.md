@@ -228,7 +228,7 @@ Below are some common repainting issues that can affect a script’s alerts:
 
 Most scripts have [fluid data values](/pine-script-docs/concepts/repainting/#fluid-data-values) that update after new ticks during an unconfirmed realtime bar and finalize after the bar closes. Consequently, an alert that fires on an open bar may not reflect the _final state_ of the condition after the bar’s confirmation. Set the alert’s frequency to “Once Per Bar Close” to avoid this issue.
 
-**Using \`calc\_on\_every\_tick\` in strategies**
+**Using \`calc_on_every_tick\` in strategies**
 
 When a strategy script includes `calc_on_every_tick = true` in its declaration statement or the user selects the “On every tick” option in the “Recalculate” section of the strategy’s [properties](https://www.tradingview.com/support/solutions/43000628599-strategy-properties/), it recalculates on _every_ price update in the realtime data. This behavior can cause strategies to repaint because historical bars do not contain the same information as realtime bars. See [this section](/pine-script-docs/concepts/strategies/#altering-calculation-behavior) of the [Strategies](/pine-script-docs/concepts/strategies/) page to learn more.
 
@@ -458,7 +458,6 @@ Note that:
 - The timing starts when the condition first becomes `true`. If the condition becomes `false` or an optional resetting condition occurs, the timer restarts. If “Reset timing on new bar” is enabled in the “Settings/Inputs” tab, the function restarts its timing at the start of a new bar.
 
 - A colored label shows what state the script is in:
-
   1. **Red** - The condition has not occurred yet.
   2. **Orange** - The condition occurred and the delay timer is active.
   3. **Green** - The timer has surpassed the set duration, simulating a delayed alert.

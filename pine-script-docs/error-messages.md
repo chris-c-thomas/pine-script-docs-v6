@@ -72,6 +72,7 @@ c = request.security(syminfo.tickerid, timeframe.period, open)  // result
 ## Script could not be translated from: null
 
 ```study($)
+
 ```
 
 Usually this error occurs in version 1 Pine scripts, and means that code is incorrect. Pine Script® of version 2 (and higher) is better at explaining errors of this kind. So you can try to switch to version 2 by adding a [special attribute](/pine-script-docs/language/script-structure/#version) in the first line. You’ll get `line 2: no viable alternative at character '$'`:
@@ -98,11 +99,12 @@ indicator("My Script")
     plot(1)
 ```
 
-```line 3: mismatched input 'plot' expecting 'end of line without line continuation'`
+`line 3: mismatched input 'plot' expecting 'end of line without line continuation'`
 
 To fix this you should start line with `plot` on a new line without an indent:
 
-`//@version=6
+```pine
+//@version=6
 indicator("My Script")
 plot(1)
 ```
@@ -166,6 +168,7 @@ var3 = var1 + var2
 can be converted into:
 
 ```var3 = expr1 + expr2
+
 ```
 
 ## The requested historical offset (X) is beyond the historical buffer’s limit (Y)
@@ -198,7 +201,7 @@ The following sections describe different methods to ensure that the historical 
 
 #### Use the ​`max_bars_back()`​ function
 
-The [max\_bars\_back()](https://www.tradingview.com/pine-script-reference/v6/#fun_max_bars_back) function sets the size of the historical buffer for a particular variable. To fix the issue in the example script above, we need to ensure the buffer for [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) is at least 1000:
+The [max_bars_back()](https://www.tradingview.com/pine-script-reference/v6/#fun_max_bars_back) function sets the size of the historical buffer for a particular variable. To fix the issue in the example script above, we need to ensure the buffer for [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) is at least 1000:
 
 ```pine
 //@version=6
@@ -210,7 +213,7 @@ plot(myVar)
 
 #### Use the ​`max_bars_back`​ parameter of the ​`indicator()`​ or ​`strategy()`​ function
 
-The `max_bars_back` parameter of the [indicator()](https://www.tradingview.com/pine-script-reference/v6/#fun_indicator) and [strategy()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy) functions provides a handy way to increase the historical buffer for _all_ the variables inside of the script. However, increasing the historical buffer for all variables without a specific need for it negatively impacts performance. Using the [max\_bars\_back()](https://www.tradingview.com/pine-script-reference/v6/#fun_max_bars_back) function is preferable because it is more precise and more performant.
+The `max_bars_back` parameter of the [indicator()](https://www.tradingview.com/pine-script-reference/v6/#fun_indicator) and [strategy()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy) functions provides a handy way to increase the historical buffer for _all_ the variables inside of the script. However, increasing the historical buffer for all variables without a specific need for it negatively impacts performance. Using the [max_bars_back()](https://www.tradingview.com/pine-script-reference/v6/#fun_max_bars_back) function is preferable because it is more precise and more performant.
 
 NoticeWhen using `max_bars_back`, choose the **minimum** default buffer size that accommodates all the script’s historical references. Buffer sizes that are larger than what a script requires can significantly impact its performance. For example, using `max_bars_back = 5000` in a script that references up to only 700 bars back causes an excessive use of resources.
 
@@ -239,11 +242,11 @@ if barstate.isrealtime
 
 **Note**
 
-All Pine drawings that anchor to the chart convert their horizontal coordinates into [time](https://www.tradingview.com/pine-script-reference/v6/#var_time) values internally, even if the programmer defines those coordinates using [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) values.
+All Pine drawings that anchor to the chart convert their horizontal coordinates into [time](https://www.tradingview.com/pine-script-reference/v6/#var_time) values internally, even if the programmer defines those coordinates using [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) values.
 
 When the example indicator above is calculating on historical data, it does not draw any lines, and so does not call the [time](https://www.tradingview.com/pine-script-reference/v6/#var_time) series at all. In this case, the [time](https://www.tradingview.com/pine-script-reference/v6/#var_time) series takes the default buffer size of 300. On realtime bars, we then request the `bar_index[500]` value, which is converted into `time[500]` by the function. But the script doesn’t have a large enough historical buffer, which causes the error to appear.
 
-In these cases, the historical buffer for the [time](https://www.tradingview.com/pine-script-reference/v6/#var_time) series must be enlarged, even if the drawing functions use [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) exclusively. The easiest fix is to call the [max\_bars\_back()](https://www.tradingview.com/pine-script-reference/v6/#fun_max_bars_back) function on the [time](https://www.tradingview.com/pine-script-reference/v6/#var_time) series, to ensure that its buffer is large enough:
+In these cases, the historical buffer for the [time](https://www.tradingview.com/pine-script-reference/v6/#var_time) series must be enlarged, even if the drawing functions use [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) exclusively. The easiest fix is to call the [max_bars_back()](https://www.tradingview.com/pine-script-reference/v6/#fun_max_bars_back) function on the [time](https://www.tradingview.com/pine-script-reference/v6/#var_time) series, to ensure that its buffer is large enough:
 
 ```pine
 //@version=6
@@ -257,7 +260,7 @@ if barstate.isrealtime
 
 ## Memory limits exceeded
 
-The most common cause of this error is the retrieval of [objects](/pine-script-docs/language/objects/#objects) and [collections](/pine-script-docs/language/type-system/#collections) from `request.*()` functions such as [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security). Other possible causes include unnecessary drawing updates, excess historical buffer capacity, or inefficient use of [max\_bars\_back()](https://www.tradingview.com/pine-script-reference/v6/#fun_max_bars_back).
+The most common cause of this error is the retrieval of [objects](/pine-script-docs/language/objects/#objects) and [collections](/pine-script-docs/language/type-system/#collections) from `request.*()` functions such as [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security). Other possible causes include unnecessary drawing updates, excess historical buffer capacity, or inefficient use of [max_bars_back()](https://www.tradingview.com/pine-script-reference/v6/#fun_max_bars_back).
 
 ### Returning collections from ​`request.*()`​ functions
 
@@ -483,7 +486,7 @@ There are a few other ways to optimize scripts to consume less memory.
 
 The `request.*()` functions can be computationally expensive to call, because they retrieve data from additional datasets. Data requests often require significant usage of runtime and memory resources. Excessive or inefficient requests can easily cause scripts to reach the memory limit.
 
-This memory consumption is especially substantial for scripts requesting data from [lower timeframes](/pine-script-docs/concepts/other-timeframes-and-data/#lower-timeframes), because the [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) function returns [arrays](/pine-script-docs/language/arrays/) of intrabar data for _each_ bar in the script’s main dataset. For example, requesting data from the “1” (one-minute) timeframe on a “1D” chart returns hundreds of minute bars for each “1D” bar where the request executes. In the process, the script must allocate memory to store each requested array so that it can access them later in the main context. Maintaining that much data in memory requires a significant amount of resources.
+This memory consumption is especially substantial for scripts requesting data from [lower timeframes](/pine-script-docs/concepts/other-timeframes-and-data/#lower-timeframes), because the [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) function returns [arrays](/pine-script-docs/language/arrays/) of intrabar data for _each_ bar in the script’s main dataset. For example, requesting data from the “1” (one-minute) timeframe on a “1D” chart returns hundreds of minute bars for each “1D” bar where the request executes. In the process, the script must allocate memory to store each requested array so that it can access them later in the main context. Maintaining that much data in memory requires a significant amount of resources.
 
 Programmers can reduce the memory requirements of a script’s requests by:
 
@@ -498,9 +501,9 @@ See the [Minimizing \`request.\*()\` calls](/pine-script-docs/writing/profiling-
 
 The `max_bars_back` parameter of an [indicator](https://www.tradingview.com/pine-script-reference/v6/#fun_indicator) or [strategy](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy) sets the size of the _historical buffers_ for all series in a script. Each buffer defines the number of historical data points _maintained in memory_ for the script’s variables and expressions.
 
-By default, the Pine Script runtime system automatically allocates an appropriate buffer for each variable and expression. Therefore, using the `max_bars_back` parameter or [max\_bars\_back()](https://www.tradingview.com/pine-script-reference/v6/#fun_max_bars_back) function is necessary only when Pine [cannot determine the referencing length of a series](https://www.tradingview.com/support/solutions/43000587849-i-see-pine-cannot-determine-the-referencing-length-of-a-series-try-using-max-bars-back-error/).
+By default, the Pine Script runtime system automatically allocates an appropriate buffer for each variable and expression. Therefore, using the `max_bars_back` parameter or [max_bars_back()](https://www.tradingview.com/pine-script-reference/v6/#fun_max_bars_back) function is necessary only when Pine [cannot determine the referencing length of a series](https://www.tradingview.com/support/solutions/43000587849-i-see-pine-cannot-determine-the-referencing-length-of-a-series-try-using-max-bars-back-error/).
 
-If you encounter the referencing length error and must manually set the size of a historical buffer using the `max_bars_back` parameter or the [max\_bars\_back()](https://www.tradingview.com/pine-script-reference/v6/#fun_max_bars_back) function, ensure that you select the _minimum size_ that accommodates your script’s historical references. Historical buffers that contain more data points than a script requires use excessive memory resources. Read up on how to optimize using `max_bars_back` in [this Help Center article](https://www.tradingview.com/chart/?solution=43000587849).
+If you encounter the referencing length error and must manually set the size of a historical buffer using the `max_bars_back` parameter or the [max_bars_back()](https://www.tradingview.com/pine-script-reference/v6/#fun_max_bars_back) function, ensure that you select the _minimum size_ that accommodates your script’s historical references. Historical buffers that contain more data points than a script requires use excessive memory resources. Read up on how to optimize using `max_bars_back` in [this Help Center article](https://www.tradingview.com/chart/?solution=43000587849).
 
 #### Minimize historical buffer calculations
 
@@ -508,7 +511,7 @@ The Pine Script runtime system automatically creates historical buffers for all 
 
 As a script loads on a dataset, historical references to distant points in the dataset can cause the system to reload the script and increase the size of necessary historical buffers. Each increase to historical buffer sizes leads to increased memory consumption. In some cases, buffer resizing can cause the script to exceed the memory limits. Therefore, ensure a script references only _necessary_ historical data in its calculations. When possible, modify the script’s logic to avoid referencing very distant points in history.
 
-Specifying a `calc_bars_count` argument in the [indicator()](https://www.tradingview.com/pine-script-reference/v6/#fun_indicator) or [strategy()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy) declaration statement can help reduce memory issues, because it restricts the number of historical bars that the script can use for its calculations. Similarly, using [max\_bars\_back()](https://www.tradingview.com/pine-script-reference/v6/#fun_max_bars_back) to manually define the appropriate size for a buffer can help reduce buffer calculations. When using this function to specify the size of historical buffers, choose the **smallest** possible size that accommodates the script’s historical references to avoid unnecessary memory use.
+Specifying a `calc_bars_count` argument in the [indicator()](https://www.tradingview.com/pine-script-reference/v6/#fun_indicator) or [strategy()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy) declaration statement can help reduce memory issues, because it restricts the number of historical bars that the script can use for its calculations. Similarly, using [max_bars_back()](https://www.tradingview.com/pine-script-reference/v6/#fun_max_bars_back) to manually define the appropriate size for a buffer can help reduce buffer calculations. When using this function to specify the size of historical buffers, choose the **smallest** possible size that accommodates the script’s historical references to avoid unnecessary memory use.
 
 To learn more about historical buffer calculations and how to optimize them, see the [Minimizing historical buffer calculations](/pine-script-docs/writing/profiling-and-optimization/#minimizing-historical-buffer-calculations) section of the [Profiling and optimization](/pine-script-docs/writing/profiling-and-optimization/) page.
 
@@ -528,7 +531,7 @@ Eliminate updates to historical drawings during executions on historical bars wh
 
 [Drawing objects](/pine-script-docs/language/type-system/#drawing-types) such as [lines](/pine-script-docs/visuals/lines-and-boxes/#lines) and [labels](/pine-script-docs/visuals/text-and-shapes/#labels) can consume a lot of memory, especially if a script _recreates_ drawings unnecessarily.
 
-For example, if a script draws a line from point `x1` to `x2`, then needs to update the line’s endpoint (`x2`), it’s more computationally expensive to delete the existing line and redraw a new line from `x1` to `x3`. Instead, using the _setter_ function [line.set\_x2()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_x2) to update the existing line’s endpoint is more efficient.
+For example, if a script draws a line from point `x1` to `x2`, then needs to update the line’s endpoint (`x2`), it’s more computationally expensive to delete the existing line and redraw a new line from `x1` to `x3`. Instead, using the _setter_ function [line.set_x2()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_x2) to update the existing line’s endpoint is more efficient.
 
 Look for ways to optimize drawing objects in a script:
 

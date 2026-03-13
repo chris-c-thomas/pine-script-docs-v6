@@ -20,7 +20,7 @@ hline(price, title, color, linestyle, linewidth, editable, display) → hline
 
 - Since the function’s objective is to plot horizontal lines, its `price` parameter requires an “input int/float” argument, which means that “series float” values such as [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) or dynamically-calculated values cannot be used.
 - Its `color` parameter requires an “input color” argument, which precludes the use of dynamic colors, i.e., colors calculated on each bar — or “series color” values.
-- Three different line styles are supported through the `linestyle` parameter: [hline.style\_solid](https://www.tradingview.com/pine-script-reference/v6/#const_hline.style_solid), [hline.style\_dotted](https://www.tradingview.com/pine-script-reference/v6/#const_hline.style_dotted) and [hline.style\_dashed](https://www.tradingview.com/pine-script-reference/v6/#const_hline.style_dashed).
+- Three different line styles are supported through the `linestyle` parameter: [hline.style_solid](https://www.tradingview.com/pine-script-reference/v6/#const_hline.style_solid), [hline.style_dotted](https://www.tradingview.com/pine-script-reference/v6/#const_hline.style_dotted) and [hline.style_dashed](https://www.tradingview.com/pine-script-reference/v6/#const_hline.style_dashed).
 
 Let’s see [hline()](https://www.tradingview.com/pine-script-reference/v6/#fun_hline) in action in the “True Strength Index” indicator:
 

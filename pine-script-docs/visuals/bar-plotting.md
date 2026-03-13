@@ -85,7 +85,6 @@ Note that:
 - We set the `behind_chart` parameter of the [indicator()](https://www.tradingview.com/pine-script-reference/v6/#fun_indicator) declaration to `false`. This causes our script’s candles to appear on top of the chart’s candles. Selecting “Visual Order/Bring to Front” from the script’s “More” menu achieves the same result.
 
 - The script displays candles only when two conditions are met:
-
   - The chart is using an intraday timeframe (see the check on `timeframe.isintraday` in the [plotcandle()](https://www.tradingview.com/pine-script-reference/v6/#fun_plotcandle) call). We do this because it’s not useful to show a daily value on timeframes higher or equal to 1D.
   - The [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request%7Bdot%7Dsecurity) function returns non [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) values (see `gaps = barmerge.gaps_on` in the function call).
 

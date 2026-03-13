@@ -62,13 +62,13 @@ Both overloads share the same additional parameters:
 
 `xloc`
 
-Controls whether the x-coordinates of the new line use bar index or time values. Its default value is [xloc.bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_index).
+Controls whether the x-coordinates of the new line use bar index or time values. Its default value is [xloc.bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_index).
 
-When calling the first overload, using an `xloc` value of [xloc.bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_index) tells the function to use the `index` fields of the `first_point` and `second_point`, and a value of [xloc.bar\_time](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_time) tells the function to use the `time` fields of the points.
+When calling the first overload, using an `xloc` value of [xloc.bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_index) tells the function to use the `index` fields of the `first_point` and `second_point`, and a value of [xloc.bar_time](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_time) tells the function to use the `time` fields of the points.
 
-When calling the second overload, an `xloc` value of [xloc.bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_index) prompts the function to treat the `x1` and `x2` arguments as bar index values. When using [xloc.bar\_time](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_time), the function will treat `x1` and `x2` as time values.
+When calling the second overload, an `xloc` value of [xloc.bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_index) prompts the function to treat the `x1` and `x2` arguments as bar index values. When using [xloc.bar_time](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_time), the function will treat `x1` and `x2` as time values.
 
-When the specified x-coordinates represent _bar index_ values, it’s important to note that the minimum x-coordinate allowed is `bar_index - 10000`. For larger offsets, one can use [xloc.bar\_time](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_time).
+When the specified x-coordinates represent _bar index_ values, it’s important to note that the minimum x-coordinate allowed is `bar_index - 10000`. For larger offsets, one can use [xloc.bar_time](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_time).
 
 `extend`
 
@@ -80,7 +80,7 @@ Specifies the color of the line drawing. The default is [color.blue](https://www
 
 `style`
 
-Specifies the line’s style, which can be any of the options listed in this page’s [Line styles](/pine-script-docs/visuals/lines-and-boxes/#line-styles) section. The default value is [line.style\_solid](https://www.tradingview.com/pine-script-reference/v6/#var_line.style_solid).
+Specifies the line’s style, which can be any of the options listed in this page’s [Line styles](/pine-script-docs/visuals/lines-and-boxes/#line-styles) section. The default value is [line.style_solid](https://www.tradingview.com/pine-script-reference/v6/#var_line.style_solid).
 
 `width`
 
@@ -163,21 +163,21 @@ Note that:
 
 The `line.*` namespace contains multiple _setter_ functions that modify the properties of [line](https://www.tradingview.com/pine-script-reference/v6/#type_line) instances:
 
-- [line.set\_first\_point()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_first_point) and [line.set\_second\_point()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_second_point) respectively update the start and end points of the `id` line using information from the specified `point`.
-- [line.set\_x1()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_x1) and [line.set\_x2()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_x2) set one of the x-coordinates of the `id` line to a new `x` value, which can represent a bar index or time value depending on the line’s `xloc` property.
-- [line.set\_y1()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_y1) and [line.set\_y2()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_y2) set one of the y-coordinates of the `id` line to a new `y` value.
-- [line.set\_xy1()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_xy1) and [line.set\_xy2()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_xy2) update one of the `id` line’s points with new `x` and `y` values.
-- [line.set\_xloc()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_xloc) sets the `xloc` of the `id` line and updates both of its x-coordinates with new `x1` and `x2` values.
-- [line.set\_extend()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_extend) sets the `extend` property of the `id` line.
-- [line.set\_color()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_color) updates the `id` line’s `color` value.
-- [line.set\_style()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_style) changes the `style` of the `id` line.
-- [line.set\_width()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_width) sets the `width` of the `id` line.
+- [line.set_first_point()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_first_point) and [line.set_second_point()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_second_point) respectively update the start and end points of the `id` line using information from the specified `point`.
+- [line.set_x1()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_x1) and [line.set_x2()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_x2) set one of the x-coordinates of the `id` line to a new `x` value, which can represent a bar index or time value depending on the line’s `xloc` property.
+- [line.set_y1()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_y1) and [line.set_y2()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_y2) set one of the y-coordinates of the `id` line to a new `y` value.
+- [line.set_xy1()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_xy1) and [line.set_xy2()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_xy2) update one of the `id` line’s points with new `x` and `y` values.
+- [line.set_xloc()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_xloc) sets the `xloc` of the `id` line and updates both of its x-coordinates with new `x1` and `x2` values.
+- [line.set_extend()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_extend) sets the `extend` property of the `id` line.
+- [line.set_color()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_color) updates the `id` line’s `color` value.
+- [line.set_style()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_style) changes the `style` of the `id` line.
+- [line.set_width()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_width) sets the `width` of the `id` line.
 
 All setter functions directly modify the `id` line passed into the call and do not return any value. Each setter function accepts “series” arguments, as a script can change a line’s properties throughout its execution.
 
-The following example draws lines connecting the opening price of a `timeframe` to its closing price. The script uses the [var](https://www.tradingview.com/pine-script-reference/v6/#kw_var) keyword to declare `periodLine` and the variables that reference [chart.point](https://www.tradingview.com/pine-script-reference/v6/#type_chart.point) objects (`openPoint` and `closePoint`) only on the _first_ chart bar, and it assigns new references to these variables over its execution. After detecting a new bar on the specified timeframe with [timeframe.change](https://www.tradingview.com/pine-script-reference/v6/#fun_timeframe.change), the script uses [line.set\_color()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_color) to set the `color` property of the current line referenced by `periodLine`, creates new chart points for `openPoint` and `closePoint` using [chart.point.now()](https://www.tradingview.com/pine-script-reference/v6/#fun_chart.point.now), calls [line.new()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.new) to create another line anchored to those points, then assigns the new line’s reference to `periodLine`.
+The following example draws lines connecting the opening price of a `timeframe` to its closing price. The script uses the [var](https://www.tradingview.com/pine-script-reference/v6/#kw_var) keyword to declare `periodLine` and the variables that reference [chart.point](https://www.tradingview.com/pine-script-reference/v6/#type_chart.point) objects (`openPoint` and `closePoint`) only on the _first_ chart bar, and it assigns new references to these variables over its execution. After detecting a new bar on the specified timeframe with [timeframe.change](https://www.tradingview.com/pine-script-reference/v6/#fun_timeframe.change), the script uses [line.set_color()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_color) to set the `color` property of the current line referenced by `periodLine`, creates new chart points for `openPoint` and `closePoint` using [chart.point.now()](https://www.tradingview.com/pine-script-reference/v6/#fun_chart.point.now), calls [line.new()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.new) to create another line anchored to those points, then assigns the new line’s reference to `periodLine`.
 
-On other bars where the `periodLine` reference is not [na](https://www.tradingview.com/pine-script-reference/v6/#var_na), the script assigns a new [chart.point](https://www.tradingview.com/pine-script-reference/v6/#type_chart.point) reference to the `closePoint` variable, then uses [line.set\_second\_point()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_second_point) and [line.set\_color()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_color) as [methods](/pine-script-docs/language/methods/) to update the end coordinate and color of the latest line:
+On other bars where the `periodLine` reference is not [na](https://www.tradingview.com/pine-script-reference/v6/#var_na), the script assigns a new [chart.point](https://www.tradingview.com/pine-script-reference/v6/#type_chart.point) reference to the `closePoint` variable, then uses [line.set_second_point()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_second_point) and [line.set_color()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_color) as [methods](/pine-script-docs/language/methods/) to update the end coordinate and color of the latest line:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Lines-and-boxes-Lines-Modifying-lines-1.9MbH8maN_1T4Dvi.webp)
 
@@ -231,20 +231,20 @@ else if not na(periodLine)
 
 Note that:
 
-- Each line drawing in this example uses the [line.style\_arrow\_right](https://www.tradingview.com/pine-script-reference/v6/#var_line.style_arrow_right) style. See the [Line styles](/pine-script-docs/visuals/lines-and-boxes/#line-styles) section below for an overview of all available style settings.
+- Each line drawing in this example uses the [line.style_arrow_right](https://www.tradingview.com/pine-script-reference/v6/#var_line.style_arrow_right) style. See the [Line styles](/pine-script-docs/visuals/lines-and-boxes/#line-styles) section below for an overview of all available style settings.
 
 ### Line styles
 
-Users can control the style of their scripts’ line drawings by passing one of the following variables as the `style` argument in their [line.new()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.new) or [line.set\_style()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_style) function calls:
+Users can control the style of their scripts’ line drawings by passing one of the following variables as the `style` argument in their [line.new()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.new) or [line.set_style()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_style) function calls:
 
-| Argument                 | Line                                                                                                            |
-| ------------------------ | --------------------------------------------------------------------------------------------------------------- |
-| `line.style_solid`       | ![line\_style\_solid](https://www.tradingview.com/pine-script-docs/_astro/LinesAndBoxes-LineStyles-solid.DhD1RUy8_12kPg2.webp)             |
-| `line.style_dotted`      | ![line\_style\_dotted](https://www.tradingview.com/pine-script-docs/_astro/LinesAndBoxes-LineStyles-dotted.ChjUGoWk_Z25Ho6S.webp)          |
-| `line.style_dashed`      | ![line\_style\_dashed](https://www.tradingview.com/pine-script-docs/_astro/LinesAndBoxes-LineStyles-dashed.RIt4NsM6_DFkrB.webp)            |
-| `line.style_arrow_left`  | ![line\_style\_arrow\_left](https://www.tradingview.com/pine-script-docs/_astro/LinesAndBoxes-LineStyles-arrow_left.CASIwsfy_Z1JIiS0.webp) |
-| `line.style_arrow_right` | ![line\_style\_arrow\_right](https://www.tradingview.com/pine-script-docs/_astro/LinesAndBoxes-LineStyles-arrow_right.Ch2Ohee9_C6Kmb.webp) |
-| `line.style_arrow_both`  | ![line\_style\_arrow\_both](https://www.tradingview.com/pine-script-docs/_astro/LinesAndBoxes-LineStyles-arrow_both.CDMgsUYf_Z1hzmym.webp) |
+| Argument                 | Line                                                                                                                                    |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `line.style_solid`       | ![line_style_solid](https://www.tradingview.com/pine-script-docs/_astro/LinesAndBoxes-LineStyles-solid.DhD1RUy8_12kPg2.webp)            |
+| `line.style_dotted`      | ![line_style_dotted](https://www.tradingview.com/pine-script-docs/_astro/LinesAndBoxes-LineStyles-dotted.ChjUGoWk_Z25Ho6S.webp)         |
+| `line.style_dashed`      | ![line_style_dashed](https://www.tradingview.com/pine-script-docs/_astro/LinesAndBoxes-LineStyles-dashed.RIt4NsM6_DFkrB.webp)           |
+| `line.style_arrow_left`  | ![line_style_arrow_left](https://www.tradingview.com/pine-script-docs/_astro/LinesAndBoxes-LineStyles-arrow_left.CASIwsfy_Z1JIiS0.webp) |
+| `line.style_arrow_right` | ![line_style_arrow_right](https://www.tradingview.com/pine-script-docs/_astro/LinesAndBoxes-LineStyles-arrow_right.Ch2Ohee9_C6Kmb.webp) |
+| `line.style_arrow_both`  | ![line_style_arrow_both](https://www.tradingview.com/pine-script-docs/_astro/LinesAndBoxes-LineStyles-arrow_both.CDMgsUYf_Z1hzmym.webp) |
 
 Note that:
 
@@ -254,13 +254,13 @@ Note that:
 
 The `line.*` namespace includes _getter_ functions, which allow a script to retrieve values from a [line](https://www.tradingview.com/pine-script-reference/v6/#type_line) object for further use:
 
-- [line.get\_x1()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.get_x1) and [line.get\_x2()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.get_x2) respectively get the first and second x-coordinate from the `id` line. Whether the value returned represents a bar index or time value depends on the line’s `xloc` property.
-- [line.get\_y1()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.get_y1) and [line.get\_y2()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.get_y2) respectively get the `id` line’s first and second y-coordinate.
-- [line.get\_price()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.get_price) retrieves the price (y-coordinate) from a line `id` at a specified `x` value, including at bar indices outside the line’s start and end points. This function is only compatible with lines that use [xloc.bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_index) as the `xloc` value.
+- [line.get_x1()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.get_x1) and [line.get_x2()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.get_x2) respectively get the first and second x-coordinate from the `id` line. Whether the value returned represents a bar index or time value depends on the line’s `xloc` property.
+- [line.get_y1()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.get_y1) and [line.get_y2()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.get_y2) respectively get the `id` line’s first and second y-coordinate.
+- [line.get_price()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.get_price) retrieves the price (y-coordinate) from a line `id` at a specified `x` value, including at bar indices outside the line’s start and end points. This function is only compatible with lines that use [xloc.bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_index) as the `xloc` value.
 
 The script below draws a new line upon the onset of a rising or falling price pattern forming over `length` bars. It uses the [var](https://www.tradingview.com/pine-script-reference/v6/#kw_var) keyword to declare the `directionLine` variable on the first chart bar. The line reference assigned to `directionLine` persists over subsequent bars until the `newDirection` condition occurs, in which case the script assigns a creates a new line with [line.new](https://www.tradingview.com/pine-script-reference/v6/#fun_line.new) and assigns that line’s reference to the variable.
 
-On every bar, the script calls the [line.get\_y2()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.get_y2), [line.get\_y1()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.get_y1), [line.get\_x2()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.get_x2), and [line.get\_x1()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.get_x1) getters as [methods](/pine-script-docs/language/methods/) to retrieve values from the current line referenced by `directionLine` and calculate its slope, then uses the result to determine the color of each drawing and plot. The script retrieves an extended value of the current line from _beyond_ its second point using [line.get\_price()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.get_price) and [plots](/pine-script-docs/visuals/plots/) the returned value on the chart:
+On every bar, the script calls the [line.get_y2()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.get_y2), [line.get_y1()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.get_y1), [line.get_x2()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.get_x2), and [line.get_x1()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.get_x1) getters as [methods](/pine-script-docs/language/methods/) to retrieve values from the current line referenced by `directionLine` and calculate its slope, then uses the result to determine the color of each drawing and plot. The script retrieves an extended value of the current line from _beyond_ its second point using [line.get_price()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.get_price) and [plots](/pine-script-docs/visuals/plots/) the returned value on the chart:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Lines-and-boxes-Lines-Reading-line-values-1.C9ypOdeZ_Gv53Q.webp)
 
@@ -301,8 +301,8 @@ plot(lineValue, "Extrapolated value", slopeColor, 3, plot.style_circles)
 
 Note that:
 
-- This example calls the second overload of the [line.new()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.new) function, which uses `x1`, `y1`, `x2`, and `y2` parameters to define the start and end points of the line. The `x1` value is `length` bars behind the current [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index), and the `y1` value is the [hlc3](https://www.tradingview.com/pine-script-reference/v6/#var_hlc3) value at that index. The `x2` and `y2` in the function call use the current bar’s [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) and [hlc3](https://www.tradingview.com/pine-script-reference/v6/#var_hlc3) values.
-- The [line.get\_price()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.get_price) function call treats the `directionLine` as though it extends infinitely, regardless of its `extend` property.
+- This example calls the second overload of the [line.new()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.new) function, which uses `x1`, `y1`, `x2`, and `y2` parameters to define the start and end points of the line. The `x1` value is `length` bars behind the current [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index), and the `y1` value is the [hlc3](https://www.tradingview.com/pine-script-reference/v6/#var_hlc3) value at that index. The `x2` and `y2` in the function call use the current bar’s [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) and [hlc3](https://www.tradingview.com/pine-script-reference/v6/#var_hlc3) values.
+- The [line.get_price()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.get_price) function call treats the `directionLine` as though it extends infinitely, regardless of its `extend` property.
 - The script only displays approximately the last 50 lines on the chart, but the [plot](https://www.tradingview.com/pine-script-reference/v6/#fun_plot) of extrapolated values spans throughout the chart’s history.
 
 ### Cloning lines
@@ -344,7 +344,7 @@ line.set_second_point(copiedLine, chart.point.now(close))
 
 Note that:
 
-- The `index` field of the `secondPoint` is `length` bars beyond the current [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index). Since the maximum x-coordinate allowed with [xloc.bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_index) is `bar_index + 500`, we’ve set the `maxval` of the `length` input to 500.
+- The `index` field of the `secondPoint` is `length` bars beyond the current [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index). Since the maximum x-coordinate allowed with [xloc.bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_index) is `bar_index + 500`, we’ve set the `maxval` of the `length` input to 500.
 
 ### Deleting lines
 
@@ -497,13 +497,13 @@ Determines whether the box’s borders extend infinitely beyond the left or righ
 
 `xloc`
 
-Determines whether the left and right edges of the box use bar index or time values as x-coordinates. The default is [xloc.bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_index).
+Determines whether the left and right edges of the box use bar index or time values as x-coordinates. The default is [xloc.bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_index).
 
-In the first overload, an `xloc` value of [xloc.bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_index) means that the function will use the `index` fields of the `top_left` and `bottom_right` chart points, and an `xloc` value of [xloc.bar\_time](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_time) means that it will use their `time` fields.
+In the first overload, an `xloc` value of [xloc.bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_index) means that the function will use the `index` fields of the `top_left` and `bottom_right` chart points, and an `xloc` value of [xloc.bar_time](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_time) means that it will use their `time` fields.
 
-In the second overload, using an `xloc` value of [xloc.bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_index) means the function treats the `left` and `right` values as bar indices, and [xloc.bar\_time](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_time) means it will treat them as timestamps.
+In the second overload, using an `xloc` value of [xloc.bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_index) means the function treats the `left` and `right` values as bar indices, and [xloc.bar_time](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_time) means it will treat them as timestamps.
 
-When the specified x-coordinates represent _bar index_ values, it’s important to note that the minimum x-coordinate allowed is `bar_index - 10000`. For larger offsets, one can use [xloc.bar\_time](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_time).
+When the specified x-coordinates represent _bar index_ values, it’s important to note that the minimum x-coordinate allowed is `bar_index - 10000`. For larger offsets, one can use [xloc.bar_time](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_time).
 
 `bgcolor`
 
@@ -523,19 +523,19 @@ Controls the color of the text. Its default is [color.black](https://www.trading
 
 `text_halign`
 
-Specifies the horizontal alignment of the text within the box’s boundaries. It accepts one of the following: [text.align\_left](https://www.tradingview.com/pine-script-reference/v6/#var_text.align_left), [text.align\_right](https://www.tradingview.com/pine-script-reference/v6/#var_text.align_right), or [text.align\_center](https://www.tradingview.com/pine-script-reference/v6/#var_text.align_center) (default).
+Specifies the horizontal alignment of the text within the box’s boundaries. It accepts one of the following: [text.align_left](https://www.tradingview.com/pine-script-reference/v6/#var_text.align_left), [text.align_right](https://www.tradingview.com/pine-script-reference/v6/#var_text.align_right), or [text.align_center](https://www.tradingview.com/pine-script-reference/v6/#var_text.align_center) (default).
 
 `text_valign`
 
-Specifies the vertical alignment of the text within the box’s boundaries. It accepts one of the following: [text.align\_top](https://www.tradingview.com/pine-script-reference/v6/#var_text.align_top), [text.align\_bottom](https://www.tradingview.com/pine-script-reference/v6/#var_text.align_bottom), or [text.align\_center](https://www.tradingview.com/pine-script-reference/v6/#var_text.align_center) (default).
+Specifies the vertical alignment of the text within the box’s boundaries. It accepts one of the following: [text.align_top](https://www.tradingview.com/pine-script-reference/v6/#var_text.align_top), [text.align_bottom](https://www.tradingview.com/pine-script-reference/v6/#var_text.align_bottom), or [text.align_center](https://www.tradingview.com/pine-script-reference/v6/#var_text.align_center) (default).
 
 `text_wrap`
 
-Determines whether the box will wrap the text within it. If its value is [text.wrap\_auto](https://www.tradingview.com/pine-script-reference/v6/#var_text.wrap_auto), the box wraps the text to ensure it does not span past its vertical borders. It also clips the wrapped text when it extends past the bottom. If the value is [text.wrap\_none](https://www.tradingview.com/pine-script-reference/v6/#var_text.wrap_none), the box displays the text on a single line that can extend beyond its borders. The default is [text.wrap\_none](https://www.tradingview.com/pine-script-reference/v6/#var_text.wrap_none).
+Determines whether the box will wrap the text within it. If its value is [text.wrap_auto](https://www.tradingview.com/pine-script-reference/v6/#var_text.wrap_auto), the box wraps the text to ensure it does not span past its vertical borders. It also clips the wrapped text when it extends past the bottom. If the value is [text.wrap_none](https://www.tradingview.com/pine-script-reference/v6/#var_text.wrap_none), the box displays the text on a single line that can extend beyond its borders. The default is [text.wrap_none](https://www.tradingview.com/pine-script-reference/v6/#var_text.wrap_none).
 
 `text_font_family`
 
-Defines the font family of the box’s text. Using [font.family\_default](https://www.tradingview.com/pine-script-reference/v6/#var_font.family_default) displays the box’s text with the system’s default font. The [font.family\_monospace](https://www.tradingview.com/pine-script-reference/v6/#var_font.family_monospace) displays the text in a monospace format. The default value is [font.family\_default](https://www.tradingview.com/pine-script-reference/v6/#var_font.family_default).
+Defines the font family of the box’s text. Using [font.family_default](https://www.tradingview.com/pine-script-reference/v6/#var_font.family_default) displays the box’s text with the system’s default font. The [font.family_monospace](https://www.tradingview.com/pine-script-reference/v6/#var_font.family_monospace) displays the text in a monospace format. The default value is [font.family_default](https://www.tradingview.com/pine-script-reference/v6/#var_font.family_default).
 
 `force_overlay`
 
@@ -543,11 +543,11 @@ If `true`, the drawing will display on the main chart pane, even when the script
 
 `text_formatting`
 
-Specifies the formatting of the box’s text. Using [text.format\_none](https://www.tradingview.com/pine-script-reference/v6/#const_text.format_none) displays the text with no special formatting. This parameter also accepts the arguments [text.format\_bold](https://www.tradingview.com/pine-script-reference/v6/#const_text.format_bold) or [text.format\_italic](https://www.tradingview.com/pine-script-reference/v6/#const_text.format_italic). Using `text.format_bold + text.format_italic` applies both formats together to display text that is both bold and italicized. The default value is [text.format\_none](https://www.tradingview.com/pine-script-reference/v6/#const_text.format_none).
+Specifies the formatting of the box’s text. Using [text.format_none](https://www.tradingview.com/pine-script-reference/v6/#const_text.format_none) displays the text with no special formatting. This parameter also accepts the arguments [text.format_bold](https://www.tradingview.com/pine-script-reference/v6/#const_text.format_bold) or [text.format_italic](https://www.tradingview.com/pine-script-reference/v6/#const_text.format_italic). Using `text.format_bold + text.format_italic` applies both formats together to display text that is both bold and italicized. The default value is [text.format_none](https://www.tradingview.com/pine-script-reference/v6/#const_text.format_none).
 
 Let’s write a simple script to display boxes on a chart. The example below draws a box projecting each bar’s [high](https://www.tradingview.com/pine-script-reference/v6/#var_high) and [low](https://www.tradingview.com/pine-script-reference/v6/#var_low) values from the horizontal center of the current bar to the center of the next available bar.
 
-On each bar, the script creates `topLeft` and `bottomRight` points via [chart.point.now()](https://www.tradingview.com/pine-script-reference/v6/#fun_chart.point.now) and [chart.point.from\_index()](https://www.tradingview.com/pine-script-reference/v6/#fun_chart.point.from_index), then calls [box.new()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.new) to construct a new box and display it on the chart. It also highlights the background on the unconfirmed chart bar using [bgcolor()](https://www.tradingview.com/pine-script-reference/v6/#fun_bgcolor) to indicate that it redraws that box until the bar’s last update:
+On each bar, the script creates `topLeft` and `bottomRight` points via [chart.point.now()](https://www.tradingview.com/pine-script-reference/v6/#fun_chart.point.now) and [chart.point.from_index()](https://www.tradingview.com/pine-script-reference/v6/#fun_chart.point.from_index), then calls [box.new()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.new) to construct a new box and display it on the chart. It also highlights the background on the unconfirmed chart bar using [bgcolor()](https://www.tradingview.com/pine-script-reference/v6/#fun_bgcolor) to indicate that it redraws that box until the bar’s last update:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Lines-and-boxes-Boxes-Creating-boxes-1.BfHkiDpJ_2qyzFB.webp)
 
@@ -577,21 +577,21 @@ Note that:
 
 Multiple _setter_ functions exist in the `box.*` namespace, allowing scripts to modify the properties of [box](https://www.tradingview.com/pine-script-reference/v6/#type_box) objects:
 
-- [box.set\_top\_left\_point()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_top_left_point) and [box.set\_bottom\_right\_point()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_bottom_right_point) respectively update the top-left and bottom-right coordinates of the `id` box using information from the specified `point`.
-- [box.set\_left()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_left) and [box.set\_right()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_right) set the left or right x-coordinate of the `id` box to a new `left/right` value, which can be a bar index or time value depending on the box’s `xloc` property.
-- [box.set\_top()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_top) and [box.set\_bottom()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_bottom) set the top or bottom y-coordinate of the `id` box to a new `top/bottom` value.
-- [box.set\_lefttop()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_lefttop) sets the `left` and `top` coordinates of the `id` box, and [box.set\_rightbottom()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_rightbottom) sets its `right` and `bottom` coordinates.
-- [box.set\_xloc()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_xloc) sets the `xloc` property of the `id` box and updates its x-coordinates to new `left` and `right` values, which represent bar index or time values accordingly.
-- [box.set\_border\_color()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_border_color), [box.set\_border\_width()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_border_width) and [box.set\_border\_style()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_border_style) respectively update the `color`, `width`, and `style` of the `id` box’s border.
-- [box.set\_extend()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_extend) sets the horizontal `extend` property of the `id` box.
-- [box.set\_bgcolor()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_bgcolor) sets the color of the space inside the `id` box to a new `color`.
-- [box.set\_text()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_text), [box.set\_text\_size()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_text_size), [box.set\_text\_color()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_text_color), [box.set\_text\_halign()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_text_halign), [box.set\_text\_valign()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_text_valign), [box.set\_text\_wrap()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_text_wrap), [box.set\_text\_font\_family()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_text_font_family), and [box.set\_text\_formatting()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_text_formatting) update the `id` box’s text-related properties.
+- [box.set_top_left_point()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_top_left_point) and [box.set_bottom_right_point()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_bottom_right_point) respectively update the top-left and bottom-right coordinates of the `id` box using information from the specified `point`.
+- [box.set_left()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_left) and [box.set_right()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_right) set the left or right x-coordinate of the `id` box to a new `left/right` value, which can be a bar index or time value depending on the box’s `xloc` property.
+- [box.set_top()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_top) and [box.set_bottom()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_bottom) set the top or bottom y-coordinate of the `id` box to a new `top/bottom` value.
+- [box.set_lefttop()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_lefttop) sets the `left` and `top` coordinates of the `id` box, and [box.set_rightbottom()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_rightbottom) sets its `right` and `bottom` coordinates.
+- [box.set_xloc()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_xloc) sets the `xloc` property of the `id` box and updates its x-coordinates to new `left` and `right` values, which represent bar index or time values accordingly.
+- [box.set_border_color()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_border_color), [box.set_border_width()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_border_width) and [box.set_border_style()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_border_style) respectively update the `color`, `width`, and `style` of the `id` box’s border.
+- [box.set_extend()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_extend) sets the horizontal `extend` property of the `id` box.
+- [box.set_bgcolor()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_bgcolor) sets the color of the space inside the `id` box to a new `color`.
+- [box.set_text()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_text), [box.set_text_size()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_text_size), [box.set_text_color()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_text_color), [box.set_text_halign()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_text_halign), [box.set_text_valign()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_text_valign), [box.set_text_wrap()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_text_wrap), [box.set_text_font_family()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_text_font_family), and [box.set_text_formatting()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_text_formatting) update the `id` box’s text-related properties.
 
 As with setter functions in the `line.*` namespace, all box setters modify the `id` box directly without returning a value, and each setter function accepts “series” arguments.
 
 This example uses boxes to visualize the ranges of upward and downward bars with the highest [volume](https://www.tradingview.com/pine-script-reference/v6/#var_volume) over a user-defined `timeframe`. When the script detects a new bar on the specified timeframe with [timeframe.change()](https://www.tradingview.com/pine-script-reference/v6/#fun_timeframe.change), it assigns new boxes to the `upBox` and `downBox` variables, resets the `upVolume` and `downVolume` values, and highlights the chart background.
 
-When an upward or downward bar’s [volume](https://www.tradingview.com/pine-script-reference/v6/#var_volume) exceeds the `upVolume` or `downVolume`, the script updates the volume-tracking variables and calls [box.set\_top\_left\_point()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_top_left_point) and [box.set\_bottom\_right\_point()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_bottom_right_point) to update the `upBox` or `downBox` coordinates. The setters use the information from the [chart points](/pine-script-docs/language/type-system/#chart-points) created with [chart.point.now()](https://www.tradingview.com/pine-script-reference/v6/#fun_chart.point.now) and [chart.point.from\_time()](https://www.tradingview.com/pine-script-reference/v6/#fun_chart.point.from_time) to project that bar’s [high](https://www.tradingview.com/pine-script-reference/v6/#var_high) and [low](https://www.tradingview.com/pine-script-reference/v6/#var_low) values from the current time to the closing time of the specified timeframe:
+When an upward or downward bar’s [volume](https://www.tradingview.com/pine-script-reference/v6/#var_volume) exceeds the `upVolume` or `downVolume`, the script updates the volume-tracking variables and calls [box.set_top_left_point()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_top_left_point) and [box.set_bottom_right_point()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_bottom_right_point) to update the `upBox` or `downBox` coordinates. The setters use the information from the [chart points](/pine-script-docs/language/type-system/#chart-points) created with [chart.point.now()](https://www.tradingview.com/pine-script-reference/v6/#fun_chart.point.now) and [chart.point.from_time()](https://www.tradingview.com/pine-script-reference/v6/#fun_chart.point.from_time) to project that bar’s [high](https://www.tradingview.com/pine-script-reference/v6/#var_high) and [low](https://www.tradingview.com/pine-script-reference/v6/#var_low) values from the current time to the closing time of the specified timeframe:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Lines-and-boxes-Boxes-Modifying-boxes-1.Bj141v5c_297ln.webp)
 
@@ -666,26 +666,26 @@ Note that:
 
 ### Box styles
 
-Users can include one of the following `line.style_*` variables in their [box.new()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.new) or [box.set\_border\_style()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_border_style) function calls to set the border styles of boxes drawn by their scripts:
+Users can include one of the following `line.style_*` variables in their [box.new()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.new) or [box.set_border_style()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_border_style) function calls to set the border styles of boxes drawn by their scripts:
 
 ---
 
-| Argument            | Box                                                                                    |
-| ------------------- | -------------------------------------------------------------------------------------- |
-| `line.style_solid`  | ![box\_style\_solid](https://www.tradingview.com/pine-script-docs/_astro/box.style_solid.DpZnFQGZ_2oQNCW.webp)    |
-| `line.style_dotted` | ![box\_style\_dotted](https://www.tradingview.com/pine-script-docs/_astro/box.style_dotted.DQk4-fDM_Z23lye8.webp) |
-| `line.style_dashed` | ![box\_style\_dashed](https://www.tradingview.com/pine-script-docs/_astro/box.style_dashed.BezJLOhC_Z1FMPte.webp) |
+| Argument            | Box                                                                                                             |
+| ------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `line.style_solid`  | ![box_style_solid](https://www.tradingview.com/pine-script-docs/_astro/box.style_solid.DpZnFQGZ_2oQNCW.webp)    |
+| `line.style_dotted` | ![box_style_dotted](https://www.tradingview.com/pine-script-docs/_astro/box.style_dotted.DQk4-fDM_Z23lye8.webp) |
+| `line.style_dashed` | ![box_style_dashed](https://www.tradingview.com/pine-script-docs/_astro/box.style_dashed.BezJLOhC_Z1FMPte.webp) |
 
 ### Reading box values
 
 The `box.*` namespace features _getter_ functions that allow scripts to retrieve coordinate values from a box instance:
 
-- [box.get\_left()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.get_left) and [box.get\_right()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.get_right) respectively get the x-coordinates of the left and right edges of the `id` box. Whether the value returned represents a bar index or time value depends on the box’s `xloc` property.
-- [box.get\_top()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.get_top) and [box.get\_bottom()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.get_bottom) respectively get the top and bottom y-coordinates of the `id` box.
+- [box.get_left()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.get_left) and [box.get_right()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.get_right) respectively get the x-coordinates of the left and right edges of the `id` box. Whether the value returned represents a bar index or time value depends on the box’s `xloc` property.
+- [box.get_top()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.get_top) and [box.get_bottom()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.get_bottom) respectively get the top and bottom y-coordinates of the `id` box.
 
 The example below draws boxes to visualize hypothetical price ranges over a period of `length` bars. At the start of each new period, it uses the average candle range multiplied by the `scaleFactor` input to calculate the corner points of a box centered at the [hl2](https://www.tradingview.com/pine-script-reference/v6/#var_hl2) price with an `initialRange` height. After drawing the first box, it creates `numberOfBoxes - 1` new boxes inside a [for](https://www.tradingview.com/pine-script-reference/v6/#kw_for) loop.
 
-Within each loop iteration, the script gets the `lastBoxDrawn` reference by retrieving the last element from the read-only [box.all](https://www.tradingview.com/pine-script-reference/v6/#var_box.all) array, then calls [box.get\_top()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.get_top) and [box.get\_bottom()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.get_bottom) to get the y-coordinates of the referenced box. It uses these values to calculate the coordinates for a new box that’s `scaleFactor` times taller than the previous:
+Within each loop iteration, the script gets the `lastBoxDrawn` reference by retrieving the last element from the read-only [box.all](https://www.tradingview.com/pine-script-reference/v6/#var_box.all) array, then calls [box.get_top()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.get_top) and [box.get_bottom()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.get_bottom) to get the y-coordinates of the referenced box. It uses these values to calculate the coordinates for a new box that’s `scaleFactor` times taller than the previous:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Lines-and-boxes-Boxes-Reading-box-values-1.BjHiyYzc_1hj7GF.webp)
 
@@ -793,7 +793,7 @@ To delete boxes drawn by a script, use [box.delete()](https://www.tradingview.co
 
 This example displays boxes representing periodic cumulative volume values. The script [creates](/pine-script-docs/visuals/lines-and-boxes/#creating-boxes) a new box ID and stores it in a `boxes` array once every `length` bars. If the array’s size exceeds the `numberOfBoxes` value, the script removes the oldest box from the array using [array.shift()](https://www.tradingview.com/pine-script-reference/v6/#fun_array.shift) and deletes it using [box.delete()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.delete).
 
-On other bars, it accumulates [volume](https://www.tradingview.com/pine-script-reference/v6/#var_volume) over each period by [modifying](/pine-script-docs/visuals/lines-and-boxes/#modifying-boxes) the `top` property of the last box in the `boxes` array. The script then uses [\`for\` loops](/pine-script-docs/language/loops/#for-loops) to find the `highestTop` of all the array’s boxes and set the `bgcolor` of each box with a gradient color created using [color.from\_gradient()](https://www.tradingview.com/pine-script-reference/v6/#fun_color.from_gradient) based on its [box.get\_top()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.get_top) value relative to the `highestTop`:
+On other bars, it accumulates [volume](https://www.tradingview.com/pine-script-reference/v6/#var_volume) over each period by [modifying](/pine-script-docs/visuals/lines-and-boxes/#modifying-boxes) the `top` property of the last box in the `boxes` array. The script then uses [\`for\` loops](/pine-script-docs/language/loops/#for-loops) to find the `highestTop` of all the array’s boxes and set the `bgcolor` of each box with a gradient color created using [color.from_gradient()](https://www.tradingview.com/pine-script-reference/v6/#fun_color.from_gradient) based on its [box.get_top()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.get_top) value relative to the `highestTop`:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Lines-and-boxes-Boxes-Deleting-boxes-1.CnAZt6YV_ZXP4os.webp)
 
@@ -882,7 +882,7 @@ Controls whether the polyline will connect the last [chart.point](https://www.tr
 
 `xloc`
 
-Specifies which field from each [chart.point](https://www.tradingview.com/pine-script-reference/v6/#type_chart.point) in the `points` array the polyline uses for its x-coordinates. When its value is [xloc.bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_index), the function uses the `index` fields to create the polyline. When its value is [xloc.bar\_time](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_time), the function uses the `time` fields. The default value is [xloc.bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_index).
+Specifies which field from each [chart.point](https://www.tradingview.com/pine-script-reference/v6/#type_chart.point) in the `points` array the polyline uses for its x-coordinates. When its value is [xloc.bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_index), the function uses the `index` fields to create the polyline. When its value is [xloc.bar_time](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_time), the function uses the `time` fields. The default value is [xloc.bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_index).
 
 `line_color`
 
@@ -894,7 +894,7 @@ Controls the color of the closed space filled by the polyline drawing. Its defau
 
 `line_style`
 
-Specifies the style of the polyline, which can be any of the available options in the [Line styles](/pine-script-docs/visuals/lines-and-boxes/#line-styles) section of this page. The default is [line.style\_solid](https://www.tradingview.com/pine-script-reference/v6/#var_line.style_solid).
+Specifies the style of the polyline, which can be any of the available options in the [Line styles](/pine-script-docs/visuals/lines-and-boxes/#line-styles) section of this page. The default is [line.style_solid](https://www.tradingview.com/pine-script-reference/v6/#var_line.style_solid).
 
 `line_width`
 
@@ -1297,7 +1297,7 @@ Note that:
 
 ### Past and future references with ​`xloc.bar_index`​
 
-Objects positioned using [xloc.bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_index) can contain x-coordinates no further than 500 bars into the future or 10,000 bars into the past.
+Objects positioned using [xloc.bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_index) can contain x-coordinates no further than 500 bars into the future or 10,000 bars into the past.
 
 ### Other contexts
 
@@ -1323,11 +1323,11 @@ if barstate.isrealtime
     line.new(firstPoint, secondPoint)
 ```
 
-However, it will fail at runtime and raise an error. The script fails because it cannot determine the buffer size for historical values of the underlying [time](https://www.tradingview.com/pine-script-reference/v6/#var_time) series. Although the code doesn’t contain the built-in [time](https://www.tradingview.com/pine-script-reference/v6/#var_time) variable, the built-in [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) uses the [time](https://www.tradingview.com/pine-script-reference/v6/#var_time) series in its inner workings. Therefore, accessing the value of the [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) from 300 bars back requires the history buffer of the [time](https://www.tradingview.com/pine-script-reference/v6/#var_time) series to be at least 300 bars.
+However, it will fail at runtime and raise an error. The script fails because it cannot determine the buffer size for historical values of the underlying [time](https://www.tradingview.com/pine-script-reference/v6/#var_time) series. Although the code doesn’t contain the built-in [time](https://www.tradingview.com/pine-script-reference/v6/#var_time) variable, the built-in [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) uses the [time](https://www.tradingview.com/pine-script-reference/v6/#var_time) series in its inner workings. Therefore, accessing the value of the [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) from 300 bars back requires the history buffer of the [time](https://www.tradingview.com/pine-script-reference/v6/#var_time) series to be at least 300 bars.
 
 Pine Script includes a mechanism that detects the required historical buffer size automatically in most cases. It works by letting the script access historical values any number of bars back for a limited duration. In this script’s case, using [barstate.isrealtime](https://www.tradingview.com/pine-script-reference/v6/#var_barstate.isrealtime) to control the drawing of lines prevents it from accessing the historical series, so it cannot infer the required historical buffer size, and the script fails.
 
-The simple solution to this issue is to use the [max\_bars\_back()](https://www.tradingview.com/pine-script-reference/v6/#fun_max_bars_back) function to _explicitly define_ the historical buffer of the [time](https://www.tradingview.com/pine-script-reference/v6/#var_time) series before evaluating the [conditional structure](/pine-script-docs/language/conditional-structures/):
+The simple solution to this issue is to use the [max_bars_back()](https://www.tradingview.com/pine-script-reference/v6/#fun_max_bars_back) function to _explicitly define_ the historical buffer of the [time](https://www.tradingview.com/pine-script-reference/v6/#var_time) series before evaluating the [conditional structure](/pine-script-docs/language/conditional-structures/):
 
 ```pine
 //@version=6

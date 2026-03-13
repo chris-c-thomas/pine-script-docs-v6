@@ -83,11 +83,12 @@ s := nz(s[1]) + close
 t = security(tickerid, period, s)
 ```
 
-```Cannot use mutable variable as an argument for security function!`
+`Cannot use mutable variable as an argument for security function!`
 
 This limitation exists since mutable variables were introduced in Pine Script, i.e., in version 2. It can be resolved as before: wrap the code with a mutable variable in a function:
 
-`//@version=3
+```pine
+//@version=3
 //...
 calcS() =>
     s = 0.0

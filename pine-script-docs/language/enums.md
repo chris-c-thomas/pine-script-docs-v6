@@ -51,6 +51,7 @@ Note that:
 To retrieve a member of an enum, use _dot notation_ syntax on the enum name. For example, the following expression retrieves the `fieldName` member of the `enumName` type:
 
 ```enumName.fieldName
+
 ```
 
 As with other types, scripts can assign enum members to variables, function parameters, and [UDT](/pine-script-docs/language/type-system/#user-defined-types) fields, enabling strict control over their allowed values.
@@ -58,11 +59,13 @@ As with other types, scripts can assign enum members to variables, function para
 For instance, the code line below declares a `mySignal` variable whose value is the `neutral` member of the `Signal` enum. Any value assigned to this variable later must also be of the same [enum type](/pine-script-docs/language/type-system/#enum-types):
 
 ```mySignal = Signal.neutral
+
 ```
 
 Note that the above line does not require specifying the variable’s _type_ as `Signal`, because the compiler can automatically determine that information from the assigned value. However, if we use [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) as the initial value instead, we must include `Signal` as the variable’s type keyword to specify that `mySignal` accepts members of the `Signal` type:
 
 ```Signal mySignal = na
+
 ```
 
 ## Using enums

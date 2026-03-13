@@ -152,11 +152,11 @@ Scripts can access the entry price for a _specific trade_, or the average entry 
 
 **Average entry price**
 
-The [strategy.position\_avg\_price](https://www.tradingview.com/pine-script-reference/v6/#var_strategy.position_avg_price) variable automatically updates to the average entry price of the current position. If the position consist of only one trade, the average price of the position is equal to the entry price of that single trade. If a strategy closes a market position that consists of multiple trades, trades are closed in the order they were opened, by default. Since the average price of the open position changes according to which positions are still open, be aware of the order in which trades are closed, and if necessary, configure it using the `close_entries_rule` parameter of the [strategy()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy) declaration function.
+The [strategy.position_avg_price](https://www.tradingview.com/pine-script-reference/v6/#var_strategy.position_avg_price) variable automatically updates to the average entry price of the current position. If the position consist of only one trade, the average price of the position is equal to the entry price of that single trade. If a strategy closes a market position that consists of multiple trades, trades are closed in the order they were opened, by default. Since the average price of the open position changes according to which positions are still open, be aware of the order in which trades are closed, and if necessary, configure it using the `close_entries_rule` parameter of the [strategy()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy) declaration function.
 
 **Specific entry price**
 
-The [strategy.opentrades.entry\_price()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.opentrades.entry_price) function returns the entry price for a given trade ID. To find the entry price for the most recent open trade, and remembering that the trade indexes start at zero, use `float entryPrice = strategy.opentrades.entry_price(strategy.opentrades - 1)`.
+The [strategy.opentrades.entry_price()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.opentrades.entry_price) function returns the entry price for a given trade ID. To find the entry price for the most recent open trade, and remembering that the trade indexes start at zero, use `float entryPrice = strategy.opentrades.entry_price(strategy.opentrades - 1)`.
 
 ### How do I filter trades by a date or time range?
 
@@ -235,14 +235,14 @@ Each historical bar in a chart is composed of a single set of [open](https://www
 
 So that results are consistent between historical and realtime bars, strategies also execute at the close of realtime bars. The next possible moment for an order to be filled is the beginning of the next bar.
 
-Users can [alter a strategy’s calculation behavior](/pine-script-docs/concepts/strategies/#altering-calculation-behavior) by configuring strategies to process orders at the close of the signal bar instead, by selecting the “Fill orders/On bar close” setting in the “Settings/Properties” tab. Programmers can do the same by setting the [process\_orders\_on\_close](/pine-script-docs/concepts/strategies/#process_orders_on_close) parameter to `true` in the [strategy()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy) declaration statement:
+Users can [alter a strategy’s calculation behavior](/pine-script-docs/concepts/strategies/#altering-calculation-behavior) by configuring strategies to process orders at the close of the signal bar instead, by selecting the “Fill orders/On bar close” setting in the “Settings/Properties” tab. Programmers can do the same by setting the [process_orders_on_close](/pine-script-docs/concepts/strategies/#process_orders_on_close) parameter to `true` in the [strategy()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy) declaration statement:
 
 ```pine
 //@version=6
 strategy("My Strategy", process_orders_on_close = true, ...)
 ```
 
-An alternative method is to specify the `immediately` parameter as `true` in a [strategy.close()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.close) or [strategy.close\_all](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.close_all) function call. This setting causes the broker emulator to close a position on the same tick that the strategy creates the close order — meaning, when bar closes instead of the beginning of the next one. The [process\_orders\_on\_close](/pine-script-docs/concepts/strategies/#process_orders_on_close) parameter affects all closing orders in the strategy, whereas the `immediately` parameter affects only the close order in which it is used.
+An alternative method is to specify the `immediately` parameter as `true` in a [strategy.close()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.close) or [strategy.close_all](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.close_all) function call. This setting causes the broker emulator to close a position on the same tick that the strategy creates the close order — meaning, when bar closes instead of the beginning of the next one. The [process_orders_on_close](/pine-script-docs/concepts/strategies/#process_orders_on_close) parameter affects all closing orders in the strategy, whereas the `immediately` parameter affects only the close order in which it is used.
 
 However, processing orders on close might not give accurate results. For instance, if an alert occurs at the close of the session’s last bar, the actual order can be executed only on the next trading day, since the bar is already closed. In contrast, the emulator would simulate the order being filled at the previous day’s close. This discrepancy can lead to repainting, where the behavior of the strategy’s simulation on historical bars differs from that seen in live trading.
 
@@ -355,7 +355,7 @@ On [historical bars](/pine-script-docs/language/execution-model/#executions-on-h
 
 #### Using ​`calc_on_every_tick`​
 
-Strategies running on [realtime bars](/pine-script-docs/language/execution-model/#executions-on-realtime-bars) can simulate orders partway through a bar by enabling the [calc\_on\_every\_tick](/pine-script-docs/concepts/strategies/#calc_on_every_tick) parameter. This setting allows the strategy to process each tick (incoming price update) and execute trades on the tick after a logical condition occurs.
+Strategies running on [realtime bars](/pine-script-docs/language/execution-model/#executions-on-realtime-bars) can simulate orders partway through a bar by enabling the [calc_on_every_tick](/pine-script-docs/concepts/strategies/#calc_on_every_tick) parameter. This setting allows the strategy to process each tick (incoming price update) and execute trades on the tick after a logical condition occurs.
 
 NoticeIn contrast to realtime bars, historical bars do not contain data for each incoming tick. Those bars contain only confirmed price data. Consequently, a strategy that enables calculation on every tick might [repaint](/pine-script-docs/concepts/repainting/) on elapsed realtime bars after reloading, because those bars become _historical_ and no longer contain data for each tick before their close. Therefore, we recommend setting `calc_on_every_tick` to `false` while backtesting.
 
@@ -443,23 +443,23 @@ if buyCondition and strategy.position_size == 0.0
 strategy.close("buy", immediately = true)
 ```
 
-NoticeThe `immediately` parameter operates in a similar way to [process\_orders\_on\_close](/pine-script-docs/concepts/strategies/#process_orders_on_close), but it is specific to the [strategy.close()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.close) and [strategy.close\_all()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.close_all) functions. The emulator calculates the close order using bar closing prices, but the same prices might not always be attainable in realtime trading. Additionally, this behavior can cause [repainting](/pine-script-docs/concepts/repainting/).
+NoticeThe `immediately` parameter operates in a similar way to [process_orders_on_close](/pine-script-docs/concepts/strategies/#process_orders_on_close), but it is specific to the [strategy.close()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.close) and [strategy.close_all()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.close_all) functions. The emulator calculates the close order using bar closing prices, but the same prices might not always be attainable in realtime trading. Additionally, this behavior can cause [repainting](/pine-script-docs/concepts/repainting/).
 
 ## Advanced order types and conditions
 
 ### How can I set stop-loss and take-profit levels as a percentage from my entry point?
 
-To set exit orders as a percentage from the entry price, the script needs the average entry price calculated by the broker emulator (which is affected by conditions including multiple entries and slippage). However, the built-in variable [strategy.position\_avg\_price](https://www.tradingview.com/pine-script-reference/v6/#var_strategy.position_avg_price) returns [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) until the close of the entry bar. This means that take-profit and stop-loss orders based on the entry price can only be placed during the _next_ bar.
+To set exit orders as a percentage from the entry price, the script needs the average entry price calculated by the broker emulator (which is affected by conditions including multiple entries and slippage). However, the built-in variable [strategy.position_avg_price](https://www.tradingview.com/pine-script-reference/v6/#var_strategy.position_avg_price) returns [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) until the close of the entry bar. This means that take-profit and stop-loss orders based on the entry price can only be placed during the _next_ bar.
 
 If programmers want strategies to be able to close trades on the same bar that they are opened, there are two workarounds, each of which have their own benefits and limitations: altering the emulator behavior and using a different, fixed value.
 
 #### Using ​`calc_on_order_fills`​
 
-Setting the [calc\_on\_order\_fills](/pine-script-docs/concepts/strategies/#calc_on_order_fills) argument of the [strategy()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy) declaration function to `true` recalculates the strategy immediately after simulating an order fill. This setting provides access to data such as the current average price of a position on an unconfirmed bar.
+Setting the [calc_on_order_fills](/pine-script-docs/concepts/strategies/#calc_on_order_fills) argument of the [strategy()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy) declaration function to `true` recalculates the strategy immediately after simulating an order fill. This setting provides access to data such as the current average price of a position on an unconfirmed bar.
 
 NoticeEnabling `calc_on_order_fills` for some strategies might lead to unrealistic results on historical bars. During the extra script execution after an order fills, the script has access to the _confirmed_ OHLC values for the historical bar, but those values would not be available in the real world until the bar’s closing time. For an explanation of this form of _lookahead bias_, see [this Help Center article](https://www.tradingview.com/support/solutions/43000614705-strategy-produces-unrealistically-good-results-by-peeking-into-the-future/).
 
-The following example script sets take-profit and stop-loss orders during the entry bar, based on the entry price [strategy.position\_avg\_price](https://www.tradingview.com/pine-script-reference/v6/#var_strategy.position_avg_price). The script uses the `calc_on_order_fills` setting to enable this behavior.
+The following example script sets take-profit and stop-loss orders during the entry bar, based on the entry price [strategy.position_avg_price](https://www.tradingview.com/pine-script-reference/v6/#var_strategy.position_avg_price). The script uses the `calc_on_order_fills` setting to enable this behavior.
 
 ```pine
 //@version=6
@@ -538,7 +538,7 @@ plot(takeProfit, "TP", color.green, style = plot.style_linebr)
 
 Moving a stop-loss order to breakeven can be a useful technique to manage risk.
 
-The following example script sets a persistent `stopLoss` variable when the strategy enters a position. The script then updates the stop price to the entry price when the market price gets halfway to the take-profit level. The script calls the [strategy.exit()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.exit) function on every bar to ensure that the broker emulator receives any updates made to the `stopLoss` value. Lastly, it plots the average price according to the [strategy.position\_avg\_price](https://www.tradingview.com/pine-script-reference/v6/#var_strategy.position_avg_price) variable for reference.
+The following example script sets a persistent `stopLoss` variable when the strategy enters a position. The script then updates the stop price to the entry price when the market price gets halfway to the take-profit level. The script calls the [strategy.exit()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.exit) function on every bar to ensure that the broker emulator receives any updates made to the `stopLoss` value. Lastly, it plots the average price according to the [strategy.position_avg_price](https://www.tradingview.com/pine-script-reference/v6/#var_strategy.position_avg_price) variable for reference.
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Strategies-Advanced-order-types-and-conditions-How-do-i-move-my-stop-loss-to-breakeven-1.IzyaMOFu_1VWlEM.webp)
 
@@ -588,7 +588,7 @@ strategy.exit("exit", "buy", stop = stopLoss, limit = takeProfit)
 
 Note that:
 
-- This strategy uses [strategy.position\_avg\_price](https://www.tradingview.com/pine-script-reference/v6/#var_strategy.position_avg_price) as the breakeven level. However, the real breakeven price of a trade is affected by slippage and commission.
+- This strategy uses [strategy.position_avg_price](https://www.tradingview.com/pine-script-reference/v6/#var_strategy.position_avg_price) as the breakeven level. However, the real breakeven price of a trade is affected by slippage and commission.
 
 ### How do I place a trailing stop loss?
 
@@ -760,7 +760,7 @@ To close positions after a certain amount of time has passed, track the entry ti
 
 Because strategies calculate at the close of each bar on historical data, time-based conditions can only be evaluated at the close, so **trade times are assessed in multiples of the chart bar’s duration**. Further, if the timeout value is not divisible by the duration of a chart bar, each trade will last at least one additional chart bar. For instance, setting a timeout of 100 seconds on a 1-minute chart effectively means a minimum of two bars before a position can be closed.
 
-In realtime, the same logic applies unless the strategy uses the [calc\_on\_every\_tick](/pine-script-docs/concepts/strategies/#calc_on_every_tick) parameter, in which case the trade closes as soon as the first tick exceeds the timeout value. Remember that [altering emulator behavior](/pine-script-docs/concepts/strategies/#altering-calculation-behavior) typically introduces [repainting](/pine-script-docs/concepts/repainting/).
+In realtime, the same logic applies unless the strategy uses the [calc_on_every_tick](/pine-script-docs/concepts/strategies/#calc_on_every_tick) parameter, in which case the trade closes as soon as the first tick exceeds the timeout value. Remember that [altering emulator behavior](/pine-script-docs/concepts/strategies/#altering-calculation-behavior) typically introduces [repainting](/pine-script-docs/concepts/repainting/).
 
 The following example script calculates the duration of each open trade by comparing the current time against the trade entry time. If a trade’s duration exceeds the specified timeout, the script closes the trade and marks the event with a comment on the chart including the trade’s duration in seconds.
 
@@ -800,8 +800,8 @@ closePositionsAfter(input(1200, "Timeout (seconds)"))
 
 Note that:
 
-- The script uses either the time of the bar’s close using the [time\_close](https://www.tradingview.com/pine-script-reference/v6/#var_time_close) variable, or the current time from the [timenow](https://www.tradingview.com/pine-script-reference/v6/#var_timenow) variable (if the strategy uses the [calc\_on\_every\_tick](/pine-script-docs/concepts/strategies/#calc_on_every_tick) parameter).
-- The script uses the [built-in](/pine-script-docs/language/built-ins) functions [strategy.opentrades.entry\_time()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.opentrades.entry_time) and [strategy.opentrades.entry\_id()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.opentrades.entry_id) to measure trade duration and identify individual trades.
+- The script uses either the time of the bar’s close using the [time_close](https://www.tradingview.com/pine-script-reference/v6/#var_time_close) variable, or the current time from the [timenow](https://www.tradingview.com/pine-script-reference/v6/#var_timenow) variable (if the strategy uses the [calc_on_every_tick](/pine-script-docs/concepts/strategies/#calc_on_every_tick) parameter).
+- The script uses the [built-in](/pine-script-docs/language/built-ins) functions [strategy.opentrades.entry_time()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.opentrades.entry_time) and [strategy.opentrades.entry_id()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.opentrades.entry_id) to measure trade duration and identify individual trades.
 - The [strategy.close()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.close) function uses the `immediately` argument to simulate trades at the end of the bar that exceeds the timer, rather than waiting for the opening of the next bar. Consequently, when a 120-second timeout is applied and the script runs on a 1-minute chart, it gives the appearance that trades last exactly two bars.
 
 ### How can I configure a bracket order with a specific risk-to-reward (R:R ) ratio?
@@ -1015,7 +1015,7 @@ Pine Script strategies and indicators cannot directly place orders on exchanges.
 Adding a time delay between orders can help to prevent too many trades in a short time. Strategies can also prevent trading for a time after a series of losses. Here’s how to set up a time delay between orders:
 
 - Define the delay duration, whether in time units (minutes, hours, days) or a number of bars. For time-based delays, convert the chosen time unit into milliseconds, because Pine [time variables](/pine-script-docs/concepts/time/#time-variables) use milliseconds.
-- Check the [time](https://www.tradingview.com/pine-script-reference/v6/#var_time) or [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) of the last trade using [strategy.closedtrades.exit\_time()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.closedtrades.exit_time) or [strategy.closedtrades.exit\_bar\_index()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.closedtrades.exit_bar_index).
+- Check the [time](https://www.tradingview.com/pine-script-reference/v6/#var_time) or [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) of the last trade using [strategy.closedtrades.exit_time()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.closedtrades.exit_time) or [strategy.closedtrades.exit_bar_index()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.closedtrades.exit_bar_index).
 - If the difference between the current bar `time` or `bar_index` and that of the last trade’s exit exceeds the delay duration, set a boolean flag to allow new orders. Make sure to include the flag in the strategy entry conditions.
 
 The following example script provides two methods for delaying orders: a time-based delay or a specified number of bars. The strategy creates a long entry order when either the `time` of a bar or its `bar_index` exceeds the set delay from the last active trade bar. No other conditions are used for entry in this demonstration, but users can add their own logic to these conditions.
@@ -1240,11 +1240,11 @@ Pine scripts _repaint_ if they behave differently on historical and realtime bar
 
 Some strategy properties cause repainting:
 
-- The [calc\_on\_every\_tick](/pine-script-docs/concepts/strategies/#calc_on_every_tick) setting causes a strategy to recalculate with every price update, which may cause orders and alerts to trigger during the formation of a bar in realtime. By contrast, on historical bars, calculations are performed at the close of the bar.
-- The [calc\_on\_order\_fills](/pine-script-docs/concepts/strategies/#calc_on_order_fills) setting causes a strategy to recalculate immediately after simulating an order fill. For example, this feature is particularly useful for strategies that rely on entry prices to set exit prices on the entry bar, rather than waiting for the bar to close, such as the first example script in the FAQ entry [How can I set stop-loss and take-profit levels as a percentage from my entry point using `calc_on_order_fills`?](/pine-script-docs/faq/strategies/#using-calc_on_order_fills) However, using this setting can introduce _lookahead bias_ into the strategy, leading to potentially unrealistic outcomes. For instance, if a strategy’s entry conditions are met within a bar that also triggers an exit, the strategy would execute an entry order within the same bar on the next tick. On historical bars, such entries could occur at any of the bar’s [open](https://www.tradingview.com/pine-script-reference/v6/#var_open), [high](https://www.tradingview.com/pine-script-reference/v6/#var_high), [low](https://www.tradingview.com/pine-script-reference/v6/#var_low), or [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) (OHLC) prices, resulting in entry prices that are unrealistically favorable.
-- Since strategies and their alerts execute at the close of a historical bar, the next possible moment for an entry order to be filled is the beginning of the next bar. However, the [process\_orders\_on\_close](/pine-script-docs/concepts/strategies/#process_orders_on_close) setting causes the strategy to use the close price of the bar where the condition is met for its order prices instead. See the FAQ entry [Why are my orders executed on the bar following my triggers?](/pine-script-docs/faq/strategies/#why-are-my-orders-executed-on-the-bar-following-my-triggers) for more information.
+- The [calc_on_every_tick](/pine-script-docs/concepts/strategies/#calc_on_every_tick) setting causes a strategy to recalculate with every price update, which may cause orders and alerts to trigger during the formation of a bar in realtime. By contrast, on historical bars, calculations are performed at the close of the bar.
+- The [calc_on_order_fills](/pine-script-docs/concepts/strategies/#calc_on_order_fills) setting causes a strategy to recalculate immediately after simulating an order fill. For example, this feature is particularly useful for strategies that rely on entry prices to set exit prices on the entry bar, rather than waiting for the bar to close, such as the first example script in the FAQ entry [How can I set stop-loss and take-profit levels as a percentage from my entry point using `calc_on_order_fills`?](/pine-script-docs/faq/strategies/#using-calc_on_order_fills) However, using this setting can introduce _lookahead bias_ into the strategy, leading to potentially unrealistic outcomes. For instance, if a strategy’s entry conditions are met within a bar that also triggers an exit, the strategy would execute an entry order within the same bar on the next tick. On historical bars, such entries could occur at any of the bar’s [open](https://www.tradingview.com/pine-script-reference/v6/#var_open), [high](https://www.tradingview.com/pine-script-reference/v6/#var_high), [low](https://www.tradingview.com/pine-script-reference/v6/#var_low), or [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) (OHLC) prices, resulting in entry prices that are unrealistically favorable.
+- Since strategies and their alerts execute at the close of a historical bar, the next possible moment for an entry order to be filled is the beginning of the next bar. However, the [process_orders_on_close](/pine-script-docs/concepts/strategies/#process_orders_on_close) setting causes the strategy to use the close price of the bar where the condition is met for its order prices instead. See the FAQ entry [Why are my orders executed on the bar following my triggers?](/pine-script-docs/faq/strategies/#why-are-my-orders-executed-on-the-bar-following-my-triggers) for more information.
 
-To avoid repainting, set the [calc\_on\_every\_tick](/pine-script-docs/concepts/strategies/#calc_on_every_tick), [calc\_on\_order\_fills](/pine-script-docs/concepts/strategies/#calc_on_order_fills), and [process\_orders\_on\_close](/pine-script-docs/concepts/strategies/#process_orders_on_close) parameters to `false` in the [strategy()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy) declaration statement.
+To avoid repainting, set the [calc_on_every_tick](/pine-script-docs/concepts/strategies/#calc_on_every_tick), [calc_on_order_fills](/pine-script-docs/concepts/strategies/#calc_on_order_fills), and [process_orders_on_close](/pine-script-docs/concepts/strategies/#process_orders_on_close) parameters to `false` in the [strategy()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy) declaration statement.
 
 Additionally, using unfixed data from a higher timeframe can cause repainting. If the data from the higher timeframe changes during the higher timeframe bar, this can change the script’s oputput for historical bars. Ensure that strategies use only fixed values from a higher timeframe, as described in [Avoiding repainting](/pine-script-docs/concepts/other-timeframes-and-data/#avoiding-repainting).
 
@@ -1257,4 +1257,5 @@ In automated trading strategies, it is common practice to set stop-loss and take
 Here is an example of an order fill command with this parameter set:
 
 ```strategy.exit("Exit", stop = stopLevel, limit = limitLevel, disable_alert = true)
+
 ```

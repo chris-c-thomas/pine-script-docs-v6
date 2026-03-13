@@ -16,7 +16,7 @@ Pine Script methods are specialized functions associated with values of specific
 
 ## Built-in methods
 
-Pine Script features built-in methods for most [special types](/pine-script-docs/language/type-system/#types), including [array](https://www.tradingview.com/pine-script-reference/v6/#type_array), [matrix](https://www.tradingview.com/pine-script-reference/v6/#type_matrix), [map](https://www.tradingview.com/pine-script-reference/v6/#type_map), [line](https://www.tradingview.com/pine-script-reference/v6/#type_line), [linefill](https://www.tradingview.com/pine-script-reference/v6/#type_linefill), [box](https://www.tradingview.com/pine-script-reference/v6/#type_box), [polyline](https://www.tradingview.com/pine-script-reference/v6/#type_polyline), [label](https://www.tradingview.com/pine-script-reference/v6/#type_label), [table](https://www.tradingview.com/pine-script-reference/v6/#type_table), [chart.point](https://www.tradingview.com/pine-script-reference/v6/#type_chart.point), [footprint](https://www.tradingview.com/pine-script-reference/v6/#type_footprint), and [volume\_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row). These methods provide users with a more concise way to call specialized routines for these types within their scripts.
+Pine Script features built-in methods for most [special types](/pine-script-docs/language/type-system/#types), including [array](https://www.tradingview.com/pine-script-reference/v6/#type_array), [matrix](https://www.tradingview.com/pine-script-reference/v6/#type_matrix), [map](https://www.tradingview.com/pine-script-reference/v6/#type_map), [line](https://www.tradingview.com/pine-script-reference/v6/#type_line), [linefill](https://www.tradingview.com/pine-script-reference/v6/#type_linefill), [box](https://www.tradingview.com/pine-script-reference/v6/#type_box), [polyline](https://www.tradingview.com/pine-script-reference/v6/#type_polyline), [label](https://www.tradingview.com/pine-script-reference/v6/#type_label), [table](https://www.tradingview.com/pine-script-reference/v6/#type_table), [chart.point](https://www.tradingview.com/pine-script-reference/v6/#type_chart.point), [footprint](https://www.tradingview.com/pine-script-reference/v6/#type_footprint), and [volume_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row). These methods provide users with a more concise way to call specialized routines for these types within their scripts.
 
 When using these special types, the expressions:
 
@@ -33,11 +33,13 @@ and:
 are equivalent. For example, rather than using:
 
 ```array.get(id, index)
+
 ```
 
 to get the value from an array `id` at the specified `index`, we can simply use:
 
 ```id.get(index)
+
 ```
 
 to achieve the same effect. This notation eliminates the need for users to reference the function’s namespace, as [get()](https://www.tradingview.com/pine-script-reference/v6/#fun_array.get) is a method of `id` in this context.
@@ -138,12 +140,13 @@ if bar_index % n == 0
     sourceArray.shift()
     // Update the mean and standard deviation values.
     sampleMean := sourceArray.avg()
-    sampleDev  := sourceArray.stdev() * multiplier
+    sampleDev  := sourceArray.stdev() \* multiplier
 
 // Calculate band values.
 float highBand = sampleMean + sampleDev
 float lowBand  = sampleMean - sampleDev
-```
+
+````
 
 We will start by defining a simple method to queue values through an array in a single call.
 
@@ -161,7 +164,7 @@ method maintainQueue(array<float> srcArray, float value, bool takeSample 
         srcArray.push(value)
         srcArray.shift()
     srcArray
-```
+````
 
 Note that:
 
@@ -175,12 +178,13 @@ if bar_index % n == 0
     sourceArray.maintainQueue(sourceInput)
     // Update the mean and standard deviation values.
     sampleMean  := sourceArray.avg()
-    sampleDev   := sourceArray.stdev() * multiplier
+    sampleDev   := sourceArray.stdev() \* multiplier
 
 // Calculate band values.
 float highBand  = sampleMean + sampleDev
 float lowBand   = sampleMean - sampleDev
-```
+
+````
 
 From here, we will further simplify our code by defining a method that handles all Bollinger Band calculations within its scope.
 
@@ -199,7 +203,7 @@ method calcBB(array<float> srcArray, float mult, bool calculate = true)�
         mean := srcArray.avg()
         dev  := srcArray.stdev() * mult
     [mean, mean + dev, mean - dev]
-```
+````
 
 With this method, we can now remove Bollinger Band calculations from the global scope and improve code readability:
 
@@ -207,7 +211,8 @@ With this method, we can now remove Bollinger Band calculations from the global 
 bool newSample = bar_index % n == 0
 
 // Update the queue and compute new BB values on each new sample. [sampleMean, highBand, lowBand] = sourceArray.maintainQueue(sourceInput, newSample).calcBB(multiplier, newSample)
-```
+
+````
 
 Note that:
 
@@ -262,7 +267,7 @@ bool newSample = bar_index % n == 0
 plot(sampleMean, "Basis", color.orange)
 plot(highBand, "Upper", color.lime)
 plot(lowBand, "Lower", color.red)
-```
+````
 
 ## Method overloading
 
@@ -292,7 +297,7 @@ method getType(string this) =>
     na(this) ? "string(na)" : "string"
 ```
 
-Now we can use these overloads to inspect some variables. This script uses [str.format()](https://www.tradingview.com/pine-script-reference/v6/#fun_str.format) to format the results from calling the `getType()` method on five different variables into a single `results` string, then displays the string in the `lbl` label using the built-in [set\_text()](https://www.tradingview.com/pine-script-reference/v6/#fun_label.set_text) method:
+Now we can use these overloads to inspect some variables. This script uses [str.format()](https://www.tradingview.com/pine-script-reference/v6/#fun_str.format) to format the results from calling the `getType()` method on five different variables into a single `results` string, then displays the string in the `lbl` label using the built-in [set_text()](https://www.tradingview.com/pine-script-reference/v6/#fun_label.set_text) method:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Methods_overloads_type_inspection.BxAK0zpG_2p2qvn.webp)
 
@@ -363,16 +368,18 @@ method fill(array<float> srcArray, float innerValue, float outerValue, fl
         else
             srcArray.set(i, outerValue)
     srcArray
-```
+
+````
 
 With this method, we can filter an array by value ranges to produce an array of occurrences. For example, the expression:
 
 ```srcArray.copy().fill(1.0, 0.0, min, val)
-```
+````
 
 copies the `srcArray` object, replaces all elements between `min` and `val` with 1.0, then replaces all elements above `val` with 0.0. From here, it’s easy to estimate the output of the cumulative distribution function at the `val`, as it’s simply the average of the resulting array:
 
 ```srcArray.copy().fill(1.0, 0.0, min, val).avg()
+
 ```
 
 Note that:
@@ -397,7 +404,8 @@ method eCDF(array<float> srcArray, int steps) =>
         val += rng
         cdfArray.push(srcArray.copy().fill(1.0, 0.0, min, val).avg())
     cdfArray
-```
+
+````
 
 Lastly, to ensure that our `eCDF()` method functions properly for arrays containing small and large values, we will define a method to normalize our arrays.
 
@@ -414,7 +422,7 @@ method featureScale(array<float> srcArray) =>
     for element in srcArray
         scaledArray.push((element - min) / rng)
     scaledArray
-```
+````
 
 Note that:
 

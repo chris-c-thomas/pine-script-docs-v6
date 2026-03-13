@@ -55,8 +55,8 @@ Note that:
 
 - The `//@description`, `//@enum`, `//@type`, `@field`, `// @function`, `// @param`, and `// @returns` [compiler annotations](/pine-script-docs/language/script-structure/#compiler-annotations) are optional but we highly recommend you use them. These annotations document the library’s code and populate the default library description, which authors can use when publishing the library.
 - The [export](https://www.tradingview.com/pine-script-reference/v6/#kw_export) keyword is mandatory.
-- \<parameter\_type> is mandatory, contrary to user-defined function parameter definitions in indicators or strategies, which are typeless.
-- \<script\_code> can be any code one would normally use in an indicator, including [inputs](/pine-script-docs/concepts/inputs/).
+- \<parameter_type> is mandatory, contrary to user-defined function parameter definitions in indicators or strategies, which are typeless.
+- \<script_code> can be any code one would normally use in an indicator, including [inputs](/pine-script-docs/concepts/inputs/).
 
 This is an example library:
 
@@ -110,7 +110,7 @@ Pine Script automatically determines the [qualified types](/pine-script-docs/lan
     ta.ema(close, length = x)
 ```
 
-The `length` parameter of the [ta.ema()](https://www.tradingview.com/pine-script-reference/v6/#fun_ta.ema) function used in our function’s scope has the expected type “simple int”. The parameter can accept “simple int”, “const int” or “input int” values, but **not** “series int” values. Therefore, the Pine Script compiler automatically detects that the `x` parameter’s qualified type is “simple int”. This behavior explains why a call such as `myCustomLibrary.myEma(x = 20)` compiles successfully, but a call such as `myCustomLibrary.myEma(x = bar_index)` causes a _compilation error_. A literal value of 20 is of the type “const int”, meaning the script can convert it to a “simple int” argument. In contrast, [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) has the type “series int”, and “series” arguments **cannot** inherit _weaker_ qualifiers such as “simple”.
+The `length` parameter of the [ta.ema()](https://www.tradingview.com/pine-script-reference/v6/#fun_ta.ema) function used in our function’s scope has the expected type “simple int”. The parameter can accept “simple int”, “const int” or “input int” values, but **not** “series int” values. Therefore, the Pine Script compiler automatically detects that the `x` parameter’s qualified type is “simple int”. This behavior explains why a call such as `myCustomLibrary.myEma(x = 20)` compiles successfully, but a call such as `myCustomLibrary.myEma(x = bar_index)` causes a _compilation error_. A literal value of 20 is of the type “const int”, meaning the script can convert it to a “simple int” argument. In contrast, [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) has the type “series int”, and “series” arguments **cannot** inherit _weaker_ qualifiers such as “simple”.
 
 While library functions cannot return “const” or “input” values, they can be written to produce “simple” results. This makes them useful in more contexts than functions returning “series” results, as some built-in functions do not allow “series” arguments. For example, [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) requires a “simple string” argument for its `symbol` parameter when a script does not allow [dynamic requests](/pine-script-docs/concepts/other-timeframes-and-data/#dynamic-requests). If we wrote a library function to assemble the argument to `symbol` in the following way, the function’s result would not work with a non-dynamic `request.*()` call because it is of the “series string” qualified type:
 
@@ -347,6 +347,7 @@ where:
 To use the library we published in the previous section, our next script will require an [import](https://www.tradingview.com/pine-script-reference/v6/#kw_import) statement:
 
 ```import PineCoders/AllTimeHighLow/1 as allTime
+
 ```
 
 As you type the user name of the library’s author, you can use the Editor’s `ctrl` + `space` / `cmd` “Auto-complete” command to display a popup providing selections that match the available libraries:

@@ -35,28 +35,32 @@ Note that:
 - After the first line, we create a local block containing the type and name of each field.
 - The `x` field will hold the x-coordinate of the pivot. It is declared as an “int” because it will hold either a timestamp or a bar index of “int” type.
 - `y` is a “float” because it will hold the pivot’s price.
-- `xloc` is a field that will specify the units of `x`: [xloc.bar\_index](https://www.tradingview.com/pine-script-reference/v6/#const_xloc%7Bdot%7Dbar_index) or [xloc.bar\_time](https://www.tradingview.com/pine-script-reference/v6/#const_xloc%7Bdot%7Dbar_time). We set its default value to [xloc.bar\_time](https://www.tradingview.com/pine-script-reference/v6/#const_xloc%7Bdot%7Dbar_time) by using the `=` operator. When an object is created from that UDT, its `xloc` field will thus be set to that value.
+- `xloc` is a field that will specify the units of `x`: [xloc.bar_index](https://www.tradingview.com/pine-script-reference/v6/#const_xloc%7Bdot%7Dbar_index) or [xloc.bar_time](https://www.tradingview.com/pine-script-reference/v6/#const_xloc%7Bdot%7Dbar_time). We set its default value to [xloc.bar_time](https://www.tradingview.com/pine-script-reference/v6/#const_xloc%7Bdot%7Dbar_time) by using the `=` operator. When an object is created from that UDT, its `xloc` field will thus be set to that value.
 
 Now that our `pivotPoint` UDT is defined, we can proceed to create objects from it. We create objects using the UDT’s `new()` built-in method. To create a new `foundPoint` object from our `pivotPoint` UDT, we use:
 
 ```foundPoint = pivotPoint.new()
+
 ```
 
 We can also specify field values for the created object using the following:
 
 ```foundPoint = pivotPoint.new(time, high)
+
 ```
 
 Or the equivalent:
 
 ```foundPoint = pivotPoint.new(x = time, y = high)
+
 ```
 
-At this point, the `foundPoint` object’s `x` field will contain the value of the [time](https://www.tradingview.com/pine-script-reference/v6/#var_time) built-in when it is created, `y` will contain the value of [high](https://www.tradingview.com/pine-script-reference/v6/#var_high) and the `xloc` field will contain its default value of [xloc.bar\_time](https://www.tradingview.com/pine-script-reference/v6/#const_xloc%7Bdot%7Dbar_time) because no value was defined for it when creating the object.
+At this point, the `foundPoint` object’s `x` field will contain the value of the [time](https://www.tradingview.com/pine-script-reference/v6/#var_time) built-in when it is created, `y` will contain the value of [high](https://www.tradingview.com/pine-script-reference/v6/#var_high) and the `xloc` field will contain its default value of [xloc.bar_time](https://www.tradingview.com/pine-script-reference/v6/#const_xloc%7Bdot%7Dbar_time) because no value was defined for it when creating the object.
 
 Object placeholders can also be created by declaring [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) object names using the following:
 
 ```pivotPoint foundPoint = na
+
 ```
 
 This example displays a label where high pivots are detected. The pivots are detected `legsInput` bars after they occur, so we must plot the label in the past for it to appear on the pivot:
@@ -88,6 +92,7 @@ if not na(pivotHighPrice)
 Take note of this line from the above example:
 
 ```foundPoint = pivotPoint.new(time[legsInput], pivotHighPrice)
+
 ```
 
 This could also be written using the following:
@@ -153,6 +158,7 @@ The value of an object’s fields can be changed using the [:=](/pine-script-doc
 This line of our previous example:
 
 ```foundPoint = pivotPoint.new(time[legsInput], pivotHighPrice)
+
 ```
 
 Could be written using the following:
@@ -169,6 +175,7 @@ Pine Script _collections_ ([arrays](/pine-script-docs/language/arrays/), [matric
 The following line of code declares a variable that holds the ID of an empty [array](https://www.tradingview.com/pine-script-reference/v6/#type_array) that can store references to objects of a `pivotPoint` user-defined type:
 
 ```pivotHighArray = array.new<pivotPoint>()
+
 ```
 
 To explicitly declare the type of a variable as an [array](https://www.tradingview.com/pine-script-reference/v6/#type_array), [matrix](https://www.tradingview.com/pine-script-reference/v6/#type_matrix), or [map](https://www.tradingview.com/pine-script-reference/v6/#type_map) of a [user-defined type](/pine-script-docs/language/type-system/#user-defined-types), prefix the variable declaration with collection’s _type keyword_ followed by its _type template_. For example:
@@ -261,7 +268,7 @@ plot(pivot1.x)
 plot(pivot2.x)
 ```
 
-It’s important to note that the built-in `copy()` method produces a _shallow copy_ of an object. If an object contains fields that reference objects of user-defined types or built-in _special types_ ([array](https://www.tradingview.com/pine-script-reference/v6/#type_array), [matrix](https://www.tradingview.com/pine-script-reference/v6/#type_matrix), [map](https://www.tradingview.com/pine-script-reference/v6/#type_map), [line](https://www.tradingview.com/pine-script-reference/v6/#type_line), [linefill](https://www.tradingview.com/pine-script-reference/v6/#type_linefill), [box](https://www.tradingview.com/pine-script-reference/v6/#type_box), [polyline](https://www.tradingview.com/pine-script-reference/v6/#type_polyline), [label](https://www.tradingview.com/pine-script-reference/v6/#type_label), [table](https://www.tradingview.com/pine-script-reference/v6/#type_table), [chart.point](https://www.tradingview.com/pine-script-reference/v6/#type_chart.point), [footprint](https://www.tradingview.com/pine-script-reference/v6/#type_footprint), or [volume\_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row)), those fields in a shallow copy of the object will point to the same instances as the original.
+It’s important to note that the built-in `copy()` method produces a _shallow copy_ of an object. If an object contains fields that reference objects of user-defined types or built-in _special types_ ([array](https://www.tradingview.com/pine-script-reference/v6/#type_array), [matrix](https://www.tradingview.com/pine-script-reference/v6/#type_matrix), [map](https://www.tradingview.com/pine-script-reference/v6/#type_map), [line](https://www.tradingview.com/pine-script-reference/v6/#type_line), [linefill](https://www.tradingview.com/pine-script-reference/v6/#type_linefill), [box](https://www.tradingview.com/pine-script-reference/v6/#type_box), [polyline](https://www.tradingview.com/pine-script-reference/v6/#type_polyline), [label](https://www.tradingview.com/pine-script-reference/v6/#type_label), [table](https://www.tradingview.com/pine-script-reference/v6/#type_table), [chart.point](https://www.tradingview.com/pine-script-reference/v6/#type_chart.point), [footprint](https://www.tradingview.com/pine-script-reference/v6/#type_footprint), or [volume_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row)), those fields in a shallow copy of the object will point to the same instances as the original.
 
 In the following example, we have defined an `InfoLabel` type with a label as one of its fields. The script instantiates a `shallow` copy of the `parent` object, then calls a user-defined `set()` [method](/pine-script-docs/language/methods/) to update the `info` and `lbl` fields of each object. Since the `lbl` field of both objects points to the same label instance, changes to this field in either object affect the other:
 

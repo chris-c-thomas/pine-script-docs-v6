@@ -110,7 +110,7 @@ Labels exist specifically to display text — and so the label adjusts to the si
 
 The main use of boxes is to display the drawing itself. A box attaches to specific points on the chart, and its text might or might not fit into it. To ensure that the text displays in the best possible way, boxes provide some additional features that can not be used in labels: text wrapping and text alignment.
 
-Text contained in the box can automatically wrap if it reaches the border of the box, if the `text_wrap` parameter is set to [text.wrap\_auto](https://www.tradingview.com/pine-script-reference/v6/#const_text.wrap_auto). Additionally, scripts can align the text inside the box along the vertical and horizontal axes. Using the `text_halign` and `text_valign` parameters of [box.new()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.new), text can display at one of the nine possible positions inside of the box.
+Text contained in the box can automatically wrap if it reaches the border of the box, if the `text_wrap` parameter is set to [text.wrap_auto](https://www.tradingview.com/pine-script-reference/v6/#const_text.wrap_auto). Additionally, scripts can align the text inside the box along the vertical and horizontal axes. Using the `text_halign` and `text_valign` parameters of [box.new()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.new), text can display at one of the nine possible positions inside of the box.
 
 In the example below, we draw a box that spans the last 50 historical bars on the chart, and a label. We add long text to both. With `text_wrap = text.wrap_auto`, the text inside the box automatically wraps to fit the box itself, while the text inside of the label stays unchanged:
 

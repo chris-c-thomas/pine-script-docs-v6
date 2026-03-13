@@ -20,9 +20,9 @@ plot(t)
 
 ## How can I convert a time to a date-time string?
 
-The built-in function [str.format\_time()](https://www.tradingview.com/pine-script-reference/v6/#fun_str.format_time) translates a UNIX timestamp into a string representation of date and time. In the following example script, we provide four distinct methods to obtain the date-time string, two of which offset the date and time into the future. To improve readability, we use a custom function, `timeToString()`, which calls [str.format\_time()](https://www.tradingview.com/pine-script-reference/v6/#fun_str.format_time) and applies a consistent format, instead of specifying the format for every function call.
+The built-in function [str.format_time()](https://www.tradingview.com/pine-script-reference/v6/#fun_str.format_time) translates a UNIX timestamp into a string representation of date and time. In the following example script, we provide four distinct methods to obtain the date-time string, two of which offset the date and time into the future. To improve readability, we use a custom function, `timeToString()`, which calls [str.format_time()](https://www.tradingview.com/pine-script-reference/v6/#fun_str.format_time) and applies a consistent format, instead of specifying the format for every function call.
 
-The format `"YYYY.MM.dd @ HH:mm:ss"` is similar to the ISO 8601 date and time representation, but with periods to separate parts of the date, and an `@` symbol between the date and time. For more formatting customization options, consult the [str.format\_time()](https://www.tradingview.com/pine-script-reference/v6/#fun_str.format_time) documentation.
+The format `"YYYY.MM.dd @ HH:mm:ss"` is similar to the ISO 8601 date and time representation, but with periods to separate parts of the date, and an `@` symbol between the date and time. For more formatting customization options, consult the [str.format_time()](https://www.tradingview.com/pine-script-reference/v6/#fun_str.format_time) documentation.
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Times-dates-sessions-How-can-i-convert-a-time-to-a-date-time-string.D2uzseAs_Z2h7U0u.webp)
 
@@ -94,14 +94,14 @@ plot(daysPerMonth())
 
 ## How can I detect the chart’s last day?
 
-Scripts can detect the last day on a chart in different ways. However, because the [last\_bar\_time](https://www.tradingview.com/pine-script-reference/v6/#var_last_bar_time) and [timenow](https://www.tradingview.com/pine-script-reference/v6/#var_timenow) variables constantly update to mirror the time of the newest bar, each subsequent realtime bar is _also_ interpreted as if it is the chart’s last day.
+Scripts can detect the last day on a chart in different ways. However, because the [last_bar_time](https://www.tradingview.com/pine-script-reference/v6/#var_last_bar_time) and [timenow](https://www.tradingview.com/pine-script-reference/v6/#var_timenow) variables constantly update to mirror the time of the newest bar, each subsequent realtime bar is _also_ interpreted as if it is the chart’s last day.
 
 ### Using ​`timeframe.change`​
 
 This example script checks for all of these conditions:
 
 - The daily timeframe begins a new day.
-- The difference between the time of the last chart bar (retrieved using [last\_bar\_time](https://www.tradingview.com/pine-script-reference/v6/#var_last_bar_time)) and the current bar’s time (from [time](https://www.tradingview.com/pine-script-reference/v6/#var_time)) is less than the time in one day.
+- The difference between the time of the last chart bar (retrieved using [last_bar_time](https://www.tradingview.com/pine-script-reference/v6/#var_last_bar_time)) and the current bar’s time (from [time](https://www.tradingview.com/pine-script-reference/v6/#var_time)) is less than the time in one day.
 
 The script colors the background red on the last day.
 
@@ -154,7 +154,7 @@ label.new(bar_index, high, labelStr)
 
 There is a way to avoid this issue. Each date-related variable like [dayofmonth](https://www.tradingview.com/pine-script-reference/v6/#var_dayofmonth) has a corresponding function with the same name, e.g., [dayofmonth()](https://www.tradingview.com/pine-script-reference/v6/#fun_dayofmonth). The function takes two parameters, `time` and `timezone`, which together allow you to specify the exact timestamp to convert to a date.
 
-In addition, the [time\_tradingday](https://www.tradingview.com/pine-script-reference/v6/#var_time_tradingday) variable returns the timestamp of 00:00 UTC of the _trading day_ the bar belongs to, regardless of the bar’s actual opening time. You can pass this timestamp to the [dayofmonth()](https://www.tradingview.com/pine-script-reference/v6/#fun_dayofmonth) function along with the `"UTC"` time zone to extract the date from the trading day of the bar, instead of its opening time. Below, we update our example script to use this method:
+In addition, the [time_tradingday](https://www.tradingview.com/pine-script-reference/v6/#var_time_tradingday) variable returns the timestamp of 00:00 UTC of the _trading day_ the bar belongs to, regardless of the bar’s actual opening time. You can pass this timestamp to the [dayofmonth()](https://www.tradingview.com/pine-script-reference/v6/#fun_dayofmonth) function along with the `"UTC"` time zone to extract the date from the trading day of the bar, instead of its opening time. Below, we update our example script to use this method:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Times-dates-sessions-How-can-i-get-bars-trading-date-on-overnight-symbols-2.CbFg8vvY_Z1k78tT.webp)
 
@@ -169,7 +169,7 @@ label.new(bar_index, high, labelStr)
 
 Note that:
 
-- Here, we add `"UTC"` as the time zone for the [dayofmonth()](https://www.tradingview.com/pine-script-reference/v6/#fun_dayofmonth) calculation, because [time\_tradingday](https://www.tradingview.com/pine-script-reference/v6/#var_time_tradingday) always returns the trading day as 00:00 in the UTC time zone. The variable returns 00:00 because its only purpose is to specify a year, month, and day, and its hour and minute components carry no specific meaning.
+- Here, we add `"UTC"` as the time zone for the [dayofmonth()](https://www.tradingview.com/pine-script-reference/v6/#fun_dayofmonth) calculation, because [time_tradingday](https://www.tradingview.com/pine-script-reference/v6/#var_time_tradingday) always returns the trading day as 00:00 in the UTC time zone. The variable returns 00:00 because its only purpose is to specify a year, month, and day, and its hour and minute components carry no specific meaning.
 
 ## How can I plot a value starting n months or years back?
 
@@ -358,7 +358,7 @@ if not na(sessionStart) and not na(sessionEnd)  // If we found the s
 Note that:
 
 - The lowest timeframe to use, assuming that the session allows 24-hour trading 7 days a week, to search forward one whole day, is 5 minutes. Therefore, if the chart timeframe is lower than “5m”, the script throws a runtime error.
-- The script uses [time()](https://www.tradingview.com/pine-script-reference/v6/#fun_time-1) and [time\_close()](https://www.tradingview.com/pine-script-reference/v6/#fun_time_close) functions in loops, with positive and negative values for the `bars_back` parameter to search forwards and backwards in time.
+- The script uses [time()](https://www.tradingview.com/pine-script-reference/v6/#fun_time-1) and [time_close()](https://www.tradingview.com/pine-script-reference/v6/#fun_time_close) functions in loops, with positive and negative values for the `bars_back` parameter to search forwards and backwards in time.
 
 ## How can I track highs and lows for periods within a bar?
 
@@ -691,7 +691,7 @@ bgcolor(isAtOccurrence ? color.purple : na, title = "Time condition hig
 
 Users can display a countdown on the price scale of the chart that shows the time remaining in each bar, by enabling the “Countdown to bar close” option in the “Scales and lines” section of the chart “Settings” menu. Our example script below displays a similar countdown timer. This script functions on intraday and “1D” timeframes only. For timeframes longer than “1D”, more complex logic is necessary. The script throws a runtime error if the chart timefrmae is greater than one day.
 
-We subtract [timenow](https://www.tradingview.com/pine-script-reference/v6/#var_timenow) from [time\_close](https://www.tradingview.com/pine-script-reference/v6/#var_time_close) to calculate the time remaining in the current bar, and then display the result in a table.
+We subtract [timenow](https://www.tradingview.com/pine-script-reference/v6/#var_timenow) from [time_close](https://www.tradingview.com/pine-script-reference/v6/#var_time_close) to calculate the time remaining in the current bar, and then display the result in a table.
 
 Because Pine scripts run only when there is a chart update, countdown timers do not usually update every second. The script refreshes more often on symbols with higher liquidity.
 
@@ -734,7 +734,7 @@ else if barstate.islast
 
 **Note that:**
 
-- We use the [str.format\_time()](https://www.tradingview.com/pine-script-reference/v6/#fun_str.format_time) function to present the timestamp in a format similar to the price scale countdown timer. The function uses a conditional format so that we display hours only if the time remaining is one hour or greater.
+- We use the [str.format_time()](https://www.tradingview.com/pine-script-reference/v6/#fun_str.format_time) function to present the timestamp in a format similar to the price scale countdown timer. The function uses a conditional format so that we display hours only if the time remaining is one hour or greater.
 - The built-in bar countdown uses a background the same color as the current candle. Pine scripts do not have access to the chart candle color settings, but if the user sets the correct colors in the script settings, our countdown displays in the same way.
 - We use a custom function to analyze the luminance of the background colors and decide whether black or white text has the better contrast.
 
@@ -756,7 +756,7 @@ bgcolor(isNewWeek ? color.new(chart.fg_color, 90) : na)
 bgcolor(isNewMonth ? color.new(color.lime, 80) : na)
 ```
 
-The following amended script version uses the functions [weekofyear()](https://www.tradingview.com/pine-script-reference/v6/#fun_weekofyear) and [month()](https://www.tradingview.com/pine-script-reference/v6/#fun_month) instead of the equivalent variables, and evaluates the [time\_tradingday](https://www.tradingview.com/pine-script-reference/v6/#var_time_tradingday) variable, which, unlike [time](https://www.tradingview.com/pine-script-reference/v6/#var_time), returns the beginning time _of the trading day_ that the bar belongs to. Using this variable, and fixing the time zone to “UTC”, avoids problems with sessions that span days.
+The following amended script version uses the functions [weekofyear()](https://www.tradingview.com/pine-script-reference/v6/#fun_weekofyear) and [month()](https://www.tradingview.com/pine-script-reference/v6/#fun_month) instead of the equivalent variables, and evaluates the [time_tradingday](https://www.tradingview.com/pine-script-reference/v6/#var_time_tradingday) variable, which, unlike [time](https://www.tradingview.com/pine-script-reference/v6/#var_time), returns the beginning time _of the trading day_ that the bar belongs to. Using this variable, and fixing the time zone to “UTC”, avoids problems with sessions that span days.
 
 ```// @version=6
 indicator("Week of month demo 2")
@@ -772,7 +772,7 @@ bgcolor(isNewWeek ? color.new(chart.fg_color, 90) : na)
 bgcolor(isNewMonth ? color.new(color.lime, 80) : na)
 ```
 
-While the preceding examples are useful for understanding the difference between [time](https://www.tradingview.com/pine-script-reference/v6/#var_time) and [time\_tradingday](https://www.tradingview.com/pine-script-reference/v6/#var_time_tradingday), the simplest solution is to use the [timeframe.change()](https://www.tradingview.com/pine-script-reference/v6/#fun_timeframe.change) function, which detects changes in a given timeframe. We can rewrite the boolean conditions in our example script as follows:
+While the preceding examples are useful for understanding the difference between [time](https://www.tradingview.com/pine-script-reference/v6/#var_time) and [time_tradingday](https://www.tradingview.com/pine-script-reference/v6/#var_time_tradingday), the simplest solution is to use the [timeframe.change()](https://www.tradingview.com/pine-script-reference/v6/#fun_timeframe.change) function, which detects changes in a given timeframe. We can rewrite the boolean conditions in our example script as follows:
 
 ```bool isNewWeek = timeframe.change("1W")
 bool isNewMonth = timeframe.change("1M")

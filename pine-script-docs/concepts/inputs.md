@@ -53,7 +53,7 @@ Pine Script® features the following input functions:
 - [input.bool()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.bool)
 - [input.color()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.color)
 - [input.string()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.string)
-- [input.text\_area()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.text_area)
+- [input.text_area()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.text_area)
 - [input.timeframe()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.timeframe)
 - [input.symbol()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.symbol)
 - [input.source()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.source)
@@ -89,7 +89,7 @@ The parameters that require “const” arguments _cannot_ use dynamic values or
 
 Let’s examine each parameter:
 
-```defval`
+`defval`
 
 The default value assigned to the input variable, and the initial value that appears in the input widget. It is the first parameter of all `input*()` functions. The required type for a `defval` argument depends on the input function type, e.g., an “int” `defval` argument for [input.int()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.int), a “string” `defval` argument for [input.string()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.string), etc. The [generic input](/pine-script-docs/concepts/inputs/#generic-input) function infers its input type based on the `defval` argument used in the [input()](https://www.tradingview.com/pine-script-reference/v6/#fun_input) call.
 
@@ -115,7 +115,7 @@ Using the same `group` argument in any number of `input*()` calls groups the inp
 
 `display`
 
-Controls whether the input value appears next to the script title in the status line and Data Window. It accepts the following values: [display.all](https://www.tradingview.com/pine-script-reference/v6/#const_display.all), [display.status\_line](https://www.tradingview.com/pine-script-reference/v6/#const_display.status_line), [display.data\_window](https://www.tradingview.com/pine-script-reference/v6/#const_display.data_window), or [display.none](https://www.tradingview.com/pine-script-reference/v6/#const_display.none). The default is [display.all](https://www.tradingview.com/pine-script-reference/v6/#const_display.all) for all input types except “bool” and “color” inputs, which use [display.none](https://www.tradingview.com/pine-script-reference/v6/#const_display.none) by default.
+Controls whether the input value appears next to the script title in the status line and Data Window. It accepts the following values: [display.all](https://www.tradingview.com/pine-script-reference/v6/#const_display.all), [display.status_line](https://www.tradingview.com/pine-script-reference/v6/#const_display.status_line), [display.data_window](https://www.tradingview.com/pine-script-reference/v6/#const_display.data_window), or [display.none](https://www.tradingview.com/pine-script-reference/v6/#const_display.none). The default is [display.all](https://www.tradingview.com/pine-script-reference/v6/#const_display.all) for all input types except “bool” and “color” inputs, which use [display.none](https://www.tradingview.com/pine-script-reference/v6/#const_display.none) by default.
 
 Note that the input value always appears in the “Inputs” tab, regardless of the `display` argument.
 
@@ -190,7 +190,8 @@ input.int(defval, title, options, tooltip, inline, group, confirm, display, acti
 
 This call uses the `options` parameter to propose a pre-defined list of lengths for the MA:
 
-`//@version=6
+```pine
+//@version=6
 indicator("MA", "", true)
 maLengthInput = input.int(10, options = [3, 5, 7, 10, 14, 20, 50, 100, 200])
 ma = ta.sma(close, maLengthInput)
@@ -314,9 +315,9 @@ The [input.string()](https://www.tradingview.com/pine-script-reference/v6/#fun_i
 
 If a call to the [input.string()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.string) function includes an `options` argument, it creates a dropdown menu containing the listed options. Otherwise, the call creates a text field that parses user-input text into a “string” value.
 
-Like the [input.text\_area()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.text_area) function, the [input.string()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.string) text can contain up to 40,960 characters, including horizontal whitespaces. However, because the input’s field in the “Settings/Inputs” tab is _narrow_, [input.string()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.string) is best suited for defining small strings or for providing a quick set of input options for customizing calculations.
+Like the [input.text_area()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.text_area) function, the [input.string()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.string) text can contain up to 40,960 characters, including horizontal whitespaces. However, because the input’s field in the “Settings/Inputs” tab is _narrow_, [input.string()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.string) is best suited for defining small strings or for providing a quick set of input options for customizing calculations.
 
-The simple script below contains two [input.string()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.string) calls. The first call creates a text field for defining the `timezone` argument of two [str.format\_time()](https://www.tradingview.com/pine-script-reference/v6/#fun_str.format_time) calls. It allows users to supply any text representing a [time zone](/pine-script-docs/concepts/time/#time-zones) in _UTC-offset_ or _IANA_ formats. The second call creates a _dropdown_ input with three preset options that determine the text shown in the drawn [labels](/pine-script-docs/visuals/text-and-shapes/#labels) (`"Open time"`, `"Close time"`, or `"Both"`):
+The simple script below contains two [input.string()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.string) calls. The first call creates a text field for defining the `timezone` argument of two [str.format_time()](https://www.tradingview.com/pine-script-reference/v6/#fun_str.format_time) calls. It allows users to supply any text representing a [time zone](/pine-script-docs/concepts/time/#time-zones) in _UTC-offset_ or _IANA_ formats. The second call creates a _dropdown_ input with three preset options that determine the text shown in the drawn [labels](/pine-script-docs/visuals/text-and-shapes/#labels) (`"Open time"`, `"Close time"`, or `"Both"`):
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Inputs-Input-types-String-input-1.Y-zx-dc8_25p5Lm.webp)
 
@@ -350,7 +351,7 @@ Note that:
 
 ### Text area input
 
-The [input.text\_area()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.text_area) function creates a text field for parsing user-specified text into a “string” value. The text field generated by this function is much larger than the field from [input.string()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.string). Additionally, it supports _multiline_ text.
+The [input.text_area()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.text_area) function creates a text field for parsing user-specified text into a “string” value. The text field generated by this function is much larger than the field from [input.string()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.string). Additionally, it supports _multiline_ text.
 
 Programmers often use text area inputs for purposes such as alert customization and multi-parameter lists.
 
@@ -380,8 +381,8 @@ if barstate.islast
 Note that:
 
 - The script can use [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) within a loop because [dynamic requests](/pine-script-docs/concepts/other-timeframes-and-data/#dynamic-requests) are enabled by default.
-- As with [input.string()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.string), the [input.text\_area()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.text_area) function’s text field treats backslashes (`\`) as literal characters. It cannot process [escape sequences](/pine-script-docs/concepts/strings/#escape-sequences). However, the field automatically parses any line terminators and tab spaces in the specified text.
-- Because text area inputs allow freeform, multiline text, it is often helpful to validate the [input.text\_area()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.text_area) function’s results to prevent erroneous user inputs. Refer to the [Matching patterns](/pine-script-docs/concepts/strings/#matching-patterns) section of the [Strings](/pine-script-docs/concepts/strings) page for an example that confirms an input symbol list using [regular expressions](https://en.wikipedia.org/wiki/Regular_expression).
+- As with [input.string()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.string), the [input.text_area()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.text_area) function’s text field treats backslashes (`\`) as literal characters. It cannot process [escape sequences](/pine-script-docs/concepts/strings/#escape-sequences). However, the field automatically parses any line terminators and tab spaces in the specified text.
+- Because text area inputs allow freeform, multiline text, it is often helpful to validate the [input.text_area()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.text_area) function’s results to prevent erroneous user inputs. Refer to the [Matching patterns](/pine-script-docs/concepts/strings/#matching-patterns) section of the [Strings](/pine-script-docs/concepts/strings) page for an example that confirms an input symbol list using [regular expressions](https://en.wikipedia.org/wiki/Regular_expression).
 
 ### Timeframe input
 
@@ -417,8 +418,8 @@ plot(maHTF, "MA", color.aqua)
 Note that:
 
 - By default, the [input.timeframe()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.timeframe) call’s dropdown contains options for the chart’s timeframe and all timeframes listed in the chart’s “Time interval” menu. To restrict the available options to specific preset timeframes, pass a [tuple](/pine-script-docs/language/type-system/#tuples) of timeframe strings to the function’s `options` parameter.
-- This script calls [runtime.error()](https://www.tradingview.com/pine-script-reference/v6/#fun_runtime.error) to raise a custom runtime error if the [timeframe.in\_seconds()](https://www.tradingview.com/pine-script-reference/v6/#fun_timeframe.in_seconds) value for the `tfInput` timeframe is _less_ than the number of seconds in the main timeframe, preventing it from requesting lower-timeframe data. See [this section](/pine-script-docs/concepts/other-timeframes-and-data/#higher-timeframes) of the [Other timeframes and data](/pine-script-docs/concepts/other-timeframes-and-data/) page to learn more.
-- The [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) call uses [barmerge.lookahead\_on](https://www.tradingview.com/pine-script-reference/v6/#const_barmerge.lookahead_on) as its `lookahead` argument, and it offsets the `expression` argument by one bar when the `tfInput` represents a _higher timeframe_ to [avoid repainting](/pine-script-docs/concepts/other-timeframes-and-data/#avoiding-repainting).
+- This script calls [runtime.error()](https://www.tradingview.com/pine-script-reference/v6/#fun_runtime.error) to raise a custom runtime error if the [timeframe.in_seconds()](https://www.tradingview.com/pine-script-reference/v6/#fun_timeframe.in_seconds) value for the `tfInput` timeframe is _less_ than the number of seconds in the main timeframe, preventing it from requesting lower-timeframe data. See [this section](/pine-script-docs/concepts/other-timeframes-and-data/#higher-timeframes) of the [Other timeframes and data](/pine-script-docs/concepts/other-timeframes-and-data/) page to learn more.
+- The [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) call uses [barmerge.lookahead_on](https://www.tradingview.com/pine-script-reference/v6/#const_barmerge.lookahead_on) as its `lookahead` argument, and it offsets the `expression` argument by one bar when the `tfInput` represents a _higher timeframe_ to [avoid repainting](/pine-script-docs/concepts/other-timeframes-and-data/#avoiding-repainting).
 
 ### Symbol input
 
@@ -645,6 +646,7 @@ Note that:
 By default, an enum input displays the titles of all an enum’s members within its dropdown. If we supply an `options` argument to the [input.enum()](https://www.tradingview.com/pine-script-reference/v6/#fun_input.enum) call, it will only allow users to select the members included in that list, e.g.:
 
 ```SignalType sigInput = input.enum(SignalType.long, "Signal type", options = [SignalType.long, SignalType.short])
+
 ```
 
 The above `options` argument specifies that users can only view and select the titles of the `long` and `short` fields from the `SignalType` enum. No other options are allowed:

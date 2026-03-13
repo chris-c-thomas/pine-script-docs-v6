@@ -63,6 +63,7 @@ This caused a single built-in function to behave in two very different ways, and
 The [ta.rsi()](https://www.tradingview.com/pine-script-reference/v5/#fun_ta%7Bdot%7Drsi) function in v5 only accepts a “simple int” argument for its `length` parameter. If your v4 code used the now deprecated overload of the function with a `float` second argument, you can replace the whole `rsi()` call with the following formula, which is equivalent:
 
 ```100.0 - (100.0 / (1.0 + arg1 / arg2))
+
 ```
 
 Note that when your v4 code used a “series int” value as the second argument to [rsi()](https://www.tradingview.com/pine-script-reference/v4/#fun_rsi), it was automatically cast to “series float” and the second overload of the function was used. While this was syntactically correct, it most probably did **not** yield the result you expected. In v5, [ta.rsi()](https://www.tradingview.com/pine-script-reference/v5/#fun_ta%7Bdot%7Drsi) requires a “simple int” for the argument to `length`, which precludes dynamic (or “series”) lengths. The reason for this is that RSI calculations use the [ta.rma()](https://www.tradingview.com/pine-script-reference/v5/#fun_ta%7Bdot%7Drma) moving average, which is similar to [ta.ema()](https://www.tradingview.com/pine-script-reference/v5/#fun_ta%7Bdot%7Dema) in that it relies on a length-dependent recursive process using the values of previous bars. This makes it impossible to achieve correct results with a “series” length that could vary bar to bar.
@@ -97,7 +98,8 @@ h1 = ta.highest(10)
 l1 = ta.lowest(10)
 v1 = close > open ? h1 : l1
 plot(v1)
-```
+
+````
 
 The [offset()](https://www.tradingview.com/pine-script-reference/v4/#fun_offset) function was deprecated because the more readable [\[\]](https://www.tradingview.com/pine-script-reference/v5/#op_%5B%5D) operator is equivalent:
 
@@ -105,7 +107,7 @@ The [offset()](https://www.tradingview.com/pine-script-reference/v4/#fun_offset)
 prevClosev4 = offset(close, 1)
 // Valid in v4 and v5.
 prevClosev5 = close[1]
-```
+````
 
 ## Split of ​`input()`​ into several functions
 
@@ -139,9 +141,10 @@ request.security(syminfo.tickerid, "1D", close, lookahead = barmerge.lookah
 
 // Would compile in v4 because `plot.style_columns` was equal to 5.
 // Won't compile in v5.
-a = 2 * plot.style_columns
+a = 2 \* plot.style_columns
 plot(a)
-```
+
+````
 
 To convert your script from v4 to v5, make sure you use the correct named built-in constants as function arguments.
 
@@ -162,7 +165,7 @@ crossDn = crossunder(low, lower)
 // Both `fill()` and `bgcolor()` have a default `transp` of 90
 fill(p1PlotID, p2PlotID, color = color.green)
 bgcolor(crossUp ? color.green : crossDn ? color.red : na)
-```
+````
 
 In v5 we need to explictly mention the 90 transparency with the color, yielding:
 
@@ -182,7 +185,7 @@ bgcolor(crossUp ? color.new(color.green, TRANSP) : crossDn ? color.new(co
 
 ## Changed the default session days for ​`time()`​ and ​`time_close()`​
 
-The default set of days for `session` strings used in the [time()](https://www.tradingview.com/pine-script-reference/v5/#fun_time) and [time\_close()](https://www.tradingview.com/pine-script-reference/v5/#fun_time_close) functions, and returned by [input.session()](https://www.tradingview.com/pine-script-reference/v5/#fun_input%7Bdot%7Dsession), has changed from `"23456"` (Monday to Friday) to `"1234567"` (Sunday to Saturday):
+The default set of days for `session` strings used in the [time()](https://www.tradingview.com/pine-script-reference/v5/#fun_time) and [time_close()](https://www.tradingview.com/pine-script-reference/v5/#fun_time_close) functions, and returned by [input.session()](https://www.tradingview.com/pine-script-reference/v5/#fun_input%7Bdot%7Dsession), has changed from `"23456"` (Monday to Friday) to `"1234567"` (Sunday to Saturday):
 
 ```// On symbols that are traded during weekends, this will behave differently in v4 and v5.
 t0 = time("1D", "1000-1200")
@@ -234,7 +237,7 @@ hline(100, linestyle = hlineStyle)
 
 See the [Some function parameters now require built-in arguments](/pine-script-docs/migration-guides/to-pine-version-5/#some-function-parameters-now-require-built-in-arguments) section of this guide for more information.
 
-### Undeclared identifier ‘input.%input\_name%’
+### Undeclared identifier ‘input.%input_name%’
 
 To fix this issue, remove the `input.*` constants from your code:
 

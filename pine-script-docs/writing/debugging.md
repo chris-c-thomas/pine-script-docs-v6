@@ -331,7 +331,7 @@ The more advanced search query below specifies that the logs must contain prefix
 For more information about regular expressions, consult the [Regex syntax reference](/pine-script-docs/concepts/strings/#regex-syntax-reference) in this manual’s [Strings](/pine-script-docs/concepts/strings/) page. Most of the described syntax works the same within the Pine Logs search filter, with a few notable differences:
 
 - The strings used as `regex` arguments in [str.match()](https://www.tradingview.com/pine-script-reference/v6/#fun_str.match) calls require _two_ consecutive backslashes (`\\`) for specifying escape sequences in the pattern (e.g., `"\\w"` means the regex matches a character from the `\w` class). In contrast, the Pine Logs search filter requires only a _single_ backslash for escape sequences. Double backslashes in the search bar match the literal `\` character.
-- The regex search query can use the syntax `\xhh` or `\uhhhh` to reference Unicode code points in the [Basic Multilingual Plane](https://en.wikipedia.org/wiki/Plane_\(Unicode\)#Basic_Multilingual_Plane), where each `h` is a _hexadecimal_ digit (e.g., `\x67` and `\u0067` refer to U+0067, the `a` character). However, the full-range syntax (`\x{...}`) is not supported.
+- The regex search query can use the syntax `\xhh` or `\uhhhh` to reference Unicode code points in the [Basic Multilingual Plane](<https://en.wikipedia.org/wiki/Plane_(Unicode)#Basic_Multilingual_Plane>), where each `h` is a _hexadecimal_ digit (e.g., `\x67` and `\u0067` refer to U+0067, the `a` character). However, the full-range syntax (`\x{...}`) is not supported.
 - The search query _cannot_ use Unicode property references, such as `\p{Lu}`, `\p{IsGreek}`, etc.
 - The search query can use only the `^` and `$` _boundary assertions_ to match a logged message’s start and end boundaries. The `\A`, `\Z`, and `\z` assertions are _not_ supported.
 - The search query cannot use _pattern modifiers_ globally (e.g., `(?m)^abc`). However, it can use some modifiers locally inside _non-capturing groups_ (e.g., `(?m:^abc)`).
@@ -534,7 +534,7 @@ if time >= startTime and time <= endTime
     <create_drawing_id>
 ```
 
-Below, we added a condition to the script that draws a label only when the bar’s [time](https://www.tradingview.com/pine-script-reference/v6/#var_time) is between the [chart.left\_visible\_bar\_time](https://www.tradingview.com/pine-script-reference/v6/#var_chart.left_visible_bar_time) and [chart.right\_visible\_bar\_time](https://www.tradingview.com/pine-script-reference/v6/#var_chart.right_visible_bar_time) values. This logic restricts the drawings to _visible_ chart bars, allowing us to scroll through the chart and inspect labels on any bar:
+Below, we added a condition to the script that draws a label only when the bar’s [time](https://www.tradingview.com/pine-script-reference/v6/#var_time) is between the [chart.left_visible_bar_time](https://www.tradingview.com/pine-script-reference/v6/#var_chart.left_visible_bar_time) and [chart.right_visible_bar_time](https://www.tradingview.com/pine-script-reference/v6/#var_chart.right_visible_bar_time) values. This logic restricts the drawings to _visible_ chart bars, allowing us to scroll through the chart and inspect labels on any bar:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Debugging-Pine-drawings-Labels-Drawing-on-successive-bars-3.DxYYTLXs_Z1pHas.webp)
 
@@ -581,7 +581,7 @@ if time >= chart.left_visible_bar_time and time <= chart.right_visible_ba
 
 Note that:
 
-- The script _restarts_ each time the [UNIX timestamps](/pine-script-docs/concepts/time/#unix-timestamps) of the [chart.left\_visible\_bar\_time](https://www.tradingview.com/pine-script-reference/v6/#var_chart.left_visible_bar_time) or [chart.right\_visible\_bar\_time](https://www.tradingview.com/pine-script-reference/v6/#var_chart.right_visible_bar_time) variables change after the user scrolls or zooms on the chart.
+- The script _restarts_ each time the [UNIX timestamps](/pine-script-docs/concepts/time/#unix-timestamps) of the [chart.left_visible_bar_time](https://www.tradingview.com/pine-script-reference/v6/#var_chart.left_visible_bar_time) or [chart.right_visible_bar_time](https://www.tradingview.com/pine-script-reference/v6/#var_chart.right_visible_bar_time) variables change after the user scrolls or zooms on the chart.
 
 #### Drawing at the end of the chart
 
@@ -637,7 +637,7 @@ if barstate.islast
 
 Note that:
 
-- The `printLabel()` function draws _one_ label per function call instance. The label’s `x` property is the maximum of the [last\_bar\_time](https://www.tradingview.com/pine-script-reference/v6/#var_last_bar_time) and [chart.right\_visible\_bar\_time](https://www.tradingview.com/pine-script-reference/v6/#var_chart.right_visible_bar_time) values, ensuring it appears above the last available bar.
+- The `printLabel()` function draws _one_ label per function call instance. The label’s `x` property is the maximum of the [last_bar_time](https://www.tradingview.com/pine-script-reference/v6/#var_last_bar_time) and [chart.right_visible_bar_time](https://www.tradingview.com/pine-script-reference/v6/#var_chart.right_visible_bar_time) values, ensuring it appears above the last available bar.
 - On each execution of a `printLabel()` instance, the label’s `text` property updates to reflect the latest `info` value.
 - The [label.new()](https://www.tradingview.com/pine-script-reference/v6/#fun_label.new) call in the `printLabel()` function includes `force_overlay = true`, meaning the drawing always appears in the main chart pane.
 - This script uses _four_ distinct `printLabel()` calls. The first three append repeated newline characters (`\n`) in the `info` argument to prevent the label text from overlapping.
@@ -1518,7 +1518,7 @@ plot(sample, "Binomial sample", color.teal, 1, plot.style_columns)
 
 Note that:
 
-- The script includes [log.warning()](https://www.tradingview.com/pine-script-reference/v6/#fun_log.warning) calls before and after the loop to mark its start and end in the Pine Logs pane. The message marking the start of the loop also displays the current [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) value.
+- The script includes [log.warning()](https://www.tradingview.com/pine-script-reference/v6/#fun_log.warning) calls before and after the loop to mark its start and end in the Pine Logs pane. The message marking the start of the loop also displays the current [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) value.
 - The Pine Logs pane shows only the most recent 10,000 logs created on historical bars. Because this script creates multiple logs per bar, the earliest message in the pane is from less than 10,000 bars back. Programmers can use conditional logic that limits `log.*()` calls in order to inspect a loop’s execution flow on earlier bars with this technique. See the [Custom code filters](/pine-script-docs/writing/debugging/#custom-code-filters) section to learn more.
 
 ### Debugging collections
@@ -1534,7 +1534,7 @@ Programmers can inspect a collection’s data using various techniques, dependin
 
 The simplest way to inspect the data of [arrays](/pine-script-docs/language/arrays/) and [matrices](/pine-script-docs/language/matrices/) of “int”, “float”, “bool”, and “string” types is to generate “string” representations with the [str.tostring()](https://www.tradingview.com/pine-script-reference/v6/#fun_str.tostring) function, then display the results using [Pine Logs](/pine-script-docs/writing/debugging/#pine-logs) or other “string” outputs.
 
-The following script calls [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) to retrieve a “float” [array](https://www.tradingview.com/pine-script-reference/v6/#type_array) containing [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) prices for each lower-timeframe bar within the current chart bar, which it uses to calculate an average intrabar price. Then, it calculates the ratio of the difference between the bar’s price and the intrabar average to the bar’s total range. The script plots the resulting ratio and its EMA in a separate pane:
+The following script calls [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) to retrieve a “float” [array](https://www.tradingview.com/pine-script-reference/v6/#type_array) containing [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) prices for each lower-timeframe bar within the current chart bar, which it uses to calculate an average intrabar price. Then, it calculates the ratio of the difference between the bar’s price and the intrabar average to the bar’s total range. The script plots the resulting ratio and its EMA in a separate pane:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Debugging-Tips-and-techniques-Debugging-collections-Displaying-collection-strings-1.C-bZsQtI_p3U9Y.webp)
 
@@ -1655,7 +1655,7 @@ plot(osc, "Oscillator", oscColor, 1, plot.style_area)
 
 When a script creates [labels](/pine-script-docs/visuals/text-and-shapes/#labels), it _automatically_ maintains an [array](https://www.tradingview.com/pine-script-reference/v6/#type_array) containing each active label’s reference. Programmers can access this array using the [label.all](https://www.tradingview.com/pine-script-reference/v6/#var_label.all) variable, and thus inspect each individual label’s properties on any bar.
 
-In the version below, the script executes a [log.info()](https://www.tradingview.com/pine-script-reference/v6/#fun_log.info) call to display the current [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) and the size of the [label.all](https://www.tradingview.com/pine-script-reference/v6/#var_label.all) array for the latest bar. Then, it iterates through the array with a [for…in](https://www.tradingview.com/pine-script-reference/v6/#kw_for...in) loop. On each iteration, the script calls [log.info()](https://www.tradingview.com/pine-script-reference/v6/#fun_log.info) to log formatted text containing the array index and the corresponding label’s `x`, `y`, and `text` properties. Additionally, the script plots the oldest and newest active labels’ y-coordinates on each bar:
+In the version below, the script executes a [log.info()](https://www.tradingview.com/pine-script-reference/v6/#fun_log.info) call to display the current [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) and the size of the [label.all](https://www.tradingview.com/pine-script-reference/v6/#var_label.all) array for the latest bar. Then, it iterates through the array with a [for…in](https://www.tradingview.com/pine-script-reference/v6/#kw_for...in) loop. On each iteration, the script calls [log.info()](https://www.tradingview.com/pine-script-reference/v6/#fun_log.info) to log formatted text containing the array index and the corresponding label’s `x`, `y`, and `text` properties. Additionally, the script plots the oldest and newest active labels’ y-coordinates on each bar:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Debugging-Tips-and-techniques-Debugging-collections-Inspecting-individual-elements-2.CxLrVvEC_SozMo.webp)
 
@@ -1720,7 +1720,7 @@ Note that:
 
 Because UDT objects can organize values and references to an arbitrary number of various _different_ types, Pine does not have a built-in method to convert UDT objects to strings. Instead, to debug these structures, programmers must retrieve data from each _field_ that requires inspection.
 
-The following example defines a custom `Data` type with three fields. The first two fields reference [arrays](/pine-script-docs/language/arrays/) that hold successive price and time values. The third field specifies the number of bars between each new data sample. The script creates a new object of this type with a randomized `length` field on the first bar, then updates its arrays on bars whose [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) values are divisible by that field.
+The following example defines a custom `Data` type with three fields. The first two fields reference [arrays](/pine-script-docs/language/arrays/) that hold successive price and time values. The third field specifies the number of bars between each new data sample. The script creates a new object of this type with a randomized `length` field on the first bar, then updates its arrays on bars whose [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) values are divisible by that field.
 
 The script uses [array.covariance()](https://www.tradingview.com/pine-script-reference/v6/#fun_array.covariance) and [array.variance()](https://www.tradingview.com/pine-script-reference/v6/#fun_array.variance) on the object’s `prices` and `times` arrays to calculate a time-based slope of the collected data, and then plots the result on the chart:
 

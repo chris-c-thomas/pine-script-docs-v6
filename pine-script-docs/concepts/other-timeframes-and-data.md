@@ -11,8 +11,8 @@ section: "concepts"
 Pine Script® allows users to request data from sources and contexts other than those their charts use. The functions we present on this page can fetch data from a variety of alternative sources:
 
 - [request.security()](/pine-script-docs/concepts/other-timeframes-and-data/#requestsecurity) retrieves data from another symbol, timeframe, or other context.
-- [request.security\_lower\_tf()](/pine-script-docs/concepts/other-timeframes-and-data/#requestsecurity_lower_tf) retrieves _intrabar_ data, i.e., data from a timeframe lower than the chart timeframe.
-- [request.currency\_rate()](/pine-script-docs/concepts/other-timeframes-and-data/#requestcurrency_rate) requests a _daily rate_ to convert a value expressed in one currency to another.
+- [request.security_lower_tf()](/pine-script-docs/concepts/other-timeframes-and-data/#requestsecurity_lower_tf) retrieves _intrabar_ data, i.e., data from a timeframe lower than the chart timeframe.
+- [request.currency_rate()](/pine-script-docs/concepts/other-timeframes-and-data/#requestcurrency_rate) requests a _daily rate_ to convert a value expressed in one currency to another.
 - [request.dividends(), request.splits(), and request.earnings()](/pine-script-docs/concepts/other-timeframes-and-data/#requestdividends-requestsplits-and-requestearnings) respectively retrieve information about an issuing company’s dividends, splits, and earnings.
 - [request.financial()](/pine-script-docs/concepts/other-timeframes-and-data/#requestfinancial) retrieves financial data from [FactSet](https://www.factset.com/).
 - [request.economic()](/pine-script-docs/concepts/other-timeframes-and-data/#requesteconomic) retrieves economic and industry data.
@@ -61,7 +61,7 @@ Many functions in the `request.*()` namespace share some common properties and p
 
 All `request.*()` functions have similar internal behavior, even though they do not all share the same required parameters. Every unique `request.*()` call in a script requests a dataset from a defined _context_ (i.e., ticker ID and timeframe) and evaluates an _expression_ across the retrieved data.
 
-The [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) and [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) functions allow programmers to specify the context of a request and the expression directly via the `symbol`, `timeframe`, and `expression` parameters, making them suitable for a wide range of data requests.
+The [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) and [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) functions allow programmers to specify the context of a request and the expression directly via the `symbol`, `timeframe`, and `expression` parameters, making them suitable for a wide range of data requests.
 
 For example, the [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) call in this simple script requests daily “AMEX:SPY” data, and it calculates the slope of a 20-bar linear regression line using the retrieved [hl2](https://www.tradingview.com/pine-script-reference/v6/#var_hl2) prices. The first two arguments specify the context of the request, and the third specifies the expression to evaluate across the requested data:
 
@@ -110,7 +110,7 @@ The `timeframe_gaps` parameter of the [indicator()](https://www.tradingview.com/
 
 Suppose we have a script that requests hourly data for the chart’s symbol using [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) executing on a 1-minute chart. The function call returns new values only on the 1-minute bars that cover the opening or closing times of the symbol’s hourly bars. On other chart bars, we can decide whether the function returns [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) values or the last available values via the `gaps` parameter.
 
-If the `gaps` parameter uses [barmerge.gaps\_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.gaps_on), the function returns [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) results on all chart bars where new data is not yet confirmed from the requested context. Otherwise, if the parameter uses [barmerge.gaps\_off](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.gaps_off), the function fills the gaps in the requested data with the last confirmed values on historical bars and the most recent developing values on realtime bars.
+If the `gaps` parameter uses [barmerge.gaps_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.gaps_on), the function returns [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) results on all chart bars where new data is not yet confirmed from the requested context. Otherwise, if the parameter uses [barmerge.gaps_off](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.gaps_off), the function fills the gaps in the requested data with the last confirmed values on historical bars and the most recent developing values on realtime bars.
 
 The script below demonstrates the difference in behavior by plotting the results from two [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) calls that fetch the [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) price of the current symbol from the hourly timeframe on a 1-minute chart. The first call uses `gaps = barmerge.gaps_off` and the second uses `gaps = barmerge.gaps_on`:
 
@@ -135,9 +135,9 @@ bgcolor(barstate.isrealtime ? color.new(color.aqua, 70) : na, title = "R
 
 Note that:
 
-- [barmerge.gaps\_off](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.gaps_off) is the default value for the `gaps` parameter in all applicable `request.*()` functions.
-- The script plots the requested series as lines with breaks ([plot.style\_linebr](https://www.tradingview.com/pine-script-reference/v6/#var_plot.style_linebr)), which do not bridge over [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) values as the default style ([plot.style\_line](https://www.tradingview.com/pine-script-reference/v6/#var_plot.style_line)) does.
-- When using [barmerge.gaps\_off](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.gaps_off), the [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) function returns the last confirmed [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) from the hourly timeframe on all historical bars. When running on _realtime bars_ (the bars with the [color.aqua](https://www.tradingview.com/pine-script-reference/v6/#var_color.aqua) background in this example), it returns the symbol’s current [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) value, regardless of confirmation. For more information, see the [Historical and realtime behavior](/pine-script-docs/concepts/other-timeframes-and-data/#historical-and-realtime-behavior) section of this page.
+- [barmerge.gaps_off](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.gaps_off) is the default value for the `gaps` parameter in all applicable `request.*()` functions.
+- The script plots the requested series as lines with breaks ([plot.style_linebr](https://www.tradingview.com/pine-script-reference/v6/#var_plot.style_linebr)), which do not bridge over [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) values as the default style ([plot.style_line](https://www.tradingview.com/pine-script-reference/v6/#var_plot.style_line)) does.
+- When using [barmerge.gaps_off](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.gaps_off), the [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) function returns the last confirmed [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) from the hourly timeframe on all historical bars. When running on _realtime bars_ (the bars with the [color.aqua](https://www.tradingview.com/pine-script-reference/v6/#var_color.aqua) background in this example), it returns the symbol’s current [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) value, regardless of confirmation. For more information, see the [Historical and realtime behavior](/pine-script-docs/concepts/other-timeframes-and-data/#historical-and-realtime-behavior) section of this page.
 
 ### ​`ignore_invalid_symbol`​
 
@@ -206,17 +206,17 @@ The conversion rate between the [syminfo.currency](https://www.tradingview.com/p
 
 **Note**
 
-Not all `request.*()` function calls return values expressed as a currency amount. Therefore, currency conversion is _not_ always necessary. For example, some of the series that the [request.financial()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.financial) function can retrieve — such as the “PIOTROSKI\_F\_SCORE” and “NUMBER\_OF\_EMPLOYEES” metrics — use units other than currency. It is up to programmers to determine when currency conversion is appropriate for their data requests.
+Not all `request.*()` function calls return values expressed as a currency amount. Therefore, currency conversion is _not_ always necessary. For example, some of the series that the [request.financial()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.financial) function can retrieve — such as the “PIOTROSKI_F_SCORE” and “NUMBER_OF_EMPLOYEES” metrics — use units other than currency. It is up to programmers to determine when currency conversion is appropriate for their data requests.
 
 ### ​`lookahead`​
 
-The `lookahead` parameter in [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security), [request.dividends()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.dividends), [request.splits()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.splits), and [request.earnings()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.earnings) specifies the lookahead behavior of the function call. Its default value is [barmerge.lookahead\_off](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_off).
+The `lookahead` parameter in [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security), [request.dividends()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.dividends), [request.splits()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.splits), and [request.earnings()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.earnings) specifies the lookahead behavior of the function call. Its default value is [barmerge.lookahead_off](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_off).
 
 When requesting data from a higher-timeframe (HTF) context, the `lookahead` value determines whether the `request.*()` function can return values from times _beyond_ those of the historical bars it executes on. In other words, the `lookahead` paremeter determines whether the requested data may contain _lookahead bias_ on historical bars.
 
 When requesting data from a lower-timeframe (LTF) context, the `lookahead` parameter determines whether the function requests values from the first or last _intrabar_ (LTF bar) of each chart-timeframe bar.
 
-**Programmers should exercise extreme caution when using lookahead in their requests, especially when requesting data from higher timeframes.** When using [barmerge.lookahead\_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on) as the `lookahead` value, ensure that it does not compromise the integrity of the script’s logic by leaking _future data_ into historical chart bars.
+**Programmers should exercise extreme caution when using lookahead in their requests, especially when requesting data from higher timeframes.** When using [barmerge.lookahead_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on) as the `lookahead` value, ensure that it does not compromise the integrity of the script’s logic by leaking _future data_ into historical chart bars.
 
 The following scenarios are cases where enabling lookahead is acceptable in a `request.*()` call:
 
@@ -228,9 +228,9 @@ NoticeScripts that use [request.security()](https://www.tradingview.com/pine-scr
 
 This example demonstrates how the `lookahead` parameter affects the behavior of higher-timeframe data requests and why enabling lookahead in [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) without offsetting the `expression` is misleading. The script calls [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) to get the HTF [high](https://www.tradingview.com/pine-script-reference/v6/#var_high) price for the current chart’s symbol in three different ways and [plots](/pine-script-docs/visuals/plots/) the resulting series on the chart for comparison.
 
-The first call uses [barmerge.lookahead\_off](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_off) (default), and the others use [barmerge.lookahead\_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on). However, the third [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) call also _offsets_ its `expression` using the history-referencing operator [\[\]](https://www.tradingview.com/pine-script-reference/v6/#op_%5B%5D) to avoid leaking future data into the past.
+The first call uses [barmerge.lookahead_off](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_off) (default), and the others use [barmerge.lookahead_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on). However, the third [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) call also _offsets_ its `expression` using the history-referencing operator [\[\]](https://www.tradingview.com/pine-script-reference/v6/#op_%5B%5D) to avoid leaking future data into the past.
 
-As we see on the chart, the [plot](https://www.tradingview.com/pine-script-reference/v6/#fun_plot) of the series requested using [barmerge.lookahead\_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on) without an offset ([fuchsia](https://www.tradingview.com/pine-script-reference/v6/#var_color.fuchsia) line) shows final HTF [high](https://www.tradingview.com/pine-script-reference/v6/#var_high) prices _before_ they are actually available on historical bars, whereas the other two calls do not:
+As we see on the chart, the [plot](https://www.tradingview.com/pine-script-reference/v6/#fun_plot) of the series requested using [barmerge.lookahead_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on) without an offset ([fuchsia](https://www.tradingview.com/pine-script-reference/v6/#var_color.fuchsia) line) shows final HTF [high](https://www.tradingview.com/pine-script-reference/v6/#var_high) prices _before_ they are actually available on historical bars, whereas the other two calls do not:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Other-timeframes-and-data-Common-characteristics-Lookahead-1.DhbZxNLg_239Pup.webp)
 
@@ -263,7 +263,7 @@ bgcolor(barstate.isrealtime ? color.new(color.orange, 60) : na, title = 
 
 Note that:
 
-- The series requested using [barmerge.lookahead\_off](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_off) has a new historical value at the _end_ of each HTF period, and both series requested using [barmerge.lookahead\_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on) have new historical data at the _start_ of each period.
+- The series requested using [barmerge.lookahead_off](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_off) has a new historical value at the _end_ of each HTF period, and both series requested using [barmerge.lookahead_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on) have new historical data at the _start_ of each period.
 - On realtime bars, the plot of the series without lookahead ([blue](https://www.tradingview.com/pine-script-reference/v6/#var_color.blue)) and the series with lookahead and no historical offset ([fuchsia](https://www.tradingview.com/pine-script-reference/v6/#var_color.fuchsia)) show the _same value_ (i.e., the HTF period’s unconfirmed [high](https://www.tradingview.com/pine-script-reference/v6/#var_high) price), as no data exists beyond those points to leak into the past. Both of these plots _repaint_ their results after the user reloads the script, because the _elapsed_ realtime bars from the previous run become _historical_ bars in the new run.
 - The series that uses lookahead and a historical offset ([aqua](https://www.tradingview.com/pine-script-reference/v6/#var_color.aqua)) _does not_ repaint its results, because it always uses the last _confirmed_ value from the higher timeframe. See the [Avoiding repainting](/pine-script-docs/concepts/other-timeframes-and-data/#avoiding-repainting) section of this page for more information.
 
@@ -289,7 +289,7 @@ In Pine Script v6, scripts **cannot** use wrapped `request.*()` calls within the
 
 #### ”series” arguments
 
-Scripts without dynamic requests enabled cannot use “series” arguments for most `request.*()` function parameters, which means the argument values _cannot change_. The only exception is the `expression` parameter in [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security), [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf), and [request.seed()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.seed), which _always_ allows “series” values.
+Scripts without dynamic requests enabled cannot use “series” arguments for most `request.*()` function parameters, which means the argument values _cannot change_. The only exception is the `expression` parameter in [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security), [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf), and [request.seed()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.seed), which _always_ allows “series” values.
 
 In contrast, when a script allows dynamic requests, all `request.*()` function parameters that define parts of the ticker ID or timeframe of a request accept “series” arguments that _can change_ with each script execution. In other words, with dynamic requests, it’s possible for a single `request.*()` instance to fetch data from _different contexts_ in different executions. Some other optional parameters, such as `ignore_invalid_symbol`, can also accept “series” arguments, allowing additional flexibility in `request.*()` call behaviors.
 
@@ -450,13 +450,13 @@ Note that:
 
 - The tuple that the [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) call includes as the `expression` argument _does not_ depend on the `htfPrices()` parameters.
 - The `htfPrices()` function includes a [runtime.error()](https://www.tradingview.com/pine-script-reference/v6/#fun_runtime.error) call that raises a custom runtime error when the `timeframe` argument does not represent a higher timeframe than the chart’s timeframe. See the [higher timeframes](/pine-script-docs/concepts/other-timeframes-and-data/#higher-timeframes) section for more information.
-- The [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) call uses [barmerge.lookahead\_on](https://www.tradingview.com/pine-script-reference/v6/#const_barmerge.lookahead_on) and offsets each item in the tuple by one bar. This is the only recommended method to [avoid repainting](/pine-script-docs/concepts/other-timeframes-and-data/#avoiding-repainting).
+- The [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) call uses [barmerge.lookahead_on](https://www.tradingview.com/pine-script-reference/v6/#const_barmerge.lookahead_on) and offsets each item in the tuple by one bar. This is the only recommended method to [avoid repainting](/pine-script-docs/concepts/other-timeframes-and-data/#avoiding-repainting).
 
 #### Nested requests
 
 Scripts can use dynamic requests to execute _nested requests_, i.e., `request.*()` calls that dynamically evaluate other `request.*()` calls that their `expression` arguments depend on.
 
-When a [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) or [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) call uses an empty string or [syminfo.tickerid](https://www.tradingview.com/pine-script-reference/v6/#var_syminfo.tickerid) for its `symbol` argument, or if it uses an empty string or [timeframe.period](https://www.tradingview.com/pine-script-reference/v6/#var_timeframe.period) for the `timeframe` argument, the requested ticker ID or timeframe _depends_ on the context where the call executes. This context is normally the ticker ID or timeframe of the chart that the script is running on. However, if such a [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) or [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) function call is evaluated by another `request.*()` call, the nested request _inherits_ that `request.*()` call’s ticker ID or timeframe information.
+When a [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) or [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) call uses an empty string or [syminfo.tickerid](https://www.tradingview.com/pine-script-reference/v6/#var_syminfo.tickerid) for its `symbol` argument, or if it uses an empty string or [timeframe.period](https://www.tradingview.com/pine-script-reference/v6/#var_timeframe.period) for the `timeframe` argument, the requested ticker ID or timeframe _depends_ on the context where the call executes. This context is normally the ticker ID or timeframe of the chart that the script is running on. However, if such a [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) or [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) function call is evaluated by another `request.*()` call, the nested request _inherits_ that `request.*()` call’s ticker ID or timeframe information.
 
 For example, the script below contains two [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) calls and uses [Pine Logs](/pine-script-docs/writing/debugging/#pine-logs) to display their results. The first call uses empty strings as its `symbol` and `timeframe` arguments, meaning that the requested context depends on where the call executes. It evaluates a concatenated string containing the call’s requested ticker ID and timeframe, and the script assigns its result to the `info1` variable.
 
@@ -561,7 +561,7 @@ NoticeIf a `request.*()` call uses the value from a [source input](/pine-script-
 
 The [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) function can request data from any available timeframe, regardless of the chart the script executes on. The timeframe of the data retrieved depends on the `timeframe` argument in the function call, which may represent a higher timeframe (e.g., using “1D” as the `timeframe` value while running the script on an intraday chart) or the chart’s timeframe (i.e., using [timeframe.period](https://www.tradingview.com/pine-script-reference/v6/#var_timeframe.period) or an empty string as the `timeframe` argument).
 
-Scripts can also request _limited_ data from lower timeframes with [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) (e.g., using “1” as the `timeframe` argument while running the script on a 60-minute chart). However, we don’t typically recommend using this function for LTF data requests. The [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) function is more optimal for such cases.
+Scripts can also request _limited_ data from lower timeframes with [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) (e.g., using “1” as the `timeframe` argument while running the script on a 60-minute chart). However, we don’t typically recommend using this function for LTF data requests. The [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) function is more optimal for such cases.
 
 #### Higher timeframes
 
@@ -586,7 +586,7 @@ plot(htfPrice, "Higher timeframe HL2", color.purple, 3)
 
 Note that:
 
-- We’ve included an offset to the `expression` argument and used [barmerge.lookahead\_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on) in [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) to ensure the series returned behaves the same on historical and realtime bars. See the [Avoiding repainting](/pine-script-docs/concepts/other-timeframes-and-data/#avoiding-repainting) section for more information.
+- We’ve included an offset to the `expression` argument and used [barmerge.lookahead_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on) in [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) to ensure the series returned behaves the same on historical and realtime bars. See the [Avoiding repainting](/pine-script-docs/concepts/other-timeframes-and-data/#avoiding-repainting) section for more information.
 
 Notice that in the above example, it is possible to select a `higherTimeframe` value that actually represents a _lower timeframe_ than the one the chart uses, as the code does not prevent it. When designing a script to work specifically with higher timeframes, we recommend including conditions to prevent it from accessing lower timeframes, especially if you intend to [publish](/pine-script-docs/writing/publishing/) it.
 
@@ -617,9 +617,9 @@ plot(htfPrice, "Higher timeframe HL2", color.purple, 3)
 
 Although the [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) function is intended to operate on timeframes greater than or equal to the chart timeframe, it _can_ request data from lower timeframes as well, with limitations. When calling this function to access a lower timeframe, it will evaluate the `expression` from the LTF context. However, it returns the results from only a _single_ intrabar (LTF bar) on each chart bar.
 
-The intrabar that the function returns data from on each historical chart bar depends on the `lookahead` value in the function call. When using [barmerge.lookahead\_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on), it will return the _first_ available intrabar from the chart period. When using [barmerge.lookahead\_off](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_off), it will return the _last_ intrabar from the chart period. On realtime bars, it returns the last available value of the `expression` from the timeframe, regardless of the `lookahead` value, as the realtime intrabar information retrieved by the function is not yet sorted.
+The intrabar that the function returns data from on each historical chart bar depends on the `lookahead` value in the function call. When using [barmerge.lookahead_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on), it will return the _first_ available intrabar from the chart period. When using [barmerge.lookahead_off](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_off), it will return the _last_ intrabar from the chart period. On realtime bars, it returns the last available value of the `expression` from the timeframe, regardless of the `lookahead` value, as the realtime intrabar information retrieved by the function is not yet sorted.
 
-This script retrieves [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) data from the valid timeframe closest to a fourth of the size of the chart timeframe. It makes two calls to [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) with different `lookahead` values. The first call uses [barmerge.lookahead\_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on) to access the first intrabar value in each chart bar. The second uses the default `lookahead` value ([barmerge.lookahead\_off](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_off)), which requests the last intrabar value assigned to each chart bar. The script [plots](/pine-script-docs/visuals/plots/) the outputs of both calls on the chart to compare the difference:
+This script retrieves [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) data from the valid timeframe closest to a fourth of the size of the chart timeframe. It makes two calls to [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) with different `lookahead` values. The first call uses [barmerge.lookahead_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on) to access the first intrabar value in each chart bar. The second uses the default `lookahead` value ([barmerge.lookahead_off](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_off)), which requests the last intrabar value assigned to each chart bar. The script [plots](/pine-script-docs/visuals/plots/) the outputs of both calls on the chart to compare the difference:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Other-timeframes-and-data-Request-security-Timeframes-Lower-timeframes-1.CzbZyyC2_Z2o4fpJ.webp)
 
@@ -644,14 +644,14 @@ bgcolor(barstate.isrealtime ? color.new(color.orange, 70) : na, title = 
 
 Note that:
 
-- The script determines the value of the `lowerTimeframe` by calculating the number of seconds in the chart timeframe with [timeframe.in\_seconds()](https://www.tradingview.com/pine-script-reference/v6/#fun_timeframe.in_seconds), then dividing by four and converting the result to a [valid timeframe string](/pine-script-docs/concepts/timeframes/#timeframe-string-specifications) via [timeframe.from\_seconds()](https://www.tradingview.com/pine-script-reference/v6/#fun_timeframe.from_seconds).
+- The script determines the value of the `lowerTimeframe` by calculating the number of seconds in the chart timeframe with [timeframe.in_seconds()](https://www.tradingview.com/pine-script-reference/v6/#fun_timeframe.in_seconds), then dividing by four and converting the result to a [valid timeframe string](/pine-script-docs/concepts/timeframes/#timeframe-string-specifications) via [timeframe.from_seconds()](https://www.tradingview.com/pine-script-reference/v6/#fun_timeframe.from_seconds).
 - The plot of the series without lookahead ([purple](https://www.tradingview.com/pine-script-reference/v6/#var_color.purple)) aligns with the [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) value on the chart timeframe, as this is the last intrabar value in the chart bar.
 - Both [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) calls return the _same_ value (the current [close](https://www.tradingview.com/pine-script-reference/v6/#var_close)) on each _realtime_ bar, as shown on the bars with the [orange](https://www.tradingview.com/pine-script-reference/v6/#var_color.orange) background.
 - Scripts can retrieve up to 200,000 intrabars from a lower-timeframe context. The number of chart bars with available intrabar data varies with the requested lower timeframe, the `calc_bars_count` value, and the user’s plan. For more information, see [this](/pine-script-docs/writing/limitations/#intrabars) section of the [Limitations](/pine-script-docs/writing/limitations/) page.
 
 **Tip**
 
-While scripts can use [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) to retrieve limited intrabar data, we recommend using [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) function for such requests in most cases. Instead of retrieving data for only a single LTF bar on each chart bar, it returns an [array](https://www.tradingview.com/pine-script-reference/v6/#type_array) containing the data for _all_ available LTF bars in the chart bar. See the [`​request.security_lower_tf()` section](/pine-script-docs/concepts/other-timeframes-and-data/#requestsecurity_lower_tf) below to learn more.
+While scripts can use [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) to retrieve limited intrabar data, we recommend using [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) function for such requests in most cases. Instead of retrieving data for only a single LTF bar on each chart bar, it returns an [array](https://www.tradingview.com/pine-script-reference/v6/#type_array) containing the data for _all_ available LTF bars in the chart bar. See the [`​request.security_lower_tf()` section](/pine-script-docs/concepts/other-timeframes-and-data/#requestsecurity_lower_tf) below to learn more.
 
 ### Requestable data
 
@@ -672,6 +672,7 @@ A frequent use case of [request.security()](https://www.tradingview.com/pine-scr
 For example, suppose we want to calculate the 20-bar SMA of a symbol’s [ohlc4](https://www.tradingview.com/pine-script-reference/v6/#var_ohlc4) prices from the daily timeframe while on an intraday chart. We can accomplish this task with a single line of code:
 
 ```float ma = request.security(syminfo.tickerid, "1D", ta.sma(ohlc4, 20))
+
 ```
 
 The above line calculates the value of `ta.sma(ohlc4, 20)` on the current symbol’s data from the daily timeframe.
@@ -679,6 +680,7 @@ The above line calculates the value of `ta.sma(ohlc4, 20)` on the current symbol
 It’s important to note that newcomers to Pine might sometimes confuse the above line of code as being equivalent to the following:
 
 ```float ma = ta.sma(request.security(syminfo.tickerid, "1D", ohlc4), 20)
+
 ```
 
 However, this line returns an entirely _different_ result. Rather than requesting a 20-bar SMA from the daily timeframe, it requests the [ohlc4](https://www.tradingview.com/pine-script-reference/v6/#var_ohlc4) price from the daily timeframe and calclates the [ta.sma()](https://www.tradingview.com/pine-script-reference/v6/#fun_ta.sma) of the results over 20 **chart bars**.
@@ -722,7 +724,7 @@ bgcolor(barstate.isrealtime ? color.new(color.aqua, 70) : na, title = "R
 
 Note that:
 
-- The script calculates the ribbon’s higher timeframes by multiplying the chart’s [timeframe.in\_seconds()](https://www.tradingview.com/pine-script-reference/v6/#fun_timeframe.in_seconds) value by 2, 3, and 4, then converting each result into a [valid timeframe string](/pine-script-docs/concepts/timeframes/#timeframe-string-specifications) using [timeframe.from\_seconds()](https://www.tradingview.com/pine-script-reference/v6/#fun_timeframe.from_seconds).
+- The script calculates the ribbon’s higher timeframes by multiplying the chart’s [timeframe.in_seconds()](https://www.tradingview.com/pine-script-reference/v6/#fun_timeframe.in_seconds) value by 2, 3, and 4, then converting each result into a [valid timeframe string](/pine-script-docs/concepts/timeframes/#timeframe-string-specifications) using [timeframe.from_seconds()](https://www.tradingview.com/pine-script-reference/v6/#fun_timeframe.from_seconds).
 - Instead of calling [ta.sma()](https://www.tradingview.com/pine-script-reference/v6/#fun_ta.sma) within each [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) call, one could use the `chartAvg` variable as the `expression` in each call to achieve the same result. See the [next section](/pine-script-docs/concepts/other-timeframes-and-data/#declared-variables) for more information.
 - On realtime bars, this script also tracks _unconfirmed_ SMA values from each higher timeframe. See the [Historical and realtime behavior](/pine-script-docs/concepts/other-timeframes-and-data/#historical-and-realtime-behavior) section to learn more.
 
@@ -733,11 +735,13 @@ The [request.security()](https://www.tradingview.com/pine-script-reference/v6/#f
 For instance, this line of code declares a `priceReturn` variable that holds the current bar’s arithmetic price return:
 
 ```float priceReturn = (close - close[1]) / close[1]
+
 ```
 
 We can evaluate the `priceReturn` variable’s calculations in another context by using it as the `expression` in a [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) call. The call below duplicates the variable’s calculation and evaluates it across the data from another `symbol`, returning a _separate series_ adapted to the chart’s time axis:
 
 ```float requestedReturn = request.security(symbol, timeframe.period, priceReturn)
+
 ```
 
 This example script compares the price returns of the current chart’s symbol and a user-specified symbol. It calculates the value of the `priceReturn` variable, then uses that variable as the `expression` in a [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) call to evaluate the calculation on the input symbol’s data. After the request, the script calculates the correlation between the `priceReturn` and `requestedReturn` series using [ta.correlation()](https://www.tradingview.com/pine-script-reference/v6/#fun_ta.correlation) and plots the result on the chart:
@@ -770,7 +774,7 @@ plot(correlation, "Correlation", plotColor, style = plot.style_area)
 Note that:
 
 - The [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) call executes the same calculation used in the `priceReturn` declaration, but the request’s calculation operates on the [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) values from the specified symbol’s data.
-- The script uses the [color.from\_gradient()](https://www.tradingview.com/pine-script-reference/v6/#fun_color.from_gradient) function to calculate the color for the plot of the `correlation` series on each bar. See [this section](/pine-script-docs/visuals/colors/#colorfrom_gradient) of the [Colors](/pine-script-docs/visuals/colors/) page to learn more about color gradients.
+- The script uses the [color.from_gradient()](https://www.tradingview.com/pine-script-reference/v6/#fun_color.from_gradient) function to calculate the color for the plot of the `correlation` series on each bar. See [this section](/pine-script-docs/visuals/colors/#colorfrom_gradient) of the [Colors](/pine-script-docs/visuals/colors/) page to learn more about color gradients.
 
 When using a variable as the `expression` argument of a `request.*()` call, it’s important to note that the function only duplicates code that affects the variable _before_ the call. It _cannot_ copy any subsequent code following the call. Consequently, if the script reassigns the variable or modifies its referenced data _after_ calling [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security), the code evaluated on the requested data **does not** include those additional operations.
 
@@ -847,7 +851,7 @@ bgcolor(crossOver ? color.new(color.green, 50) : crossUnder ? color.new(c
 
 Note that:
 
-- We’ve offset the `rank` variable’s expression by one bar using the history-referencing operator [\[\]](https://www.tradingview.com/pine-script-reference/v6/#op_%5B%5D) and included [barmerge.lookahead\_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on) in the [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) call to ensure the values on realtime bars do not repaint after becoming historical bars. See the [Avoiding repainting](/pine-script-docs/concepts/other-timeframes-and-data/#avoiding-repainting) section for more information.
+- We’ve offset the `rank` variable’s expression by one bar using the history-referencing operator [\[\]](https://www.tradingview.com/pine-script-reference/v6/#op_%5B%5D) and included [barmerge.lookahead_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on) in the [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) call to ensure the values on realtime bars do not repaint after becoming historical bars. See the [Avoiding repainting](/pine-script-docs/concepts/other-timeframes-and-data/#avoiding-repainting) section for more information.
 - The [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) call returns a tuple, so we use a _tuple declaration_ to declare the `requestedRank`, `crossOver`, and `crossUnder` variables. To learn more about using tuples, see [this section](/pine-script-docs/language/type-system/#tuples) of our User Manual’s [Type system](/pine-script-docs/language/type-system/) page.
 
 #### User-defined functions
@@ -901,7 +905,7 @@ fill(upperPlot, lowerPlot, color.new(color.gray, 90), "Background")
 
 Note that:
 
-- We offset the `source` and `weight` arguments in the `weightedBB()` call used as the `expression` in [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) and used [barmerge.lookahead\_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on) to ensure the requested results reflect the last confirmed values from the `timeframe` on realtime bars. See [this section](/pine-script-docs/concepts/other-timeframes-and-data/#avoiding-repainting) to learn more.
+- We offset the `source` and `weight` arguments in the `weightedBB()` call used as the `expression` in [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) and used [barmerge.lookahead_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on) to ensure the requested results reflect the last confirmed values from the `timeframe` on realtime bars. See [this section](/pine-script-docs/concepts/other-timeframes-and-data/#avoiding-repainting) to learn more.
 
 #### Chart points
 
@@ -1012,7 +1016,7 @@ The [request.security()](https://www.tradingview.com/pine-script-reference/v6/#f
 
 The following example requests an [object](/pine-script-docs/language/objects/) ID using a specified `symbol` and displays its field values on a chart pane.
 
-The script contains a `TickerInfo` UDT with “string” fields for `syminfo.*` values, an [array](https://www.tradingview.com/pine-script-reference/v6/#type_array) field to store recent “float” price data, and an “int” field to hold the requested ticker’s [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) value. It assigns a new `TickerInfo` ID to an `info` variable on every bar and uses the variable as the `expression` in [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) to retrieve the ID of an [object](/pine-script-docs/language/objects/) representing the calculated `info` from the specified `symbol`.
+The script contains a `TickerInfo` UDT with “string” fields for `syminfo.*` values, an [array](https://www.tradingview.com/pine-script-reference/v6/#type_array) field to store recent “float” price data, and an “int” field to hold the requested ticker’s [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) value. It assigns a new `TickerInfo` ID to an `info` variable on every bar and uses the variable as the `expression` in [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) to retrieve the ID of an [object](/pine-script-docs/language/objects/) representing the calculated `info` from the specified `symbol`.
 
 The script displays the `requestedInfo` object’s `description`, `tickerType`, `currency`, and `barIndex` values in a [label](https://www.tradingview.com/pine-script-reference/v6/#type_label) and uses [plotcandle()](https://www.tradingview.com/pine-script-reference/v6/#fun_plotcandle) to display the values from its `prices` array:
 
@@ -1075,13 +1079,13 @@ Note that:
 
 ## ​`request.security_lower_tf()`​
 
-The [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) function is an alternative to [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) designed for reliably requesting information from lower-timeframe (LTF) contexts.
+The [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) function is an alternative to [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) designed for reliably requesting information from lower-timeframe (LTF) contexts.
 
-While [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) can retrieve data from a _single_ intrabar (LTF bar) in each chart bar, [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) retrieves data from _all_ available intrabars in each chart bar, which the script can access and use in additional calculations. Each [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) call can retrieve up to 200,000 intrabars from a lower timeframe, depending on the user’s [plan](https://www.tradingview.com/pricing/). See [this](/pine-script-docs/writing/limitations/#request-calls) section of our [Limitations](/pine-script-docs/writing/limitations/) page for more information.
+While [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) can retrieve data from a _single_ intrabar (LTF bar) in each chart bar, [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) retrieves data from _all_ available intrabars in each chart bar, which the script can access and use in additional calculations. Each [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) call can retrieve up to 200,000 intrabars from a lower timeframe, depending on the user’s [plan](https://www.tradingview.com/pricing/). See [this](/pine-script-docs/writing/limitations/#request-calls) section of our [Limitations](/pine-script-docs/writing/limitations/) page for more information.
 
 **Tip**
 
-Working with the [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) function involves frequent usage of _arrays_, because the function always returns array results. Therefore, we recommend reading the [Arrays](/pine-script-docs/language/arrays/) page to make the most of this function and understand how to use its returned data.
+Working with the [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) function involves frequent usage of _arrays_, because the function always returns array results. Therefore, we recommend reading the [Arrays](/pine-script-docs/language/arrays/) page to make the most of this function and understand how to use its returned data.
 
 Below is the function’s signature, which is similar to the signature of [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security):
 
@@ -1089,23 +1093,23 @@ Below is the function’s signature, which is similar to the signature of [reque
 request.security_lower_tf(symbol, timeframe, expression, ignore_invalid_symbol, currency, ignore_invalid_timeframe, calc_bars_count) → array<type>
 ```
 
-This function requests data only from timeframes that are _lower than_ or _equal to_ the chart’s timeframe ([timeframe.period](https://www.tradingview.com/pine-script-reference/v6/#var_timeframe.period)). If the `timeframe` argument of the [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) call represents a higher timeframe, the function raises a runtime error or returns [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) results, depending on the `ignore_invalid_timeframe` parameter. The parameter’s default value is `false`, meaning the function raises an error and halts the script’s executions if the `timeframe` argument is invalid.
+This function requests data only from timeframes that are _lower than_ or _equal to_ the chart’s timeframe ([timeframe.period](https://www.tradingview.com/pine-script-reference/v6/#var_timeframe.period)). If the `timeframe` argument of the [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) call represents a higher timeframe, the function raises a runtime error or returns [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) results, depending on the `ignore_invalid_timeframe` parameter. The parameter’s default value is `false`, meaning the function raises an error and halts the script’s executions if the `timeframe` argument is invalid.
 
 ### Requesting intrabar data
 
-Intrabar data can provide a script with additional information that may not be obvious or accessible from solely analyzing data sampled on the chart’s timerframe. The [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) function can retrieve many data types from an intrabar context.
+Intrabar data can provide a script with additional information that may not be obvious or accessible from solely analyzing data sampled on the chart’s timerframe. The [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) function can retrieve many data types from an intrabar context.
 
-Before you venture further in this section, we recommend exploring the [Requestable data](/pine-script-docs/concepts/other-timeframes-and-data/#requestable-data) portion of the [request.security()](/pine-script-docs/concepts/other-timeframes-and-data/#requestsecurity) section above, which provides foundational information about the types of data one can request. The `expression` parameter in [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) accepts most of the same arguments discussed in that section, excluding direct references to [collections](/pine-script-docs/language/type-system/#collections) and mutable variables. Although it accepts many of the same types of arguments, this function returns [array](https://www.tradingview.com/pine-script-reference/v6/#type_array) results, which comes with some differences in interpretation and handling, as explained below.
+Before you venture further in this section, we recommend exploring the [Requestable data](/pine-script-docs/concepts/other-timeframes-and-data/#requestable-data) portion of the [request.security()](/pine-script-docs/concepts/other-timeframes-and-data/#requestsecurity) section above, which provides foundational information about the types of data one can request. The `expression` parameter in [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) accepts most of the same arguments discussed in that section, excluding direct references to [collections](/pine-script-docs/language/type-system/#collections) and mutable variables. Although it accepts many of the same types of arguments, this function returns [array](https://www.tradingview.com/pine-script-reference/v6/#type_array) results, which comes with some differences in interpretation and handling, as explained below.
 
 ### Intrabar data arrays
 
 Lower timeframes contain more data points than higher timeframes, as new values come in at a _higher frequency_. For example, when comparing a 1-minute chart to an hourly chart, the 1-minute chart will have up to 60 times the number of bars per hour, depending on the available data.
 
-To address the fact that multiple intrabars exist within a chart bar, [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) always creates [arrays](/pine-script-docs/language/arrays/) to store the requested data. The elements in the arrays represent the `expression` values retrieved from the lower timeframe sorted in ascending order based on each intrabar’s timestamp.
+To address the fact that multiple intrabars exist within a chart bar, [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) always creates [arrays](/pine-script-docs/language/arrays/) to store the requested data. The elements in the arrays represent the `expression` values retrieved from the lower timeframe sorted in ascending order based on each intrabar’s timestamp.
 
-The _type identifier_ of the constructed arrays corresponds to the data types passed in the [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) call. For example, using an “int” as the `expression` will produce an `array<int>` instance, a “bool” as the `expression` will produce an `array<bool>` instance, etc.
+The _type identifier_ of the constructed arrays corresponds to the data types passed in the [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) call. For example, using an “int” as the `expression` will produce an `array<int>` instance, a “bool” as the `expression` will produce an `array<bool>` instance, etc.
 
-The following script uses intrabar information to decompose the chart’s close-to-close price changes into positive and negative parts. It calls [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) to fetch a “float” [array](https://www.tradingview.com/pine-script-reference/v6/#type_array) containing `ta.change(close)` values from a specified lower timeframe on each chart bar, then accesses all the array’s elements using a [for…in](https://www.tradingview.com/pine-script-reference/v6/#kw_for...in) loop to accumulate `positiveChange` and `negativeChange` sums. The script adds the accumulated values to calculate the `netChange` value, then [plots](/pine-script-docs/visuals/plots/) the results on the chart alongside the `priceChange` value for comparison:
+The following script uses intrabar information to decompose the chart’s close-to-close price changes into positive and negative parts. It calls [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) to fetch a “float” [array](https://www.tradingview.com/pine-script-reference/v6/#type_array) containing `ta.change(close)` values from a specified lower timeframe on each chart bar, then accesses all the array’s elements using a [for…in](https://www.tradingview.com/pine-script-reference/v6/#kw_for...in) loop to accumulate `positiveChange` and `negativeChange` sums. The script adds the accumulated values to calculate the `netChange` value, then [plots](/pine-script-docs/visuals/plots/) the results on the chart alongside the `priceChange` value for comparison:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Other-timeframes-and-data-Request-security-lower-tf-Intrabar-data-arrays-1.BFy5KmoZ_CQoK9.webp)
 
@@ -1147,19 +1151,19 @@ plot(priceChange, "Chart price change", color.orange, 2)
 
 Note that:
 
-- The [plots](/pine-script-docs/visuals/plots/) based on intrabar data may not appear on all available chart bars, as [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) can only access up to the most recent 200,000 intrabars available from the requested context. When executing this function on a chart bar that doesn’t have accessible intrabar data, it will return an _empty array_.
+- The [plots](/pine-script-docs/visuals/plots/) based on intrabar data may not appear on all available chart bars, as [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) can only access up to the most recent 200,000 intrabars available from the requested context. When executing this function on a chart bar that doesn’t have accessible intrabar data, it will return an _empty array_.
 - The number of intrabars per chart bar may vary depending on the data available from the context and the chart the script executes on. For example, a provider’s 1-minute data feed may not include data for every minute within the 60-minute timeframe due to a lack of trading activity over some 1-minute intervals. To check the number of intrabars retrieved for a chart bar, one can use [array.size()](https://www.tradingview.com/pine-script-reference/v6/#fun_array.size) on the resulting [array](https://www.tradingview.com/pine-script-reference/v6/#type_array).
-- If the `lowerTimeframe` value is greater than the chart’s timeframe, the script will raise a _runtime error_, as we have not supplied an `ignore_invalid_timeframe` argument in the [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) call.
+- If the `lowerTimeframe` value is greater than the chart’s timeframe, the script will raise a _runtime error_, as we have not supplied an `ignore_invalid_timeframe` argument in the [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) call.
 
 ### Tuples of intrabar data
 
-When passing a tuple or a function call that returns a tuple as the `expression` argument in [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf), the result is a tuple of [arrays](/pine-script-docs/language/arrays/) with [type templates](/pine-script-docs/language/type-system/#collections) corresponding to the types within the argument. For example, using a `[float, string, color]` tuple as the `expression` will result in `[array<float>, array<string>, array<color>]` data returned by the function. Using a tuple `expression` allows a script to fetch the IDs of several [arrays](/pine-script-docs/language/arrays/) containing intrabar data with a single [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) function call.
+When passing a tuple or a function call that returns a tuple as the `expression` argument in [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf), the result is a tuple of [arrays](/pine-script-docs/language/arrays/) with [type templates](/pine-script-docs/language/type-system/#collections) corresponding to the types within the argument. For example, using a `[float, string, color]` tuple as the `expression` will result in `[array<float>, array<string>, array<color>]` data returned by the function. Using a tuple `expression` allows a script to fetch the IDs of several [arrays](/pine-script-docs/language/arrays/) containing intrabar data with a single [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) function call.
 
 **Note**
 
 The combined size of all tuples returned by `request.*()` calls in a script cannot exceed 127 elements. See the [Tuple element limit](/pine-script-docs/writing/limitations/#tuple-element-limit) section of the [Limitations](/pine-script-docs/writing/limitations/) page for more information.
 
-The following example requests OHLC data from a lower timeframe and visualizes the current bar’s intrabars on the chart using [lines and boxes](/pine-script-docs/visuals/lines-and-boxes/). The script calls [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) with the `[open, high, low, close]` tuple as its `expression` to retrieve a tuple of [arrays](/pine-script-docs/language/arrays/) representing OHLC information from a calculated `lowerTimeframe`. It then uses a [for](https://www.tradingview.com/pine-script-reference/v6/#kw_for) loop to set line coordinates with the retrieved data and current bar indices to display the results next to the current chart bar, providing a “magnified view” of the price movement within the latest candle. It also draws a [box](https://www.tradingview.com/pine-script-reference/v6/#type_box) around the [lines](/pine-script-docs/visuals/lines-and-boxes/#lines) to indicate the chart region occupied by intrabar drawings:
+The following example requests OHLC data from a lower timeframe and visualizes the current bar’s intrabars on the chart using [lines and boxes](/pine-script-docs/visuals/lines-and-boxes/). The script calls [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) with the `[open, high, low, close]` tuple as its `expression` to retrieve a tuple of [arrays](/pine-script-docs/language/arrays/) representing OHLC information from a calculated `lowerTimeframe`. It then uses a [for](https://www.tradingview.com/pine-script-reference/v6/#kw_for) loop to set line coordinates with the retrieved data and current bar indices to display the results next to the current chart bar, providing a “magnified view” of the price movement within the latest candle. It also draws a [box](https://www.tradingview.com/pine-script-reference/v6/#type_box) around the [lines](/pine-script-docs/visuals/lines-and-boxes/#lines) to indicate the chart region occupied by intrabar drawings:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Other-timeframes-and-data-Request-security-lower-tf-Tuples-of-intrabar-data-1.C8-f9Sez_Z96QYf.webp)
 
@@ -1223,23 +1227,24 @@ if numIntrabars > 0
 Note that:
 
 - The script draws each candle using two [lines](/pine-script-docs/visuals/lines-and-boxes/#lines): one to represent wicks and the other to represent the body. Since the script can display up to 500 lines on the chart, we’ve limited the `maxIntrabars` input to 250.
-- The `lowerTimeframe` value is the result of calculating the [math.ceil()](https://www.tradingview.com/pine-script-reference/v6/#fun_math.ceil) of the [timeframe.in\_seconds()](https://www.tradingview.com/pine-script-reference/v6/#fun_timeframe.in_seconds) divided by the `maxIntrabars` and converting to a [valid timeframe string](/pine-script-docs/concepts/timeframes/#timeframe-string-specifications) with [timeframe.from\_seconds()](https://www.tradingview.com/pine-script-reference/v6/#fun_timeframe.from_seconds).
+- The `lowerTimeframe` value is the result of calculating the [math.ceil()](https://www.tradingview.com/pine-script-reference/v6/#fun_math.ceil) of the [timeframe.in_seconds()](https://www.tradingview.com/pine-script-reference/v6/#fun_timeframe.in_seconds) divided by the `maxIntrabars` and converting to a [valid timeframe string](/pine-script-docs/concepts/timeframes/#timeframe-string-specifications) with [timeframe.from_seconds()](https://www.tradingview.com/pine-script-reference/v6/#fun_timeframe.from_seconds).
 - The script sets the top of the box drawing using the [array.max()](https://www.tradingview.com/pine-script-reference/v6/#fun_array.max) of the requested `hData` array, and it sets the box’s bottom using the [array.min()](https://www.tradingview.com/pine-script-reference/v6/#fun_array.min) of the requested `lData` array. As we see on the chart, these values correspond to the [high](https://www.tradingview.com/pine-script-reference/v6/#var_high) and [low](https://www.tradingview.com/pine-script-reference/v6/#var_low) of the chart bar.
 
 ### Requesting collections
 
-In some cases, a script might need to request [collections](/pine-script-docs/language/type-system/#collections) from an intrabar context. However, in contrast to [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security), scripts cannot use collection references or calls to functions that return them as the `expression` argument in a [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) call, because [arrays](/pine-script-docs/language/arrays/) cannot directly store references to other [collections](/pine-script-docs/language/type-system/#collections).
+In some cases, a script might need to request [collections](/pine-script-docs/language/type-system/#collections) from an intrabar context. However, in contrast to [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security), scripts cannot use collection references or calls to functions that return them as the `expression` argument in a [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) call, because [arrays](/pine-script-docs/language/arrays/) cannot directly store references to other [collections](/pine-script-docs/language/type-system/#collections).
 
 Despite these limitations, it is possible to request [collections](/pine-script-docs/language/type-system/#collections) from lower timeframes, if needed, with the help of _wrapper_ types.
 
 NoticeThe technique described below is **advanced** and **not** recommended for beginners, because it requires an understanding of how [user-defined types](/pine-script-docs/language/type-system/#user-defined-types) with [collection](/pine-script-docs/language/type-system/#collections) fields work. When possible, use _simpler_ methods to manage LTF requests. Use the following technique only if others _do not_ suffice.
 
-To make [collections](/pine-script-docs/language/type-system/#collections) requestable with [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf), we must create a [UDT](/pine-script-docs/language/type-system/#user-defined-types) with a field to reference a collection ID. This step is necessary since [arrays](/pine-script-docs/language/arrays/) cannot reference other [collections](/pine-script-docs/language/type-system/#collections) directly but _can_ reference UDTs with collection fields:
+To make [collections](/pine-script-docs/language/type-system/#collections) requestable with [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf), we must create a [UDT](/pine-script-docs/language/type-system/#user-defined-types) with a field to reference a collection ID. This step is necessary since [arrays](/pine-script-docs/language/arrays/) cannot reference other [collections](/pine-script-docs/language/type-system/#collections) directly but _can_ reference UDTs with collection fields:
 
 ```//@type A "wrapper" type for storing an `array<float>` reference.
 type Wrapper
     array<float> collection
-```
+
+````
 
 With our `Wrapper` UDT defined, we can now pass the IDs of [objects](/pine-script-docs/language/objects/) of the UDT to the `expression` parameter in [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf).
 
@@ -1247,9 +1252,9 @@ A straightforward approach is to use a call to the type’s built-in `*.new()` f
 
 ```//@variable An array of `Wrapper` IDs requested from the 1-minute timeframe.
 array<Wrapper> wrappers = request.security_lower_tf(syminfo.tickerid, "1", Wrapper.new(array.from(close)))
-```
+````
 
-Alternatively, we can create a [user-defined function](/pine-script-docs/language/user-defined-functions/) or [method](/pine-script-docs/language/methods/#user-defined-methods) that returns a reference to an [object](/pine-script-docs/language/objects/) of the [UDT](/pine-script-docs/language/type-system/#user-defined-types) and call that function within [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf). For instance, this code calls a custom `newWrapper()` function that returns a `Wrapper` ID as the `expression` argument:
+Alternatively, we can create a [user-defined function](/pine-script-docs/language/user-defined-functions/) or [method](/pine-script-docs/language/methods/#user-defined-methods) that returns a reference to an [object](/pine-script-docs/language/objects/) of the [UDT](/pine-script-docs/language/type-system/#user-defined-types) and call that function within [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf). For instance, this code calls a custom `newWrapper()` function that returns a `Wrapper` ID as the `expression` argument:
 
 ```//@function Creates a new `Wrapper` instance to wrap the specified `collection`.
 newWrapper(array<float> collection) =>
@@ -1257,7 +1262,8 @@ newWrapper(array<float> collection) =>
 
 //@variable An array of `Wrapper` IDs requested from the 1-minute timeframe.
 array<Wrapper> wrappers = request.security_lower_tf(syminfo.tickerid, "1", newWrapper(array.from(close)))
-```
+
+````
 
 The result with either of the above is an [array](https://www.tradingview.com/pine-script-reference/v6/#type_array) containing `Wrapper` IDs from all available intrabars in the chart bar, which the script can use to reference `Wrapper` instances from specific intrabars and use their `collection` fields in additional operations.
 
@@ -1294,7 +1300,7 @@ array<float> intrabarData = na(intrabarPrices) ? array.new<float>(4, na) 
 
 // Plot the `intrabarData` values as candles.
 plotcandle(intrabarData.get(0), intrabarData.get(1), intrabarData.get(2), intrabarData.get(3))
-```
+````
 
 Note that:
 
@@ -1304,7 +1310,7 @@ Note that:
 
 ## Custom contexts
 
-Pine Script includes multiple `ticker.*()` functions that allow scripts to construct _custom_ ticker IDs that specify additional settings for data requests when used as a `symbol` argument in [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) and [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf):
+Pine Script includes multiple `ticker.*()` functions that allow scripts to construct _custom_ ticker IDs that specify additional settings for data requests when used as a `symbol` argument in [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) and [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf):
 
 - [ticker.new()](https://www.tradingview.com/pine-script-reference/v6/#fun_ticker.new) constructs a custom ticker ID from a specified `prefix` and `ticker` with additional `session` and `adjustment` settings.
 - [ticker.modify()](https://www.tradingview.com/pine-script-reference/v6/#fun_ticker.modify) constructs a modified form of a specified `tickerid` with additional `session` and `adjustment` settings.
@@ -1459,9 +1465,9 @@ In most circumstances where a script requests data from a broader context, one w
 
 When requesting values from a higher timeframe, they are subject to repainting since realtime bars can contain _unconfirmed_ information from developing HTF bars, and the script may adjust the times that new values come in on historical bars. To avoid repainting HTF data, one must ensure that the function only returns confirmed values with consistent timing on all bars, regardless of bar state.
 
-The most reliable approach to achieve non-repainting results is to use an `expression` argument that only references past bars (e.g., `close[1]`) while using [barmerge.lookahead\_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on) as the `lookahead` value.
+The most reliable approach to achieve non-repainting results is to use an `expression` argument that only references past bars (e.g., `close[1]`) while using [barmerge.lookahead_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on) as the `lookahead` value.
 
-Using [barmerge.lookahead\_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on) with non-offset HTF data requests is discouraged since it prompts [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) to “look ahead” to the final values of an HTF bar, retrieving confirmed values _before_ they’re actually available in the script’s history. However, if the values used in the `expression` are offset by at least one bar, the “future” data the function retrieves is no longer from the future. Instead, the data represents confirmed values from established, _available_ HTF bars. In other words, applying an offset to the `expression` effectively prevents the requested data from repainting when the script restarts its executions and eliminates lookahead bias in the historical series.
+Using [barmerge.lookahead_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on) with non-offset HTF data requests is discouraged since it prompts [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) to “look ahead” to the final values of an HTF bar, retrieving confirmed values _before_ they’re actually available in the script’s history. However, if the values used in the `expression` are offset by at least one bar, the “future” data the function retrieves is no longer from the future. Instead, the data represents confirmed values from established, _available_ HTF bars. In other words, applying an offset to the `expression` effectively prevents the requested data from repainting when the script restarts its executions and eliminates lookahead bias in the historical series.
 
 The following example demonstrates a repainting HTF data request. The script uses [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) without offset modifications or additional arguments to retrieve the results of a [ta.wma()](https://www.tradingview.com/pine-script-reference/v6/#fun_ta.wma) call from a higher timeframe. It also highlights the background to indicate which bars were in a realtime state during its calculations.
 
@@ -1522,11 +1528,11 @@ bgcolor(barstate.isrealtime ? color.new(color.orange, 70) : na, title = 
 
 #### Lower-timeframe data
 
-The [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) and [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) functions can retrieve data from lower-timeframe contexts. The [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) function can only retrieve data from a _single_ intrabar in each chart bar, and [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) retrieves data from _all_ available intrabars.
+The [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) and [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) functions can retrieve data from lower-timeframe contexts. The [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) function can only retrieve data from a _single_ intrabar in each chart bar, and [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) retrieves data from _all_ available intrabars.
 
 When using these functions to retrieve intrabar data, it’s important to note that such requests are **not** immune to repainting behavior. Historical and realtime series often rely on _separate_ data feeds. Data providers may retroactively modify realtime data, and it’s possible for races to occur in realtime data feeds, as explained in the [Data feeds](/pine-script-docs/concepts/other-timeframes-and-data/#data-feeds) section of this page. Either case may result in intrabar data retrieved on realtime bars repainting after the script restarts its executions.
 
-Additionally, a particular case that _will_ cause repainting LTF requests is using [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) with [barmerge.lookahead\_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on) to retrieve data from the first intrabar in each chart bar. While it will generally work as expected on historical bars, it will track only the most recent intrabar on realtime bars, as [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) does not retain all intrabar information, and the intrabars the function retrieves on realtime bars are unsorted until restarting the script:
+Additionally, a particular case that _will_ cause repainting LTF requests is using [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) with [barmerge.lookahead_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on) to retrieve data from the first intrabar in each chart bar. While it will generally work as expected on historical bars, it will track only the most recent intrabar on realtime bars, as [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) does not retain all intrabar information, and the intrabars the function retrieves on realtime bars are unsorted until restarting the script:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Other-timeframes-and-data-Historical-and-realtime-behavior-Avoiding-repainting-Lower-timeframe-data-1.CBTFrSjr_3y4ey.webp)
 
@@ -1547,7 +1553,7 @@ plot(requestedClose, "First intrabar close", linewidth = 3)
 bgcolor(barstate.isrealtime ? color.new(color.orange, 60) : na, title = "Realtime bar Highlight")
 ```
 
-One can mitigate this behavior and track the values from the first intrabar, or any available intrabar in the chart bar, by using [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) since it maintains an [array](https://www.tradingview.com/pine-script-reference/v6/#type_array) of intrabar values ordered by the times they come in. Here, we call [array.first()](https://www.tradingview.com/pine-script-reference/v6/#fun_array.first) on a requested [array](https://www.tradingview.com/pine-script-reference/v6/#type_array) of intrabar data to retrieve the [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) price from the first available intrabar in each chart bar:
+One can mitigate this behavior and track the values from the first intrabar, or any available intrabar in the chart bar, by using [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) since it maintains an [array](https://www.tradingview.com/pine-script-reference/v6/#type_array) of intrabar values ordered by the times they come in. Here, we call [array.first()](https://www.tradingview.com/pine-script-reference/v6/#fun_array.first) on a requested [array](https://www.tradingview.com/pine-script-reference/v6/#type_array) of intrabar data to retrieve the [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) price from the first available intrabar in each chart bar:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Other-timeframes-and-data-Historical-and-realtime-behavior-Avoiding-repainting-Lower-timeframe-data-2.6WrbL0Kk_wVrfM.webp)
 
@@ -1572,16 +1578,16 @@ bgcolor(barstate.isrealtime ? color.new(color.orange, 60) : na, title = 
 
 Note that:
 
-- While [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) is more optimized for handling historical and realtime intrabars, it’s still possible in some cases for minor repainting to occur due to data differences from the provider, as outlined above.
+- While [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) is more optimized for handling historical and realtime intrabars, it’s still possible in some cases for minor repainting to occur due to data differences from the provider, as outlined above.
 - This code may not show intrabar data on all available chart bars, depending on how many intrabars each chart bar contains, as `request.*()` functions can retrieve up to 200,000 intrabars from an LTF context. The maximum number of requestable intrabars depends on the user’s [plan](https://www.tradingview.com/pricing/). See [this](/pine-script-docs/writing/limitations/#request-calls) section of the [Limitations](/pine-script-docs/writing/limitations/) page for more information.
 
 ## ​`request.currency_rate()`​
 
-When a script needs to convert values expressed in one currency to another, one can use [request.currency\_rate()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.currency_rate). This function requests a _daily rate_ for currency conversion calculations based on currency pair or [spread](https://www.tradingview.com/support/solutions/43000502298/) data from the most popular exchanges, providing a simpler alternative to fetching specific pairs or [spreads](https://www.tradingview.com/support/solutions/43000502298/) with [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security).
+When a script needs to convert values expressed in one currency to another, one can use [request.currency_rate()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.currency_rate). This function requests a _daily rate_ for currency conversion calculations based on currency pair or [spread](https://www.tradingview.com/support/solutions/43000502298/) data from the most popular exchanges, providing a simpler alternative to fetching specific pairs or [spreads](https://www.tradingview.com/support/solutions/43000502298/) with [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security).
 
-While one can use [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) to retrieve daily currency rates, its use case is more involved than [request.currency\_rate()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.currency_rate), as one needs to supply a valid _ticker ID_ for a currency pair or spread to request the rate. Additionally, a historical offset and [barmerge.lookahead\_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on) are necessary to prevent the results from repainting, as explained in [this section](/pine-script-docs/concepts/other-timeframes-and-data/#avoiding-repainting).
+While one can use [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) to retrieve daily currency rates, its use case is more involved than [request.currency_rate()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.currency_rate), as one needs to supply a valid _ticker ID_ for a currency pair or spread to request the rate. Additionally, a historical offset and [barmerge.lookahead_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on) are necessary to prevent the results from repainting, as explained in [this section](/pine-script-docs/concepts/other-timeframes-and-data/#avoiding-repainting).
 
-The [request.currency\_rate()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.currency_rate) function, on the other hand, only requires _currency codes_. No ticker ID is needed when requesting rates with this function, and it ensures non-repainting results without requiring additional specification.
+The [request.currency_rate()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.currency_rate) function, on the other hand, only requires _currency codes_. No ticker ID is needed when requesting rates with this function, and it ensures non-repainting results without requiring additional specification.
 
 The function’s signature is as follows:
 
@@ -1593,11 +1599,11 @@ The `from` parameter specifies the currency to convert, and the `to` parameter s
 
 When the function cannot calculate a valid conversion rate between the specified `from` and `to` currencies, programmers can decide whether it raises a runtime error or returns [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) via the `ignore_invalid_currency` parameter. The default value is `false`, meaning the function raises a runtime error and halts the script’s executions.
 
-The following example demonstrates a simple use case for [request.currency\_rate()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.currency_rate). Suppose we want to convert values expressed in Turkish lira ([currency.TRY](https://www.tradingview.com/pine-script-reference/v6/#var_currency.TRY)) to South Korean won ([currency.KRW](https://www.tradingview.com/pine-script-reference/v6/#var_currency.KRW)) using a daily conversion rate. If we use [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) to retrieve the rate, we must supply a valid ticker ID and request the last confirmed [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) from the previous day.
+The following example demonstrates a simple use case for [request.currency_rate()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.currency_rate). Suppose we want to convert values expressed in Turkish lira ([currency.TRY](https://www.tradingview.com/pine-script-reference/v6/#var_currency.TRY)) to South Korean won ([currency.KRW](https://www.tradingview.com/pine-script-reference/v6/#var_currency.KRW)) using a daily conversion rate. If we use [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) to retrieve the rate, we must supply a valid ticker ID and request the last confirmed [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) from the previous day.
 
-In this case, no valid symbol exists that would allow us to retrieve a conversion rate directly with [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security). Therefore, we first need a ticker ID for a [spread](https://www.tradingview.com/support/solutions/43000502298/) that converts TRY to an intermediate currency, such as USD, then converts the intermediate currency to KRW. We can then use that ticker ID within [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) with `close[1]` as the `expression` and [barmerge.lookahead\_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on) as the `lookahead` value to request a non-repainting daily rate.
+In this case, no valid symbol exists that would allow us to retrieve a conversion rate directly with [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security). Therefore, we first need a ticker ID for a [spread](https://www.tradingview.com/support/solutions/43000502298/) that converts TRY to an intermediate currency, such as USD, then converts the intermediate currency to KRW. We can then use that ticker ID within [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) with `close[1]` as the `expression` and [barmerge.lookahead_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on) as the `lookahead` value to request a non-repainting daily rate.
 
-Alternatively, we can achieve the same result more simply by calling [request.currency\_rate()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.currency_rate). This function does all the heavy lifting for us, only requiring `from` and `to` currency arguments to perform its calculation.
+Alternatively, we can achieve the same result more simply by calling [request.currency_rate()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.currency_rate). This function does all the heavy lifting for us, only requiring `from` and `to` currency arguments to perform its calculation.
 
 As we see below, both approaches return the same daily rate:
 
@@ -1712,7 +1718,7 @@ if not na(latestEPS)
 
 Note that:
 
-- We’ve included [barmerge.gaps\_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.gaps_on) in the `request.*()` calls, so they only return values when new data is available. Otherwise, they return [na](https://www.tradingview.com/pine-script-reference/v6/#var_na).
+- We’ve included [barmerge.gaps_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.gaps_on) in the `request.*()` calls, so they only return values when new data is available. Otherwise, they return [na](https://www.tradingview.com/pine-script-reference/v6/#var_na).
 - The script assigns a [table](https://www.tradingview.com/pine-script-reference/v6/#type_table) ID to the `infoTable` variable on the first chart bar. On subsequent bars, it updates necessary cells with new information whenever data is available.
 - If no information is available from any of the `request.*()` calls throughout the chart’s history (e.g., if the `ticker` has no dividend information), the script does not initialize the corresponding cells since it’s unnecessary.
 
@@ -1736,7 +1742,7 @@ See this page’s [Common characteristics](/pine-script-docs/concepts/other-time
 
 It’s important to note that the data retrieved from this function comes in at a _fixed frequency_, independent of the precise date on which the data is made available within a fiscal period. For a company’s dividends, splits, and earnings per share (EPS) information, one can request data reported on exact dates via [request.dividends()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.dividends), [request.splits()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.splits), and [request.earnings()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.earnings).
 
-This script uses [request.financial()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.financial) to retrieve information about the income and expenses of a stock’s issuing company and visualize the profitability of its typical business operations. It requests the “OPER\_INCOME”, “TOTAL\_REVENUE”, and “TOTAL\_OPER\_EXPENSE” [financial IDs](/pine-script-docs/concepts/other-timeframes-and-data/#financial-ids) for the [syminfo.tickerid](https://www.tradingview.com/pine-script-reference/v6/#var_syminfo.tickerid) over the latest `fiscalPeriod`, then [plots](/pine-script-docs/visuals/plots/) the results on the chart:
+This script uses [request.financial()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.financial) to retrieve information about the income and expenses of a stock’s issuing company and visualize the profitability of its typical business operations. It requests the “OPER_INCOME”, “TOTAL_REVENUE”, and “TOTAL_OPER_EXPENSE” [financial IDs](/pine-script-docs/concepts/other-timeframes-and-data/#financial-ids) for the [syminfo.tickerid](https://www.tradingview.com/pine-script-reference/v6/#var_syminfo.tickerid) over the latest `fiscalPeriod`, then [plots](/pine-script-docs/visuals/plots/) the results on the chart:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Other-timeframes-and-data-Request-financial-1.B9cESm-h_ZhOVcV.webp)
 
@@ -1862,46 +1868,46 @@ This table lists the available metrics that provide information about a company�
 
 [Click to show/hide]()
 
-| Financial                                                                                                        | `period`        | `financial_id`                    |
-| ---------------------------------------------------------------------------------------------------------------- | --------------- | --------------------------------- |
-| [After tax other income/expense](https://www.tradingview.com/support/solutions/43000563497)                      | FQ, FH, FY, TTM | AFTER\_TAX\_OTHER\_INCOME         |
-| [Average basic shares outstanding](https://www.tradingview.com/support/solutions/43000670320)                    | FQ, FH, FY      | BASIC\_SHARES\_OUTSTANDING        |
-| [Basic earnings per share (Basic EPS)](https://www.tradingview.com/support/solutions/43000563520)                | FQ, FH, FY, TTM | EARNINGS\_PER\_SHARE\_BASIC       |
-| [Cost of goods sold](https://www.tradingview.com/support/solutions/43000553618)                                  | FQ, FH, FY, TTM | COST\_OF\_GOODS                   |
-| [Deprecation and amortization](https://www.tradingview.com/support/solutions/43000563477)                        | FQ, FH, FY, TTM | DEP\_AMORT\_EXP\_INCOME\_S        |
-| [Diluted earnings per share (Diluted EPS)](https://www.tradingview.com/support/solutions/43000553616)            | FQ, FH, FY, TTM | EARNINGS\_PER\_SHARE\_DILUTED     |
-| [Diluted net income available to common stockholders](https://www.tradingview.com/support/solutions/43000563516) | FQ, FH, FY, TTM | DILUTED\_NET\_INCOME              |
-| [Diluted shares outstanding](https://www.tradingview.com/support/solutions/43000670322)                          | FQ, FH, FY      | DILUTED\_SHARES\_OUTSTANDING      |
-| [Dilution adjustment](https://www.tradingview.com/support/solutions/43000563504)                                 | FQ, FH, FY, TTM | DILUTION\_ADJUSTMENT              |
-| [Discontinued operations](https://www.tradingview.com/support/solutions/43000563502)                             | FQ, FH, FY, TTM | DISCONTINUED\_OPERATIONS          |
-| [EBIT](https://www.tradingview.com/support/solutions/43000670329)                                                | FQ, FH, FY, TTM | EBIT                              |
-| [EBITDA](https://www.tradingview.com/support/solutions/43000553610)                                              | FQ, FH, FY, TTM | EBITDA                            |
-| [Equity in earnings](https://www.tradingview.com/support/solutions/43000563487)                                  | FQ, FH, FY, TTM | EQUITY\_IN\_EARNINGS              |
-| [Gross profit](https://www.tradingview.com/support/solutions/43000553611)                                        | FQ, FH, FY, TTM | GROSS\_PROFIT                     |
-| [Interest capitalized](https://www.tradingview.com/support/solutions/43000563468)                                | FQ, FH, FY, TTM | INTEREST\_CAPITALIZED             |
-| [Interest expense on debt](https://www.tradingview.com/support/solutions/43000563467)                            | FQ, FH, FY, TTM | INTEREST\_EXPENSE\_ON\_DEBT       |
-| [Interest expense, net of interest capitalized](https://www.tradingview.com/support/solutions/43000563466)       | FQ, FH, FY, TTM | NON\_OPER\_INTEREST\_EXP          |
-| [Miscellaneous non-operating expense](https://www.tradingview.com/support/solutions/43000563479)                 | FQ, FH, FY, TTM | OTHER\_INCOME                     |
-| [Net income](https://www.tradingview.com/support/solutions/43000553617)                                          | FQ, FH, FY, TTM | NET\_INCOME                       |
-| [Net income before discontinued operations](https://www.tradingview.com/support/solutions/43000563500)           | FQ, FH, FY, TTM | NET\_INCOME\_BEF\_DISC\_OPER      |
-| [Non-controlling/minority interest](https://www.tradingview.com/support/solutions/43000563495)                   | FQ, FH, FY, TTM | MINORITY\_INTEREST\_EXP           |
-| [Non-operating income, excl. interest expenses](https://www.tradingview.com/support/solutions/43000563471)       | FQ, FH, FY, TTM | NON\_OPER\_INCOME                 |
-| [Non-operating income, total](https://www.tradingview.com/support/solutions/43000563465)                         | FQ, FH, FY, TTM | TOTAL\_NON\_OPER\_INCOME          |
-| [Non-operating interest income](https://www.tradingview.com/support/solutions/43000563473)                       | FQ, FH, FY, TTM | NON\_OPER\_INTEREST\_INCOME       |
-| [Operating expenses (excl. COGS)](https://www.tradingview.com/support/solutions/43000563463)                     | FQ, FH, FY, TTM | OPERATING\_EXPENSES               |
-| [Operating income](https://www.tradingview.com/support/solutions/43000563464)                                    | FQ, FH, FY, TTM | OPER\_INCOME                      |
-| [Other cost of goods sold](https://www.tradingview.com/support/solutions/43000563478)                            | FQ, FH, FY, TTM | COST\_OF\_GOODS\_EXCL\_DEP\_AMORT |
-| [Other operating expenses, total](https://www.tradingview.com/support/solutions/43000563483)                     | FQ, FH, FY, TTM | OTHER\_OPER\_EXPENSE\_TOTAL       |
-| [Preferred dividends](https://www.tradingview.com/support/solutions/43000563506)                                 | FQ, FH, FY, TTM | PREFERRED\_DIVIDENDS              |
-| [Pretax equity in earnings](https://www.tradingview.com/support/solutions/43000563474)                           | FQ, FH, FY, TTM | PRETAX\_EQUITY\_IN\_EARNINGS      |
-| [Pretax income](https://www.tradingview.com/support/solutions/43000563462)                                       | FQ, FH, FY, TTM | PRETAX\_INCOME                    |
-| [Research & development](https://www.tradingview.com/support/solutions/43000553612)                              | FQ, FH, FY, TTM | RESEARCH\_AND\_DEV                |
-| [Selling/general/admin expenses, other](https://www.tradingview.com/support/solutions/43000553614)               | FQ, FH, FY, TTM | SELL\_GEN\_ADMIN\_EXP\_OTHER      |
-| [Selling/general/admin expenses, total](https://www.tradingview.com/support/solutions/43000553613)               | FQ, FH, FY, TTM | SELL\_GEN\_ADMIN\_EXP\_TOTAL      |
-| [Taxes](https://www.tradingview.com/support/solutions/43000563492)                                               | FQ, FH, FY, TTM | INCOME\_TAX                       |
-| [Total operating expenses](https://www.tradingview.com/support/solutions/43000553615)                            | FQ, FH, FY, TTM | TOTAL\_OPER\_EXPENSE              |
-| [Total revenue](https://www.tradingview.com/support/solutions/43000553619)                                       | FQ, FH, FY, TTM | TOTAL\_REVENUE                    |
-| [Unusual income/expense](https://www.tradingview.com/support/solutions/43000563476)                              | FQ, FH, FY, TTM | UNUSUAL\_EXPENSE\_INC             |
+| Financial                                                                                                        | `period`        | `financial_id`               |
+| ---------------------------------------------------------------------------------------------------------------- | --------------- | ---------------------------- |
+| [After tax other income/expense](https://www.tradingview.com/support/solutions/43000563497)                      | FQ, FH, FY, TTM | AFTER_TAX_OTHER_INCOME       |
+| [Average basic shares outstanding](https://www.tradingview.com/support/solutions/43000670320)                    | FQ, FH, FY      | BASIC_SHARES_OUTSTANDING     |
+| [Basic earnings per share (Basic EPS)](https://www.tradingview.com/support/solutions/43000563520)                | FQ, FH, FY, TTM | EARNINGS_PER_SHARE_BASIC     |
+| [Cost of goods sold](https://www.tradingview.com/support/solutions/43000553618)                                  | FQ, FH, FY, TTM | COST_OF_GOODS                |
+| [Deprecation and amortization](https://www.tradingview.com/support/solutions/43000563477)                        | FQ, FH, FY, TTM | DEP_AMORT_EXP_INCOME_S       |
+| [Diluted earnings per share (Diluted EPS)](https://www.tradingview.com/support/solutions/43000553616)            | FQ, FH, FY, TTM | EARNINGS_PER_SHARE_DILUTED   |
+| [Diluted net income available to common stockholders](https://www.tradingview.com/support/solutions/43000563516) | FQ, FH, FY, TTM | DILUTED_NET_INCOME           |
+| [Diluted shares outstanding](https://www.tradingview.com/support/solutions/43000670322)                          | FQ, FH, FY      | DILUTED_SHARES_OUTSTANDING   |
+| [Dilution adjustment](https://www.tradingview.com/support/solutions/43000563504)                                 | FQ, FH, FY, TTM | DILUTION_ADJUSTMENT          |
+| [Discontinued operations](https://www.tradingview.com/support/solutions/43000563502)                             | FQ, FH, FY, TTM | DISCONTINUED_OPERATIONS      |
+| [EBIT](https://www.tradingview.com/support/solutions/43000670329)                                                | FQ, FH, FY, TTM | EBIT                         |
+| [EBITDA](https://www.tradingview.com/support/solutions/43000553610)                                              | FQ, FH, FY, TTM | EBITDA                       |
+| [Equity in earnings](https://www.tradingview.com/support/solutions/43000563487)                                  | FQ, FH, FY, TTM | EQUITY_IN_EARNINGS           |
+| [Gross profit](https://www.tradingview.com/support/solutions/43000553611)                                        | FQ, FH, FY, TTM | GROSS_PROFIT                 |
+| [Interest capitalized](https://www.tradingview.com/support/solutions/43000563468)                                | FQ, FH, FY, TTM | INTEREST_CAPITALIZED         |
+| [Interest expense on debt](https://www.tradingview.com/support/solutions/43000563467)                            | FQ, FH, FY, TTM | INTEREST_EXPENSE_ON_DEBT     |
+| [Interest expense, net of interest capitalized](https://www.tradingview.com/support/solutions/43000563466)       | FQ, FH, FY, TTM | NON_OPER_INTEREST_EXP        |
+| [Miscellaneous non-operating expense](https://www.tradingview.com/support/solutions/43000563479)                 | FQ, FH, FY, TTM | OTHER_INCOME                 |
+| [Net income](https://www.tradingview.com/support/solutions/43000553617)                                          | FQ, FH, FY, TTM | NET_INCOME                   |
+| [Net income before discontinued operations](https://www.tradingview.com/support/solutions/43000563500)           | FQ, FH, FY, TTM | NET_INCOME_BEF_DISC_OPER     |
+| [Non-controlling/minority interest](https://www.tradingview.com/support/solutions/43000563495)                   | FQ, FH, FY, TTM | MINORITY_INTEREST_EXP        |
+| [Non-operating income, excl. interest expenses](https://www.tradingview.com/support/solutions/43000563471)       | FQ, FH, FY, TTM | NON_OPER_INCOME              |
+| [Non-operating income, total](https://www.tradingview.com/support/solutions/43000563465)                         | FQ, FH, FY, TTM | TOTAL_NON_OPER_INCOME        |
+| [Non-operating interest income](https://www.tradingview.com/support/solutions/43000563473)                       | FQ, FH, FY, TTM | NON_OPER_INTEREST_INCOME     |
+| [Operating expenses (excl. COGS)](https://www.tradingview.com/support/solutions/43000563463)                     | FQ, FH, FY, TTM | OPERATING_EXPENSES           |
+| [Operating income](https://www.tradingview.com/support/solutions/43000563464)                                    | FQ, FH, FY, TTM | OPER_INCOME                  |
+| [Other cost of goods sold](https://www.tradingview.com/support/solutions/43000563478)                            | FQ, FH, FY, TTM | COST_OF_GOODS_EXCL_DEP_AMORT |
+| [Other operating expenses, total](https://www.tradingview.com/support/solutions/43000563483)                     | FQ, FH, FY, TTM | OTHER_OPER_EXPENSE_TOTAL     |
+| [Preferred dividends](https://www.tradingview.com/support/solutions/43000563506)                                 | FQ, FH, FY, TTM | PREFERRED_DIVIDENDS          |
+| [Pretax equity in earnings](https://www.tradingview.com/support/solutions/43000563474)                           | FQ, FH, FY, TTM | PRETAX_EQUITY_IN_EARNINGS    |
+| [Pretax income](https://www.tradingview.com/support/solutions/43000563462)                                       | FQ, FH, FY, TTM | PRETAX_INCOME                |
+| [Research & development](https://www.tradingview.com/support/solutions/43000553612)                              | FQ, FH, FY, TTM | RESEARCH_AND_DEV             |
+| [Selling/general/admin expenses, other](https://www.tradingview.com/support/solutions/43000553614)               | FQ, FH, FY, TTM | SELL_GEN_ADMIN_EXP_OTHER     |
+| [Selling/general/admin expenses, total](https://www.tradingview.com/support/solutions/43000553613)               | FQ, FH, FY, TTM | SELL_GEN_ADMIN_EXP_TOTAL     |
+| [Taxes](https://www.tradingview.com/support/solutions/43000563492)                                               | FQ, FH, FY, TTM | INCOME_TAX                   |
+| [Total operating expenses](https://www.tradingview.com/support/solutions/43000553615)                            | FQ, FH, FY, TTM | TOTAL_OPER_EXPENSE           |
+| [Total revenue](https://www.tradingview.com/support/solutions/43000553619)                                       | FQ, FH, FY, TTM | TOTAL_REVENUE                |
+| [Unusual income/expense](https://www.tradingview.com/support/solutions/43000563476)                              | FQ, FH, FY, TTM | UNUSUAL_EXPENSE_INC          |
 
 #### Balance sheet
 
@@ -1909,75 +1915,75 @@ This table lists the metrics that provide information about a company’s capita
 
 [Click to show/hide]()
 
-| Financial                                                                                                     | `period`   | `financial_id`                         |
-| ------------------------------------------------------------------------------------------------------------- | ---------- | -------------------------------------- |
-| [Accounts payable](https://www.tradingview.com/support/solutions/43000563619)                                 | FQ, FH, FY | ACCOUNTS\_PAYABLE                      |
-| [Accounts receivable - trade, net](https://www.tradingview.com/support/solutions/43000563740)                 | FQ, FH, FY | ACCOUNTS\_RECEIVABLES\_NET             |
-| [Accrued payroll](https://www.tradingview.com/support/solutions/43000563628)                                  | FQ, FH, FY | ACCRUED\_PAYROLL                       |
-| [Accumulated depreciation, total](https://www.tradingview.com/support/solutions/43000563673)                  | FQ, FH, FY | ACCUM\_DEPREC\_TOTAL                   |
-| [Additional paid-in capital/Capital surplus](https://www.tradingview.com/support/solutions/43000563874)       | FQ, FH, FY | ADDITIONAL\_PAID\_IN\_CAPITAL          |
-| [Book value per share](https://www.tradingview.com/support/solutions/43000670330)                             | FQ, FH, FY | BOOK\_VALUE\_PER\_SHARE                |
-| [Capital and operating lease obligations](https://www.tradingview.com/support/solutions/43000563522)          | FQ, FH, FY | CAPITAL\_OPERATING\_LEASE\_OBLIGATIONS |
-| [Capitalized lease obligations](https://www.tradingview.com/support/solutions/43000563527)                    | FQ, FH, FY | CAPITAL\_LEASE\_OBLIGATIONS            |
-| [Cash & equivalents](https://www.tradingview.com/support/solutions/43000563709)                               | FQ, FH, FY | CASH\_N\_EQUIVALENTS                   |
-| [Cash and short term investments](https://www.tradingview.com/support/solutions/43000563702)                  | FQ, FH, FY | CASH\_N\_SHORT\_TERM\_INVEST           |
-| [Common equity, total](https://www.tradingview.com/support/solutions/43000563866)                             | FQ, FH, FY | COMMON\_EQUITY\_TOTAL                  |
-| [Common stock par/Carrying value](https://www.tradingview.com/support/solutions/43000563873)                  | FQ, FH, FY | COMMON\_STOCK\_PAR                     |
-| [Current portion of LT debt and capital leases](https://www.tradingview.com/support/solutions/43000563557)    | FQ, FH, FY | CURRENT\_PORT\_DEBT\_CAPITAL\_LEASES   |
-| [Deferred income, current](https://www.tradingview.com/support/solutions/43000563631)                         | FQ, FH, FY | DEFERRED\_INCOME\_CURRENT              |
-| [Deferred income, non-current](https://www.tradingview.com/support/solutions/43000563540)                     | FQ, FH, FY | DEFERRED\_INCOME\_NON\_CURRENT         |
-| [Deferred tax assets](https://www.tradingview.com/support/solutions/43000563683)                              | FQ, FH, FY | DEFERRED\_TAX\_ASSESTS                 |
-| [Deferred tax liabilities](https://www.tradingview.com/support/solutions/43000563536)                         | FQ, FH, FY | DEFERRED\_TAX\_LIABILITIES             |
-| [Dividends payable](https://www.tradingview.com/support/solutions/43000563624)                                | FY         | DIVIDENDS\_PAYABLE                     |
-| [Goodwill, net](https://www.tradingview.com/support/solutions/43000563688)                                    | FQ, FH, FY | GOODWILL                               |
-| [Gross property/plant/equipment](https://www.tradingview.com/support/solutions/43000563667)                   | FQ, FH, FY | PPE\_TOTAL\_GROSS                      |
-| [Income tax payable](https://www.tradingview.com/support/solutions/43000563621)                               | FQ, FH, FY | INCOME\_TAX\_PAYABLE                   |
-| [Inventories - finished goods](https://www.tradingview.com/support/solutions/43000563749)                     | FQ, FH, FY | INVENTORY\_FINISHED\_GOODS             |
-| [Inventories - progress payments & other](https://www.tradingview.com/support/solutions/43000563748)          | FQ, FH, FY | INVENTORY\_PROGRESS\_PAYMENTS          |
-| [Inventories - raw materials](https://www.tradingview.com/support/solutions/43000563753)                      | FQ, FH, FY | INVENTORY\_RAW\_MATERIALS              |
-| [Inventories - work in progress](https://www.tradingview.com/support/solutions/43000563746)                   | FQ, FH, FY | INVENTORY\_WORK\_IN\_PROGRESS          |
-| [Investments in unconsolidated subsidiaries](https://www.tradingview.com/support/solutions/43000563645)       | FQ, FH, FY | INVESTMENTS\_IN\_UNCONCSOLIDATE        |
-| [Long term debt](https://www.tradingview.com/support/solutions/43000553621)                                   | FQ, FH, FY | LONG\_TERM\_DEBT                       |
-| [Long term debt excl. lease liabilities](https://www.tradingview.com/support/solutions/43000563521)           | FQ, FH, FY | LONG\_TERM\_DEBT\_EXCL\_CAPITAL\_LEASE |
-| [Long term investments](https://www.tradingview.com/support/solutions/43000563639)                            | FQ, FH, FY | LONG\_TERM\_INVESTMENTS                |
-| [Minority interest](https://www.tradingview.com/support/solutions/43000563884)                                | FQ, FH, FY | MINORITY\_INTEREST                     |
-| [Net debt](https://www.tradingview.com/support/solutions/43000665310)                                         | FQ, FH, FY | NET\_DEBT                              |
-| [Net intangible assets](https://www.tradingview.com/support/solutions/43000563686)                            | FQ, FH, FY | INTANGIBLES\_NET                       |
-| [Net property/plant/equipment](https://www.tradingview.com/support/solutions/43000563657)                     | FQ, FH, FY | PPE\_TOTAL\_NET                        |
-| [Note receivable - long term](https://www.tradingview.com/support/solutions/43000563641)                      | FQ, FH, FY | LONG\_TERM\_NOTE\_RECEIVABLE           |
-| [Notes payable](https://www.tradingview.com/support/solutions/43000563600)                                    | FY         | NOTES\_PAYABLE\_SHORT\_TERM\_DEBT      |
-| [Operating lease liabilities](https://www.tradingview.com/support/solutions/43000563532)                      | FQ, FH, FY | OPERATING\_LEASE\_LIABILITIES          |
-| [Other common equity](https://www.tradingview.com/support/solutions/43000563877)                              | FQ, FH, FY | OTHER\_COMMON\_EQUITY                  |
-| [Other current assets, total](https://www.tradingview.com/support/solutions/43000563761)                      | FQ, FH, FY | OTHER\_CURRENT\_ASSETS\_TOTAL          |
-| [Other current liabilities](https://www.tradingview.com/support/solutions/43000563635)                        | FQ, FH, FY | OTHER\_CURRENT\_LIABILITIES            |
-| [Other intangibles, net](https://www.tradingview.com/support/solutions/43000563689)                           | FQ, FH, FY | OTHER\_INTANGIBLES\_NET                |
-| [Other investments](https://www.tradingview.com/support/solutions/43000563649)                                | FQ, FH, FY | OTHER\_INVESTMENTS                     |
-| [Other long term assets, total](https://www.tradingview.com/support/solutions/43000563693)                    | FQ, FH, FY | LONG\_TERM\_OTHER\_ASSETS\_TOTAL       |
-| [Other non-current liabilities, total](https://www.tradingview.com/support/solutions/43000563545)             | FQ, FH, FY | OTHER\_LIABILITIES\_TOTAL              |
-| [Other receivables](https://www.tradingview.com/support/solutions/43000563741)                                | FQ, FH, FY | OTHER\_RECEIVABLES                     |
-| [Other short term debt](https://www.tradingview.com/support/solutions/43000563614)                            | FY         | OTHER\_SHORT\_TERM\_DEBT               |
-| [Paid in capital](https://www.tradingview.com/support/solutions/43000563871)                                  | FQ, FH, FY | PAID\_IN\_CAPITAL                      |
-| [Preferred stock, carrying value](https://www.tradingview.com/support/solutions/43000563879)                  | FQ, FH, FY | PREFERRED\_STOCK\_CARRYING\_VALUE      |
-| [Prepaid expenses](https://www.tradingview.com/support/solutions/43000563757)                                 | FQ, FH, FY | PREPAID\_EXPENSES                      |
-| [Provision for risks & charge](https://www.tradingview.com/support/solutions/43000563535)                     | FQ, FH, FY | PROVISION\_F\_RISKS                    |
-| [Retained earnings](https://www.tradingview.com/support/solutions/43000563867)                                | FQ, FH, FY | RETAINED\_EARNINGS                     |
-| [Shareholders’ equity](https://www.tradingview.com/support/solutions/43000557442)                             | FQ, FH, FY | SHRHLDRS\_EQUITY                       |
-| [Short term debt](https://www.tradingview.com/support/solutions/43000563554)                                  | FQ, FH, FY | SHORT\_TERM\_DEBT                      |
-| [Short term debt excl. current portion of LT debt](https://www.tradingview.com/support/solutions/43000563563) | FQ, FH, FY | SHORT\_TERM\_DEBT\_EXCL\_CURRENT\_PORT |
-| [Short term investments](https://www.tradingview.com/support/solutions/43000563716)                           | FQ, FH, FY | SHORT\_TERM\_INVEST                    |
-| [Tangible book value per share](https://www.tradingview.com/support/solutions/43000597072)                    | FQ, FH, FY | BOOK\_TANGIBLE\_PER\_SHARE             |
-| [Total assets](https://www.tradingview.com/support/solutions/43000553623)                                     | FQ, FH, FY | TOTAL\_ASSETS                          |
-| [Total current assets](https://www.tradingview.com/support/solutions/43000557441)                             | FQ, FH, FY | TOTAL\_CURRENT\_ASSETS                 |
-| [Total current liabilities](https://www.tradingview.com/support/solutions/43000557437)                        | FQ, FH, FY | TOTAL\_CURRENT\_LIABILITIES            |
-| [Total debt](https://www.tradingview.com/support/solutions/43000553622)                                       | FQ, FH, FY | TOTAL\_DEBT                            |
-| [Total equity](https://www.tradingview.com/support/solutions/43000553625)                                     | FQ, FH, FY | TOTAL\_EQUITY                          |
-| [Total inventory](https://www.tradingview.com/support/solutions/43000563745)                                  | FQ, FH, FY | TOTAL\_INVENTORY                       |
-| [Total liabilities](https://www.tradingview.com/support/solutions/43000553624)                                | FQ, FH, FY | TOTAL\_LIABILITIES                     |
-| [Total liabilities & shareholders’ equities](https://www.tradingview.com/support/solutions/43000553626)       | FQ, FH, FY | TOTAL\_LIABILITIES\_SHRHLDRS\_EQUITY   |
-| [Total non-current assets](https://www.tradingview.com/support/solutions/43000557440)                         | FQ, FH, FY | TOTAL\_NON\_CURRENT\_ASSETS            |
-| [Total non-current liabilities](https://www.tradingview.com/support/solutions/43000557436)                    | FQ, FH, FY | TOTAL\_NON\_CURRENT\_LIABILITIES       |
-| [Total receivables, net](https://www.tradingview.com/support/solutions/43000563738)                           | FQ, FH, FY | TOTAL\_RECEIVABLES\_NET                |
-| [Treasury stock - common](https://www.tradingview.com/support/solutions/43000563875)                          | FQ, FH, FY | TREASURY\_STOCK\_COMMON                |
+| Financial                                                                                                     | `period`   | `financial_id`                      |
+| ------------------------------------------------------------------------------------------------------------- | ---------- | ----------------------------------- |
+| [Accounts payable](https://www.tradingview.com/support/solutions/43000563619)                                 | FQ, FH, FY | ACCOUNTS_PAYABLE                    |
+| [Accounts receivable - trade, net](https://www.tradingview.com/support/solutions/43000563740)                 | FQ, FH, FY | ACCOUNTS_RECEIVABLES_NET            |
+| [Accrued payroll](https://www.tradingview.com/support/solutions/43000563628)                                  | FQ, FH, FY | ACCRUED_PAYROLL                     |
+| [Accumulated depreciation, total](https://www.tradingview.com/support/solutions/43000563673)                  | FQ, FH, FY | ACCUM_DEPREC_TOTAL                  |
+| [Additional paid-in capital/Capital surplus](https://www.tradingview.com/support/solutions/43000563874)       | FQ, FH, FY | ADDITIONAL_PAID_IN_CAPITAL          |
+| [Book value per share](https://www.tradingview.com/support/solutions/43000670330)                             | FQ, FH, FY | BOOK_VALUE_PER_SHARE                |
+| [Capital and operating lease obligations](https://www.tradingview.com/support/solutions/43000563522)          | FQ, FH, FY | CAPITAL_OPERATING_LEASE_OBLIGATIONS |
+| [Capitalized lease obligations](https://www.tradingview.com/support/solutions/43000563527)                    | FQ, FH, FY | CAPITAL_LEASE_OBLIGATIONS           |
+| [Cash & equivalents](https://www.tradingview.com/support/solutions/43000563709)                               | FQ, FH, FY | CASH_N_EQUIVALENTS                  |
+| [Cash and short term investments](https://www.tradingview.com/support/solutions/43000563702)                  | FQ, FH, FY | CASH_N_SHORT_TERM_INVEST            |
+| [Common equity, total](https://www.tradingview.com/support/solutions/43000563866)                             | FQ, FH, FY | COMMON_EQUITY_TOTAL                 |
+| [Common stock par/Carrying value](https://www.tradingview.com/support/solutions/43000563873)                  | FQ, FH, FY | COMMON_STOCK_PAR                    |
+| [Current portion of LT debt and capital leases](https://www.tradingview.com/support/solutions/43000563557)    | FQ, FH, FY | CURRENT_PORT_DEBT_CAPITAL_LEASES    |
+| [Deferred income, current](https://www.tradingview.com/support/solutions/43000563631)                         | FQ, FH, FY | DEFERRED_INCOME_CURRENT             |
+| [Deferred income, non-current](https://www.tradingview.com/support/solutions/43000563540)                     | FQ, FH, FY | DEFERRED_INCOME_NON_CURRENT         |
+| [Deferred tax assets](https://www.tradingview.com/support/solutions/43000563683)                              | FQ, FH, FY | DEFERRED_TAX_ASSESTS                |
+| [Deferred tax liabilities](https://www.tradingview.com/support/solutions/43000563536)                         | FQ, FH, FY | DEFERRED_TAX_LIABILITIES            |
+| [Dividends payable](https://www.tradingview.com/support/solutions/43000563624)                                | FY         | DIVIDENDS_PAYABLE                   |
+| [Goodwill, net](https://www.tradingview.com/support/solutions/43000563688)                                    | FQ, FH, FY | GOODWILL                            |
+| [Gross property/plant/equipment](https://www.tradingview.com/support/solutions/43000563667)                   | FQ, FH, FY | PPE_TOTAL_GROSS                     |
+| [Income tax payable](https://www.tradingview.com/support/solutions/43000563621)                               | FQ, FH, FY | INCOME_TAX_PAYABLE                  |
+| [Inventories - finished goods](https://www.tradingview.com/support/solutions/43000563749)                     | FQ, FH, FY | INVENTORY_FINISHED_GOODS            |
+| [Inventories - progress payments & other](https://www.tradingview.com/support/solutions/43000563748)          | FQ, FH, FY | INVENTORY_PROGRESS_PAYMENTS         |
+| [Inventories - raw materials](https://www.tradingview.com/support/solutions/43000563753)                      | FQ, FH, FY | INVENTORY_RAW_MATERIALS             |
+| [Inventories - work in progress](https://www.tradingview.com/support/solutions/43000563746)                   | FQ, FH, FY | INVENTORY_WORK_IN_PROGRESS          |
+| [Investments in unconsolidated subsidiaries](https://www.tradingview.com/support/solutions/43000563645)       | FQ, FH, FY | INVESTMENTS_IN_UNCONCSOLIDATE       |
+| [Long term debt](https://www.tradingview.com/support/solutions/43000553621)                                   | FQ, FH, FY | LONG_TERM_DEBT                      |
+| [Long term debt excl. lease liabilities](https://www.tradingview.com/support/solutions/43000563521)           | FQ, FH, FY | LONG_TERM_DEBT_EXCL_CAPITAL_LEASE   |
+| [Long term investments](https://www.tradingview.com/support/solutions/43000563639)                            | FQ, FH, FY | LONG_TERM_INVESTMENTS               |
+| [Minority interest](https://www.tradingview.com/support/solutions/43000563884)                                | FQ, FH, FY | MINORITY_INTEREST                   |
+| [Net debt](https://www.tradingview.com/support/solutions/43000665310)                                         | FQ, FH, FY | NET_DEBT                            |
+| [Net intangible assets](https://www.tradingview.com/support/solutions/43000563686)                            | FQ, FH, FY | INTANGIBLES_NET                     |
+| [Net property/plant/equipment](https://www.tradingview.com/support/solutions/43000563657)                     | FQ, FH, FY | PPE_TOTAL_NET                       |
+| [Note receivable - long term](https://www.tradingview.com/support/solutions/43000563641)                      | FQ, FH, FY | LONG_TERM_NOTE_RECEIVABLE           |
+| [Notes payable](https://www.tradingview.com/support/solutions/43000563600)                                    | FY         | NOTES_PAYABLE_SHORT_TERM_DEBT       |
+| [Operating lease liabilities](https://www.tradingview.com/support/solutions/43000563532)                      | FQ, FH, FY | OPERATING_LEASE_LIABILITIES         |
+| [Other common equity](https://www.tradingview.com/support/solutions/43000563877)                              | FQ, FH, FY | OTHER_COMMON_EQUITY                 |
+| [Other current assets, total](https://www.tradingview.com/support/solutions/43000563761)                      | FQ, FH, FY | OTHER_CURRENT_ASSETS_TOTAL          |
+| [Other current liabilities](https://www.tradingview.com/support/solutions/43000563635)                        | FQ, FH, FY | OTHER_CURRENT_LIABILITIES           |
+| [Other intangibles, net](https://www.tradingview.com/support/solutions/43000563689)                           | FQ, FH, FY | OTHER_INTANGIBLES_NET               |
+| [Other investments](https://www.tradingview.com/support/solutions/43000563649)                                | FQ, FH, FY | OTHER_INVESTMENTS                   |
+| [Other long term assets, total](https://www.tradingview.com/support/solutions/43000563693)                    | FQ, FH, FY | LONG_TERM_OTHER_ASSETS_TOTAL        |
+| [Other non-current liabilities, total](https://www.tradingview.com/support/solutions/43000563545)             | FQ, FH, FY | OTHER_LIABILITIES_TOTAL             |
+| [Other receivables](https://www.tradingview.com/support/solutions/43000563741)                                | FQ, FH, FY | OTHER_RECEIVABLES                   |
+| [Other short term debt](https://www.tradingview.com/support/solutions/43000563614)                            | FY         | OTHER_SHORT_TERM_DEBT               |
+| [Paid in capital](https://www.tradingview.com/support/solutions/43000563871)                                  | FQ, FH, FY | PAID_IN_CAPITAL                     |
+| [Preferred stock, carrying value](https://www.tradingview.com/support/solutions/43000563879)                  | FQ, FH, FY | PREFERRED_STOCK_CARRYING_VALUE      |
+| [Prepaid expenses](https://www.tradingview.com/support/solutions/43000563757)                                 | FQ, FH, FY | PREPAID_EXPENSES                    |
+| [Provision for risks & charge](https://www.tradingview.com/support/solutions/43000563535)                     | FQ, FH, FY | PROVISION_F_RISKS                   |
+| [Retained earnings](https://www.tradingview.com/support/solutions/43000563867)                                | FQ, FH, FY | RETAINED_EARNINGS                   |
+| [Shareholders’ equity](https://www.tradingview.com/support/solutions/43000557442)                             | FQ, FH, FY | SHRHLDRS_EQUITY                     |
+| [Short term debt](https://www.tradingview.com/support/solutions/43000563554)                                  | FQ, FH, FY | SHORT_TERM_DEBT                     |
+| [Short term debt excl. current portion of LT debt](https://www.tradingview.com/support/solutions/43000563563) | FQ, FH, FY | SHORT_TERM_DEBT_EXCL_CURRENT_PORT   |
+| [Short term investments](https://www.tradingview.com/support/solutions/43000563716)                           | FQ, FH, FY | SHORT_TERM_INVEST                   |
+| [Tangible book value per share](https://www.tradingview.com/support/solutions/43000597072)                    | FQ, FH, FY | BOOK_TANGIBLE_PER_SHARE             |
+| [Total assets](https://www.tradingview.com/support/solutions/43000553623)                                     | FQ, FH, FY | TOTAL_ASSETS                        |
+| [Total current assets](https://www.tradingview.com/support/solutions/43000557441)                             | FQ, FH, FY | TOTAL_CURRENT_ASSETS                |
+| [Total current liabilities](https://www.tradingview.com/support/solutions/43000557437)                        | FQ, FH, FY | TOTAL_CURRENT_LIABILITIES           |
+| [Total debt](https://www.tradingview.com/support/solutions/43000553622)                                       | FQ, FH, FY | TOTAL_DEBT                          |
+| [Total equity](https://www.tradingview.com/support/solutions/43000553625)                                     | FQ, FH, FY | TOTAL_EQUITY                        |
+| [Total inventory](https://www.tradingview.com/support/solutions/43000563745)                                  | FQ, FH, FY | TOTAL_INVENTORY                     |
+| [Total liabilities](https://www.tradingview.com/support/solutions/43000553624)                                | FQ, FH, FY | TOTAL_LIABILITIES                   |
+| [Total liabilities & shareholders’ equities](https://www.tradingview.com/support/solutions/43000553626)       | FQ, FH, FY | TOTAL_LIABILITIES_SHRHLDRS_EQUITY   |
+| [Total non-current assets](https://www.tradingview.com/support/solutions/43000557440)                         | FQ, FH, FY | TOTAL_NON_CURRENT_ASSETS            |
+| [Total non-current liabilities](https://www.tradingview.com/support/solutions/43000557436)                    | FQ, FH, FY | TOTAL_NON_CURRENT_LIABILITIES       |
+| [Total receivables, net](https://www.tradingview.com/support/solutions/43000563738)                           | FQ, FH, FY | TOTAL_RECEIVABLES_NET               |
+| [Treasury stock - common](https://www.tradingview.com/support/solutions/43000563875)                          | FQ, FH, FY | TREASURY_STOCK_COMMON               |
 
 #### Cash flow
 
@@ -1985,53 +1991,53 @@ This table lists the available metrics that provide information about how cash f
 
 [Click to show/hide]()
 
-| Financial                                                                                            | `period`        | `financial_id`                             |
-| ---------------------------------------------------------------------------------------------------- | --------------- | ------------------------------------------ |
-| [Amortization](https://www.tradingview.com/support/solutions/43000564143)                            | FQ, FH, FY, TTM | AMORTIZATION                               |
-| [Capital expenditures](https://www.tradingview.com/support/solutions/43000564166)                    | FQ, FH, FY, TTM | CAPITAL\_EXPENDITURES                      |
-| [Capital expenditures - fixed assets](https://www.tradingview.com/support/solutions/43000564167)     | FQ, FH, FY, TTM | CAPITAL\_EXPENDITURES\_FIXED\_ASSETS       |
-| [Capital expenditures - other assets](https://www.tradingview.com/support/solutions/43000564168)     | FQ, FH, FY, TTM | CAPITAL\_EXPENDITURES\_OTHER\_ASSETS       |
-| [Cash from financing activities](https://www.tradingview.com/support/solutions/43000553629)          | FQ, FH, FY, TTM | CASH\_F\_FINANCING\_ACTIVITIES             |
-| [Cash from investing activities](https://www.tradingview.com/support/solutions/43000553628)          | FQ, FH, FY, TTM | CASH\_F\_INVESTING\_ACTIVITIES             |
-| [Cash from operating activities](https://www.tradingview.com/support/solutions/43000553627)          | FQ, FH, FY, TTM | CASH\_F\_OPERATING\_ACTIVITIES             |
-| [Change in accounts payable](https://www.tradingview.com/support/solutions/43000564150)              | FQ, FH, FY, TTM | CHANGE\_IN\_ACCOUNTS\_PAYABLE              |
-| [Change in accounts receivable](https://www.tradingview.com/support/solutions/43000564148)           | FQ, FH, FY, TTM | CHANGE\_IN\_ACCOUNTS\_RECEIVABLE           |
-| [Change in accrued expenses](https://www.tradingview.com/support/solutions/43000564151)              | FQ, FH, FY, TTM | CHANGE\_IN\_ACCRUED\_EXPENSES              |
-| [Change in inventories](https://www.tradingview.com/support/solutions/43000564153)                   | FQ, FH, FY, TTM | CHANGE\_IN\_INVENTORIES                    |
-| [Change in other assets/liabilities](https://www.tradingview.com/support/solutions/43000564154)      | FQ, FH, FY, TTM | CHANGE\_IN\_OTHER\_ASSETS                  |
-| [Change in taxes payable](https://www.tradingview.com/support/solutions/43000564149)                 | FQ, FH, FY, TTM | CHANGE\_IN\_TAXES\_PAYABLE                 |
-| [Changes in working capital](https://www.tradingview.com/support/solutions/43000564147)              | FQ, FH, FY, TTM | CHANGES\_IN\_WORKING\_CAPITAL              |
-| [Common dividends paid](https://www.tradingview.com/support/solutions/43000564185)                   | FQ, FH, FY, TTM | COMMON\_DIVIDENDS\_CASH\_FLOW              |
-| [Deferred taxes (cash flow)](https://www.tradingview.com/support/solutions/43000564144)              | FQ, FH, FY, TTM | CASH\_FLOW\_DEFERRED\_TAXES                |
-| [Depreciation & amortization (cash flow)](https://www.tradingview.com/support/solutions/43000563892) | FQ, FH, FY, TTM | CASH\_FLOW\_DEPRECATION\_N\_AMORTIZATION   |
-| [Depreciation/depletion](https://www.tradingview.com/support/solutions/43000564142)                  | FQ, FH, FY, TTM | DEPRECIATION\_DEPLETION                    |
-| [Financing activities - other sources](https://www.tradingview.com/support/solutions/43000564181)    | FQ, FH, FY, TTM | OTHER\_FINANCING\_CASH\_FLOW\_SOURCES      |
-| [Financing activities - other uses](https://www.tradingview.com/support/solutions/43000564182)       | FQ, FH, FY, TTM | OTHER\_FINANCING\_CASH\_FLOW\_USES         |
-| [Free cash flow](https://www.tradingview.com/support/solutions/43000553630)                          | FQ, FH, FY, TTM | FREE\_CASH\_FLOW                           |
-| [Funds from operations](https://www.tradingview.com/support/solutions/43000563886)                   | FQ, FH, FY, TTM | FUNDS\_F\_OPERATIONS                       |
-| [Investing activities - other sources](https://www.tradingview.com/support/solutions/43000564164)    | FQ, FH, FY, TTM | OTHER\_INVESTING\_CASH\_FLOW\_SOURCES      |
-| [Investing activities - other uses](https://www.tradingview.com/support/solutions/43000564165)       | FQ, FH, FY      | OTHER\_INVESTING\_CASH\_FLOW\_USES         |
-| [Issuance of long term debt](https://www.tradingview.com/support/solutions/43000564176)              | FQ, FH, FY, TTM | SUPPLYING\_OF\_LONG\_TERM\_DEBT            |
-| [Issuance/retirement of debt, net](https://www.tradingview.com/support/solutions/43000564172)        | FQ, FH, FY, TTM | ISSUANCE\_OF\_DEBT\_NET                    |
-| [Issuance/retirement of long term debt](https://www.tradingview.com/support/solutions/43000564175)   | FQ, FH, FY, TTM | ISSUANCE\_OF\_LONG\_TERM\_DEBT             |
-| [Issuance/retirement of other debt](https://www.tradingview.com/support/solutions/43000564178)       | FQ, FH, FY, TTM | ISSUANCE\_OF\_OTHER\_DEBT                  |
-| [Issuance/retirement of short term debt](https://www.tradingview.com/support/solutions/43000564173)  | FQ, FH, FY, TTM | ISSUANCE\_OF\_SHORT\_TERM\_DEBT            |
-| [Issuance/retirement of stock, net](https://www.tradingview.com/support/solutions/43000564169)       | FQ, FH, FY, TTM | ISSUANCE\_OF\_STOCK\_NET                   |
-| [Net income (cash flow)](https://www.tradingview.com/support/solutions/43000563888)                  | FQ, FH, FY, TTM | NET\_INCOME\_STARTING\_LINE                |
-| [Non-cash items](https://www.tradingview.com/support/solutions/43000564146)                          | FQ, FH, FY, TTM | NON\_CASH\_ITEMS                           |
-| [Other financing cash flow items, total](https://www.tradingview.com/support/solutions/43000564179)  | FQ, FH, FY, TTM | OTHER\_FINANCING\_CASH\_FLOW\_ITEMS\_TOTAL |
-| [Other investing cash flow items, total](https://www.tradingview.com/support/solutions/43000564163)  | FQ, FH, FY      | OTHER\_INVESTING\_CASH\_FLOW\_ITEMS\_TOTAL |
-| [Preferred dividends paid](https://www.tradingview.com/support/solutions/43000564186)                | FQ, FH, FY      | PREFERRED\_DIVIDENDS\_CASH\_FLOW           |
-| [Purchase of investments](https://www.tradingview.com/support/solutions/43000564162)                 | FQ, FH, FY, TTM | PURCHASE\_OF\_INVESTMENTS                  |
-| [Purchase/acquisition of business](https://www.tradingview.com/support/solutions/43000564159)        | FQ, FH, FY, TTM | PURCHASE\_OF\_BUSINESS                     |
-| [Purchase/sale of business, net](https://www.tradingview.com/support/solutions/43000564156)          | FQ, FH, FY      | PURCHASE\_SALE\_BUSINESS                   |
-| [Purchase/sale of investments, net](https://www.tradingview.com/support/solutions/43000564160)       | FQ, FH, FY, TTM | PURCHASE\_SALE\_INVESTMENTS                |
-| [Reduction of long term debt](https://www.tradingview.com/support/solutions/43000564177)             | FQ, FH, FY, TTM | REDUCTION\_OF\_LONG\_TERM\_DEBT            |
-| [Repurchase of common & preferred stock](https://www.tradingview.com/support/solutions/43000564171)  | FQ, FH, FY, TTM | PURCHASE\_OF\_STOCK                        |
-| [Sale of common & preferred stock](https://www.tradingview.com/support/solutions/43000564170)        | FQ, FH, FY, TTM | SALE\_OF\_STOCK                            |
-| [Sale of fixed assets & businesses](https://www.tradingview.com/support/solutions/43000564158)       | FQ, FH, FY, TTM | SALES\_OF\_BUSINESS                        |
-| [Sale/maturity of investments](https://www.tradingview.com/support/solutions/43000564161)            | FQ, FH, FY      | SALES\_OF\_INVESTMENTS                     |
-| [Total cash dividends paid](https://www.tradingview.com/support/solutions/43000564183)               | FQ, FH, FY, TTM | TOTAL\_CASH\_DIVIDENDS\_PAID               |
+| Financial                                                                                            | `period`        | `financial_id`                        |
+| ---------------------------------------------------------------------------------------------------- | --------------- | ------------------------------------- |
+| [Amortization](https://www.tradingview.com/support/solutions/43000564143)                            | FQ, FH, FY, TTM | AMORTIZATION                          |
+| [Capital expenditures](https://www.tradingview.com/support/solutions/43000564166)                    | FQ, FH, FY, TTM | CAPITAL_EXPENDITURES                  |
+| [Capital expenditures - fixed assets](https://www.tradingview.com/support/solutions/43000564167)     | FQ, FH, FY, TTM | CAPITAL_EXPENDITURES_FIXED_ASSETS     |
+| [Capital expenditures - other assets](https://www.tradingview.com/support/solutions/43000564168)     | FQ, FH, FY, TTM | CAPITAL_EXPENDITURES_OTHER_ASSETS     |
+| [Cash from financing activities](https://www.tradingview.com/support/solutions/43000553629)          | FQ, FH, FY, TTM | CASH_F_FINANCING_ACTIVITIES           |
+| [Cash from investing activities](https://www.tradingview.com/support/solutions/43000553628)          | FQ, FH, FY, TTM | CASH_F_INVESTING_ACTIVITIES           |
+| [Cash from operating activities](https://www.tradingview.com/support/solutions/43000553627)          | FQ, FH, FY, TTM | CASH_F_OPERATING_ACTIVITIES           |
+| [Change in accounts payable](https://www.tradingview.com/support/solutions/43000564150)              | FQ, FH, FY, TTM | CHANGE_IN_ACCOUNTS_PAYABLE            |
+| [Change in accounts receivable](https://www.tradingview.com/support/solutions/43000564148)           | FQ, FH, FY, TTM | CHANGE_IN_ACCOUNTS_RECEIVABLE         |
+| [Change in accrued expenses](https://www.tradingview.com/support/solutions/43000564151)              | FQ, FH, FY, TTM | CHANGE_IN_ACCRUED_EXPENSES            |
+| [Change in inventories](https://www.tradingview.com/support/solutions/43000564153)                   | FQ, FH, FY, TTM | CHANGE_IN_INVENTORIES                 |
+| [Change in other assets/liabilities](https://www.tradingview.com/support/solutions/43000564154)      | FQ, FH, FY, TTM | CHANGE_IN_OTHER_ASSETS                |
+| [Change in taxes payable](https://www.tradingview.com/support/solutions/43000564149)                 | FQ, FH, FY, TTM | CHANGE_IN_TAXES_PAYABLE               |
+| [Changes in working capital](https://www.tradingview.com/support/solutions/43000564147)              | FQ, FH, FY, TTM | CHANGES_IN_WORKING_CAPITAL            |
+| [Common dividends paid](https://www.tradingview.com/support/solutions/43000564185)                   | FQ, FH, FY, TTM | COMMON_DIVIDENDS_CASH_FLOW            |
+| [Deferred taxes (cash flow)](https://www.tradingview.com/support/solutions/43000564144)              | FQ, FH, FY, TTM | CASH_FLOW_DEFERRED_TAXES              |
+| [Depreciation & amortization (cash flow)](https://www.tradingview.com/support/solutions/43000563892) | FQ, FH, FY, TTM | CASH_FLOW_DEPRECATION_N_AMORTIZATION  |
+| [Depreciation/depletion](https://www.tradingview.com/support/solutions/43000564142)                  | FQ, FH, FY, TTM | DEPRECIATION_DEPLETION                |
+| [Financing activities - other sources](https://www.tradingview.com/support/solutions/43000564181)    | FQ, FH, FY, TTM | OTHER_FINANCING_CASH_FLOW_SOURCES     |
+| [Financing activities - other uses](https://www.tradingview.com/support/solutions/43000564182)       | FQ, FH, FY, TTM | OTHER_FINANCING_CASH_FLOW_USES        |
+| [Free cash flow](https://www.tradingview.com/support/solutions/43000553630)                          | FQ, FH, FY, TTM | FREE_CASH_FLOW                        |
+| [Funds from operations](https://www.tradingview.com/support/solutions/43000563886)                   | FQ, FH, FY, TTM | FUNDS_F_OPERATIONS                    |
+| [Investing activities - other sources](https://www.tradingview.com/support/solutions/43000564164)    | FQ, FH, FY, TTM | OTHER_INVESTING_CASH_FLOW_SOURCES     |
+| [Investing activities - other uses](https://www.tradingview.com/support/solutions/43000564165)       | FQ, FH, FY      | OTHER_INVESTING_CASH_FLOW_USES        |
+| [Issuance of long term debt](https://www.tradingview.com/support/solutions/43000564176)              | FQ, FH, FY, TTM | SUPPLYING_OF_LONG_TERM_DEBT           |
+| [Issuance/retirement of debt, net](https://www.tradingview.com/support/solutions/43000564172)        | FQ, FH, FY, TTM | ISSUANCE_OF_DEBT_NET                  |
+| [Issuance/retirement of long term debt](https://www.tradingview.com/support/solutions/43000564175)   | FQ, FH, FY, TTM | ISSUANCE_OF_LONG_TERM_DEBT            |
+| [Issuance/retirement of other debt](https://www.tradingview.com/support/solutions/43000564178)       | FQ, FH, FY, TTM | ISSUANCE_OF_OTHER_DEBT                |
+| [Issuance/retirement of short term debt](https://www.tradingview.com/support/solutions/43000564173)  | FQ, FH, FY, TTM | ISSUANCE_OF_SHORT_TERM_DEBT           |
+| [Issuance/retirement of stock, net](https://www.tradingview.com/support/solutions/43000564169)       | FQ, FH, FY, TTM | ISSUANCE_OF_STOCK_NET                 |
+| [Net income (cash flow)](https://www.tradingview.com/support/solutions/43000563888)                  | FQ, FH, FY, TTM | NET_INCOME_STARTING_LINE              |
+| [Non-cash items](https://www.tradingview.com/support/solutions/43000564146)                          | FQ, FH, FY, TTM | NON_CASH_ITEMS                        |
+| [Other financing cash flow items, total](https://www.tradingview.com/support/solutions/43000564179)  | FQ, FH, FY, TTM | OTHER_FINANCING_CASH_FLOW_ITEMS_TOTAL |
+| [Other investing cash flow items, total](https://www.tradingview.com/support/solutions/43000564163)  | FQ, FH, FY      | OTHER_INVESTING_CASH_FLOW_ITEMS_TOTAL |
+| [Preferred dividends paid](https://www.tradingview.com/support/solutions/43000564186)                | FQ, FH, FY      | PREFERRED_DIVIDENDS_CASH_FLOW         |
+| [Purchase of investments](https://www.tradingview.com/support/solutions/43000564162)                 | FQ, FH, FY, TTM | PURCHASE_OF_INVESTMENTS               |
+| [Purchase/acquisition of business](https://www.tradingview.com/support/solutions/43000564159)        | FQ, FH, FY, TTM | PURCHASE_OF_BUSINESS                  |
+| [Purchase/sale of business, net](https://www.tradingview.com/support/solutions/43000564156)          | FQ, FH, FY      | PURCHASE_SALE_BUSINESS                |
+| [Purchase/sale of investments, net](https://www.tradingview.com/support/solutions/43000564160)       | FQ, FH, FY, TTM | PURCHASE_SALE_INVESTMENTS             |
+| [Reduction of long term debt](https://www.tradingview.com/support/solutions/43000564177)             | FQ, FH, FY, TTM | REDUCTION_OF_LONG_TERM_DEBT           |
+| [Repurchase of common & preferred stock](https://www.tradingview.com/support/solutions/43000564171)  | FQ, FH, FY, TTM | PURCHASE_OF_STOCK                     |
+| [Sale of common & preferred stock](https://www.tradingview.com/support/solutions/43000564170)        | FQ, FH, FY, TTM | SALE_OF_STOCK                         |
+| [Sale of fixed assets & businesses](https://www.tradingview.com/support/solutions/43000564158)       | FQ, FH, FY, TTM | SALES_OF_BUSINESS                     |
+| [Sale/maturity of investments](https://www.tradingview.com/support/solutions/43000564161)            | FQ, FH, FY      | SALES_OF_INVESTMENTS                  |
+| [Total cash dividends paid](https://www.tradingview.com/support/solutions/43000564183)               | FQ, FH, FY, TTM | TOTAL_CASH_DIVIDENDS_PAID             |
 
 #### Statistics
 
@@ -2039,80 +2045,80 @@ This table contains a variety of statistical metrics, including commonly used fi
 
 [Click to show/hide]()
 
-| Financial                                                                                                     | `period`        | `financial_id`                                   |
-| ------------------------------------------------------------------------------------------------------------- | --------------- | ------------------------------------------------ |
-| [Accruals](https://www.tradingview.com/support/solutions/43000597073)                                         | FQ, FH, FY      | ACCRUALS\_RATIO                                  |
-| [Altman Z-score](https://www.tradingview.com/support/solutions/43000597092)                                   | FQ, FH, FY      | ALTMAN\_Z\_SCORE                                 |
-| [Asset turnover](https://www.tradingview.com/support/solutions/43000597022)                                   | FQ, FH, FY      | ASSET\_TURNOVER                                  |
-| [Beneish M-score](https://www.tradingview.com/support/solutions/43000597835)                                  | FQ, FH, FY      | BENEISH\_M\_SCORE                                |
-| [Buyback yield %](https://www.tradingview.com/support/solutions/43000597088)                                  | FQ, FH, FY      | BUYBACK\_YIELD                                   |
-| [COGS to revenue ratio](https://www.tradingview.com/support/solutions/43000597026)                            | FQ, FH, FY      | COGS\_TO\_REVENUE                                |
-| [Cash conversion cycle](https://www.tradingview.com/support/solutions/43000597089)                            | FQ, FY          | CASH\_CONVERSION\_CYCLE                          |
-| [Cash to debt ratio](https://www.tradingview.com/support/solutions/43000597023)                               | FQ, FH, FY      | CASH\_TO\_DEBT                                   |
-| [Current ratio](https://www.tradingview.com/support/solutions/43000597051)                                    | FQ, FH, FY      | CURRENT\_RATIO                                   |
-| [Days inventory](https://www.tradingview.com/support/solutions/43000597028)                                   | FQ, FY          | DAYS\_INVENT                                     |
-| [Days payable](https://www.tradingview.com/support/solutions/43000597029)                                     | FQ, FY          | DAYS\_PAY                                        |
-| [Days sales outstanding](https://www.tradingview.com/support/solutions/43000597030)                           | FQ, FY          | DAY\_SALES\_OUT                                  |
-| [Debt to EBITDA ratio](https://www.tradingview.com/support/solutions/43000597032)                             | FQ, FH, FY      | DEBT\_TO\_EBITDA                                 |
-| [Debt to assets ratio](https://www.tradingview.com/support/solutions/43000597031)                             | FQ, FH, FY      | DEBT\_TO\_ASSET                                  |
-| [Debt to equity ratio](https://www.tradingview.com/support/solutions/43000597078)                             | FQ, FH, FY      | DEBT\_TO\_EQUITY                                 |
-| [Debt to revenue ratio](https://www.tradingview.com/support/solutions/43000597033)                            | FQ, FH, FY      | DEBT\_TO\_REVENUE                                |
-| [Dividend payout ratio %](https://www.tradingview.com/support/solutions/43000597738)                          | FQ, FH, FY, TTM | DIVIDEND\_PAYOUT\_RATIO                          |
-| [Dividend yield %](https://www.tradingview.com/support/solutions/43000597817)                                 | FQ, FH, FY      | DIVIDENDS\_YIELD                                 |
-| [Dividends per share - common stock primary issue](https://www.tradingview.com/support/solutions/43000670334) | FQ, FH, FY, TTM | DPS\_COMMON\_STOCK\_PRIM\_ISSUE                  |
-| [EBITDA margin %](https://www.tradingview.com/support/solutions/43000597075)                                  | FQ, FH, FY, TTM | EBITDA\_MARGIN                                   |
-| [EPS basic one year growth](https://www.tradingview.com/support/solutions/43000597069)                        | FQ, FH, FY, TTM | EARNINGS\_PER\_SHARE\_BASIC\_ONE\_YEAR\_GROWTH   |
-| [EPS diluted one year growth](https://www.tradingview.com/support/solutions/43000597071)                      | FQ, FH, FY      | EARNINGS\_PER\_SHARE\_DILUTED\_ONE\_YEAR\_GROWTH |
-| [EPS estimates](https://www.tradingview.com/support/solutions/43000597066)                                    | FQ, FH, FY      | EARNINGS\_ESTIMATE                               |
-| [Effective interest rate on debt %](https://www.tradingview.com/support/solutions/43000597034)                | FQ, FH, FY      | EFFECTIVE\_INTEREST\_RATE\_ON\_DEBT              |
-| [Enterprise value](https://www.tradingview.com/support/solutions/43000597077)                                 | FQ, FH, FY      | ENTERPRISE\_VALUE                                |
-| [Enterprise value to EBIT ratio](https://www.tradingview.com/support/solutions/43000597063)                   | FQ, FH, FY      | EV\_EBIT                                         |
-| [Enterprise value to EBITDA ratio](https://www.tradingview.com/support/solutions/43000597064)                 | FQ, FH, FY      | ENTERPRISE\_VALUE\_EBITDA                        |
-| [Enterprise value to revenue ratio](https://www.tradingview.com/support/solutions/43000597065)                | FQ, FH, FY      | EV\_REVENUE                                      |
-| [Equity to assets ratio](https://www.tradingview.com/support/solutions/43000597035)                           | FQ, FH, FY      | EQUITY\_TO\_ASSET                                |
-| [Float shares outstanding](https://www.tradingview.com/support/solutions/43000670341)                         | FY              | FLOAT\_SHARES\_OUTSTANDING                       |
-| [Free cash flow margin %](https://www.tradingview.com/support/solutions/43000597813)                          | FQ, FH, FY      | FREE\_CASH\_FLOW\_MARGIN                         |
-| [Fulmer H factor](https://www.tradingview.com/support/solutions/43000597847)                                  | FQ, FY          | FULMER\_H\_FACTOR                                |
-| [Goodwill to assets ratio](https://www.tradingview.com/support/solutions/43000597036)                         | FQ, FH, FY      | GOODWILL\_TO\_ASSET                              |
-| [Graham’s number](https://www.tradingview.com/support/solutions/43000597084)                                  | FQ, FY          | GRAHAM\_NUMBERS                                  |
-| [Gross margin %](https://www.tradingview.com/support/solutions/43000597811)                                   | FQ, FH, FY, TTM | GROSS\_MARGIN                                    |
-| [Gross profit to assets ratio](https://www.tradingview.com/support/solutions/43000597087)                     | FQ, FY          | GROSS\_PROFIT\_TO\_ASSET                         |
-| [Interest coverage](https://www.tradingview.com/support/solutions/43000597037)                                | FQ, FH, FY      | INTERST\_COVER                                   |
-| [Inventory to revenue ratio](https://www.tradingview.com/support/solutions/43000597047)                       | FQ, FH, FY      | INVENT\_TO\_REVENUE                              |
-| [Inventory turnover](https://www.tradingview.com/support/solutions/43000597046)                               | FQ, FH, FY      | INVENT\_TURNOVER                                 |
-| [KZ index](https://www.tradingview.com/support/solutions/43000597844)                                         | FY              | KZ\_INDEX                                        |
-| [Long term debt to total assets ratio](https://www.tradingview.com/support/solutions/43000597048)             | FQ, FH, FY      | LONG\_TERM\_DEBT\_TO\_ASSETS                     |
-| [Net current asset value per share](https://www.tradingview.com/support/solutions/43000597085)                | FQ, FY          | NCAVPS\_RATIO                                    |
-| [Net income per employee](https://www.tradingview.com/support/solutions/43000597082)                          | FY              | NET\_INCOME\_PER\_EMPLOYEE                       |
-| [Net margin %](https://www.tradingview.com/support/solutions/43000597074)                                     | FQ, FH, FY, TTM | NET\_MARGIN                                      |
-| [Number of employees](https://www.tradingview.com/support/solutions/43000597080)                              | FY              | NUMBER\_OF\_EMPLOYEES                            |
-| [Operating earnings yield %](https://www.tradingview.com/support/solutions/43000684072)                       | FQ, FH, FY      | OPERATING\_EARNINGS\_YIELD                       |
-| [Operating margin %](https://www.tradingview.com/support/solutions/43000597076)                               | FQ, FH, FY      | OPERATING\_MARGIN                                |
-| [PEG ratio](https://www.tradingview.com/support/solutions/43000597090)                                        | FQ, FY          | PEG\_RATIO                                       |
-| [Piotroski F-score](https://www.tradingview.com/support/solutions/43000597734)                                | FQ, FH, FY      | PIOTROSKI\_F\_SCORE                              |
-| [Price earnings ratio forward](https://www.tradingview.com/support/solutions/43000597831)                     | FQ, FY          | PRICE\_EARNINGS\_FORWARD                         |
-| [Price sales ratio forward](https://www.tradingview.com/support/solutions/43000597832)                        | FQ, FY          | PRICE\_SALES\_FORWARD                            |
-| [Quality ratio](https://www.tradingview.com/support/solutions/43000597086)                                    | FQ, FH, FY      | QUALITY\_RATIO                                   |
-| [Quick ratio](https://www.tradingview.com/support/solutions/43000597050)                                      | FQ, FH, FY      | QUICK\_RATIO                                     |
-| [Research & development to revenue ratio](https://www.tradingview.com/support/solutions/43000597739)          | FQ, FH, FY      | RESEARCH\_AND\_DEVELOP\_TO\_REVENUE              |
-| [Return on assets %](https://www.tradingview.com/support/solutions/43000597054)                               | FQ, FH, FY      | RETURN\_ON\_ASSETS                               |
-| [Return on common equity %](https://www.tradingview.com/support/solutions/43000656797)                        | FQ, FH, FY      | RETURN\_ON\_COMMON\_EQUITY                       |
-| [Return on equity %](https://www.tradingview.com/support/solutions/43000597021)                               | FQ, FH, FY      | RETURN\_ON\_EQUITY                               |
-| [Return on equity adjusted to book value %](https://www.tradingview.com/support/solutions/43000597055)        | FQ, FH, FY      | RETURN\_ON\_EQUITY\_ADJUST\_TO\_BOOK             |
-| [Return on invested capital %](https://www.tradingview.com/support/solutions/43000597056)                     | FQ, FH, FY      | RETURN\_ON\_INVESTED\_CAPITAL                    |
-| [Return on tangible assets %](https://www.tradingview.com/support/solutions/43000597052)                      | FQ, FH, FY      | RETURN\_ON\_TANG\_ASSETS                         |
-| [Return on tangible equity %](https://www.tradingview.com/support/solutions/43000597053)                      | FQ, FH, FY      | RETURN\_ON\_TANG\_EQUITY                         |
-| [Revenue estimates](https://www.tradingview.com/support/solutions/43000597067)                                | FQ, FH, FY      | SALES\_ESTIMATES                                 |
-| [Revenue one year growth](https://www.tradingview.com/support/solutions/43000597068)                          | FQ, FH, FY, TTM | REVENUE\_ONE\_YEAR\_GROWTH                       |
-| [Revenue per employee](https://www.tradingview.com/support/solutions/43000597081)                             | FY              | REVENUE\_PER\_EMPLOYEE                           |
-| [Shares buyback ratio %](https://www.tradingview.com/support/solutions/43000597057)                           | FQ, FH, FY      | SHARE\_BUYBACK\_RATIO                            |
-| [Sloan ratio %](https://www.tradingview.com/support/solutions/43000597058)                                    | FQ, FH, FY      | SLOAN\_RATIO                                     |
-| [Springate score](https://www.tradingview.com/support/solutions/43000597848)                                  | FQ, FY          | SPRINGATE\_SCORE                                 |
-| [Sustainable growth rate](https://www.tradingview.com/support/solutions/43000597736)                          | FQ, FY          | SUSTAINABLE\_GROWTH\_RATE                        |
-| [Tangible common equity ratio](https://www.tradingview.com/support/solutions/43000597079)                     | FQ, FH, FY      | TANGIBLE\_COMMON\_EQUITY\_RATIO                  |
-| [Tobin’s Q (approximate)](https://www.tradingview.com/support/solutions/43000597834)                          | FQ, FH, FY      | TOBIN\_Q\_RATIO                                  |
-| [Total common shares outstanding](https://www.tradingview.com/support/solutions/43000670331)                  | FQ, FH, FY      | TOTAL\_SHARES\_OUTSTANDING                       |
-| [Zmijewski score](https://www.tradingview.com/support/solutions/43000597850)                                  | FQ, FY          | ZMIJEWSKI\_SCORE                                 |
+| Financial                                                                                                     | `period`        | `financial_id`                             |
+| ------------------------------------------------------------------------------------------------------------- | --------------- | ------------------------------------------ |
+| [Accruals](https://www.tradingview.com/support/solutions/43000597073)                                         | FQ, FH, FY      | ACCRUALS_RATIO                             |
+| [Altman Z-score](https://www.tradingview.com/support/solutions/43000597092)                                   | FQ, FH, FY      | ALTMAN_Z_SCORE                             |
+| [Asset turnover](https://www.tradingview.com/support/solutions/43000597022)                                   | FQ, FH, FY      | ASSET_TURNOVER                             |
+| [Beneish M-score](https://www.tradingview.com/support/solutions/43000597835)                                  | FQ, FH, FY      | BENEISH_M_SCORE                            |
+| [Buyback yield %](https://www.tradingview.com/support/solutions/43000597088)                                  | FQ, FH, FY      | BUYBACK_YIELD                              |
+| [COGS to revenue ratio](https://www.tradingview.com/support/solutions/43000597026)                            | FQ, FH, FY      | COGS_TO_REVENUE                            |
+| [Cash conversion cycle](https://www.tradingview.com/support/solutions/43000597089)                            | FQ, FY          | CASH_CONVERSION_CYCLE                      |
+| [Cash to debt ratio](https://www.tradingview.com/support/solutions/43000597023)                               | FQ, FH, FY      | CASH_TO_DEBT                               |
+| [Current ratio](https://www.tradingview.com/support/solutions/43000597051)                                    | FQ, FH, FY      | CURRENT_RATIO                              |
+| [Days inventory](https://www.tradingview.com/support/solutions/43000597028)                                   | FQ, FY          | DAYS_INVENT                                |
+| [Days payable](https://www.tradingview.com/support/solutions/43000597029)                                     | FQ, FY          | DAYS_PAY                                   |
+| [Days sales outstanding](https://www.tradingview.com/support/solutions/43000597030)                           | FQ, FY          | DAY_SALES_OUT                              |
+| [Debt to EBITDA ratio](https://www.tradingview.com/support/solutions/43000597032)                             | FQ, FH, FY      | DEBT_TO_EBITDA                             |
+| [Debt to assets ratio](https://www.tradingview.com/support/solutions/43000597031)                             | FQ, FH, FY      | DEBT_TO_ASSET                              |
+| [Debt to equity ratio](https://www.tradingview.com/support/solutions/43000597078)                             | FQ, FH, FY      | DEBT_TO_EQUITY                             |
+| [Debt to revenue ratio](https://www.tradingview.com/support/solutions/43000597033)                            | FQ, FH, FY      | DEBT_TO_REVENUE                            |
+| [Dividend payout ratio %](https://www.tradingview.com/support/solutions/43000597738)                          | FQ, FH, FY, TTM | DIVIDEND_PAYOUT_RATIO                      |
+| [Dividend yield %](https://www.tradingview.com/support/solutions/43000597817)                                 | FQ, FH, FY      | DIVIDENDS_YIELD                            |
+| [Dividends per share - common stock primary issue](https://www.tradingview.com/support/solutions/43000670334) | FQ, FH, FY, TTM | DPS_COMMON_STOCK_PRIM_ISSUE                |
+| [EBITDA margin %](https://www.tradingview.com/support/solutions/43000597075)                                  | FQ, FH, FY, TTM | EBITDA_MARGIN                              |
+| [EPS basic one year growth](https://www.tradingview.com/support/solutions/43000597069)                        | FQ, FH, FY, TTM | EARNINGS_PER_SHARE_BASIC_ONE_YEAR_GROWTH   |
+| [EPS diluted one year growth](https://www.tradingview.com/support/solutions/43000597071)                      | FQ, FH, FY      | EARNINGS_PER_SHARE_DILUTED_ONE_YEAR_GROWTH |
+| [EPS estimates](https://www.tradingview.com/support/solutions/43000597066)                                    | FQ, FH, FY      | EARNINGS_ESTIMATE                          |
+| [Effective interest rate on debt %](https://www.tradingview.com/support/solutions/43000597034)                | FQ, FH, FY      | EFFECTIVE_INTEREST_RATE_ON_DEBT            |
+| [Enterprise value](https://www.tradingview.com/support/solutions/43000597077)                                 | FQ, FH, FY      | ENTERPRISE_VALUE                           |
+| [Enterprise value to EBIT ratio](https://www.tradingview.com/support/solutions/43000597063)                   | FQ, FH, FY      | EV_EBIT                                    |
+| [Enterprise value to EBITDA ratio](https://www.tradingview.com/support/solutions/43000597064)                 | FQ, FH, FY      | ENTERPRISE_VALUE_EBITDA                    |
+| [Enterprise value to revenue ratio](https://www.tradingview.com/support/solutions/43000597065)                | FQ, FH, FY      | EV_REVENUE                                 |
+| [Equity to assets ratio](https://www.tradingview.com/support/solutions/43000597035)                           | FQ, FH, FY      | EQUITY_TO_ASSET                            |
+| [Float shares outstanding](https://www.tradingview.com/support/solutions/43000670341)                         | FY              | FLOAT_SHARES_OUTSTANDING                   |
+| [Free cash flow margin %](https://www.tradingview.com/support/solutions/43000597813)                          | FQ, FH, FY      | FREE_CASH_FLOW_MARGIN                      |
+| [Fulmer H factor](https://www.tradingview.com/support/solutions/43000597847)                                  | FQ, FY          | FULMER_H_FACTOR                            |
+| [Goodwill to assets ratio](https://www.tradingview.com/support/solutions/43000597036)                         | FQ, FH, FY      | GOODWILL_TO_ASSET                          |
+| [Graham’s number](https://www.tradingview.com/support/solutions/43000597084)                                  | FQ, FY          | GRAHAM_NUMBERS                             |
+| [Gross margin %](https://www.tradingview.com/support/solutions/43000597811)                                   | FQ, FH, FY, TTM | GROSS_MARGIN                               |
+| [Gross profit to assets ratio](https://www.tradingview.com/support/solutions/43000597087)                     | FQ, FY          | GROSS_PROFIT_TO_ASSET                      |
+| [Interest coverage](https://www.tradingview.com/support/solutions/43000597037)                                | FQ, FH, FY      | INTERST_COVER                              |
+| [Inventory to revenue ratio](https://www.tradingview.com/support/solutions/43000597047)                       | FQ, FH, FY      | INVENT_TO_REVENUE                          |
+| [Inventory turnover](https://www.tradingview.com/support/solutions/43000597046)                               | FQ, FH, FY      | INVENT_TURNOVER                            |
+| [KZ index](https://www.tradingview.com/support/solutions/43000597844)                                         | FY              | KZ_INDEX                                   |
+| [Long term debt to total assets ratio](https://www.tradingview.com/support/solutions/43000597048)             | FQ, FH, FY      | LONG_TERM_DEBT_TO_ASSETS                   |
+| [Net current asset value per share](https://www.tradingview.com/support/solutions/43000597085)                | FQ, FY          | NCAVPS_RATIO                               |
+| [Net income per employee](https://www.tradingview.com/support/solutions/43000597082)                          | FY              | NET_INCOME_PER_EMPLOYEE                    |
+| [Net margin %](https://www.tradingview.com/support/solutions/43000597074)                                     | FQ, FH, FY, TTM | NET_MARGIN                                 |
+| [Number of employees](https://www.tradingview.com/support/solutions/43000597080)                              | FY              | NUMBER_OF_EMPLOYEES                        |
+| [Operating earnings yield %](https://www.tradingview.com/support/solutions/43000684072)                       | FQ, FH, FY      | OPERATING_EARNINGS_YIELD                   |
+| [Operating margin %](https://www.tradingview.com/support/solutions/43000597076)                               | FQ, FH, FY      | OPERATING_MARGIN                           |
+| [PEG ratio](https://www.tradingview.com/support/solutions/43000597090)                                        | FQ, FY          | PEG_RATIO                                  |
+| [Piotroski F-score](https://www.tradingview.com/support/solutions/43000597734)                                | FQ, FH, FY      | PIOTROSKI_F_SCORE                          |
+| [Price earnings ratio forward](https://www.tradingview.com/support/solutions/43000597831)                     | FQ, FY          | PRICE_EARNINGS_FORWARD                     |
+| [Price sales ratio forward](https://www.tradingview.com/support/solutions/43000597832)                        | FQ, FY          | PRICE_SALES_FORWARD                        |
+| [Quality ratio](https://www.tradingview.com/support/solutions/43000597086)                                    | FQ, FH, FY      | QUALITY_RATIO                              |
+| [Quick ratio](https://www.tradingview.com/support/solutions/43000597050)                                      | FQ, FH, FY      | QUICK_RATIO                                |
+| [Research & development to revenue ratio](https://www.tradingview.com/support/solutions/43000597739)          | FQ, FH, FY      | RESEARCH_AND_DEVELOP_TO_REVENUE            |
+| [Return on assets %](https://www.tradingview.com/support/solutions/43000597054)                               | FQ, FH, FY      | RETURN_ON_ASSETS                           |
+| [Return on common equity %](https://www.tradingview.com/support/solutions/43000656797)                        | FQ, FH, FY      | RETURN_ON_COMMON_EQUITY                    |
+| [Return on equity %](https://www.tradingview.com/support/solutions/43000597021)                               | FQ, FH, FY      | RETURN_ON_EQUITY                           |
+| [Return on equity adjusted to book value %](https://www.tradingview.com/support/solutions/43000597055)        | FQ, FH, FY      | RETURN_ON_EQUITY_ADJUST_TO_BOOK            |
+| [Return on invested capital %](https://www.tradingview.com/support/solutions/43000597056)                     | FQ, FH, FY      | RETURN_ON_INVESTED_CAPITAL                 |
+| [Return on tangible assets %](https://www.tradingview.com/support/solutions/43000597052)                      | FQ, FH, FY      | RETURN_ON_TANG_ASSETS                      |
+| [Return on tangible equity %](https://www.tradingview.com/support/solutions/43000597053)                      | FQ, FH, FY      | RETURN_ON_TANG_EQUITY                      |
+| [Revenue estimates](https://www.tradingview.com/support/solutions/43000597067)                                | FQ, FH, FY      | SALES_ESTIMATES                            |
+| [Revenue one year growth](https://www.tradingview.com/support/solutions/43000597068)                          | FQ, FH, FY, TTM | REVENUE_ONE_YEAR_GROWTH                    |
+| [Revenue per employee](https://www.tradingview.com/support/solutions/43000597081)                             | FY              | REVENUE_PER_EMPLOYEE                       |
+| [Shares buyback ratio %](https://www.tradingview.com/support/solutions/43000597057)                           | FQ, FH, FY      | SHARE_BUYBACK_RATIO                        |
+| [Sloan ratio %](https://www.tradingview.com/support/solutions/43000597058)                                    | FQ, FH, FY      | SLOAN_RATIO                                |
+| [Springate score](https://www.tradingview.com/support/solutions/43000597848)                                  | FQ, FY          | SPRINGATE_SCORE                            |
+| [Sustainable growth rate](https://www.tradingview.com/support/solutions/43000597736)                          | FQ, FY          | SUSTAINABLE_GROWTH_RATE                    |
+| [Tangible common equity ratio](https://www.tradingview.com/support/solutions/43000597079)                     | FQ, FH, FY      | TANGIBLE_COMMON_EQUITY_RATIO               |
+| [Tobin’s Q (approximate)](https://www.tradingview.com/support/solutions/43000597834)                          | FQ, FH, FY      | TOBIN_Q_RATIO                              |
+| [Total common shares outstanding](https://www.tradingview.com/support/solutions/43000670331)                  | FQ, FH, FY      | TOTAL_SHARES_OUTSTANDING                   |
+| [Zmijewski score](https://www.tradingview.com/support/solutions/43000597850)                                  | FQ, FY          | ZMIJEWSKI_SCORE                            |
 
 ## ​`request.economic()`​
 
@@ -2157,7 +2163,7 @@ plot(gdpqq, "US GDP Growth Rate", rateColor, style = plot.style_area)
 
 Note that:
 
-- This example does not include a `gaps` argument in the [request.economic()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.economic) call, so the function uses the default [barmerge.gaps\_off](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.gaps_off). In other words, it returns the last retrieved value when new data isn’t yet available.
+- This example does not include a `gaps` argument in the [request.economic()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.economic) call, so the function uses the default [barmerge.gaps_off](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.gaps_off). In other words, it returns the last retrieved value when new data isn’t yet available.
 
 **Tip**
 
@@ -2733,7 +2739,7 @@ NoticeScripts cannot perform more than **one** footprint request with the [reque
 
 Scripts can use any returned [footprint](https://www.tradingview.com/pine-script-reference/v6/#type_footprint) ID that is not [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) in calls to the built-in `footprint.*()` functions to retrieve data from a bar’s volume footprint.
 
-For example, the following script calls [request.footprint()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.footprint) on each bar to request the ID of a [footprint](https://www.tradingview.com/pine-script-reference/v6/#type_footprint) object that contains the bar’s volume footprint data. If the requested data is available, the script then uses the returned ID in calls to four `footprint.*()` functions — [footprint.total\_volume()](https://www.tradingview.com/pine-script-reference/v6/#fun_footprint.total_volume), [footprint.buy\_volume()](https://www.tradingview.com/pine-script-reference/v6/#fun_footprint.buy_volume), [footprint.sell\_volume()](https://www.tradingview.com/pine-script-reference/v6/#fun_footprint.sell_volume), and [footprint.delta()](https://www.tradingview.com/pine-script-reference/v6/#fun_footprint.delta) — to retrieve the footprint’s total volume, total “buy” and “sell” volume, and overall volume delta.
+For example, the following script calls [request.footprint()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.footprint) on each bar to request the ID of a [footprint](https://www.tradingview.com/pine-script-reference/v6/#type_footprint) object that contains the bar’s volume footprint data. If the requested data is available, the script then uses the returned ID in calls to four `footprint.*()` functions — [footprint.total_volume()](https://www.tradingview.com/pine-script-reference/v6/#fun_footprint.total_volume), [footprint.buy_volume()](https://www.tradingview.com/pine-script-reference/v6/#fun_footprint.buy_volume), [footprint.sell_volume()](https://www.tradingview.com/pine-script-reference/v6/#fun_footprint.sell_volume), and [footprint.delta()](https://www.tradingview.com/pine-script-reference/v6/#fun_footprint.delta) — to retrieve the footprint’s total volume, total “buy” and “sell” volume, and overall volume delta.
 
 The script plots the “buy” volume, the negative “sell” volume, and the volume delta as columns for visual comparison. It also displays a color-coded [label](/pine-script-docs/visuals/text-and-shapes/#labels) at each bar’s high price to indicate whether the bar’s “buy” volume exceeds its “sell” volume or vice versa. Hovering over a label reveals a tooltip that shows the corresponding bar’s total volume and volume delta:
 
@@ -2778,11 +2784,11 @@ Note that:
 - The `id` parameter of each `footprint.*()` function does not allow [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) arguments. Therefore, this script uses [ternary operations](/pine-script-docs/language/operators/#-ternary-operator) that execute `footprint.*()` calls only if the retrieved [footprint](https://www.tradingview.com/pine-script-reference/v6/#type_footprint) ID is not [na](https://www.tradingview.com/pine-script-reference/v6/#var_na). If no data is available, the operations return [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) directly without executing the calls.
 - On timeframes higher than or equal to “1D”, a footprint’s total volume might differ significantly from the value of the [volume](https://www.tradingview.com/pine-script-reference/v6/#var_volume) variable. Such differences occur for some instruments because _EOD_ data feeds can include data from block trades, OTC trades, and other sources, whereas requested _intraday_ data feeds do not. See the [Data feeds](/pine-script-docs/concepts/other-timeframes-and-data/#data-feeds) section to learn more about the types of data feeds and their differences.
 
-While some of the `footprint.*()` functions retrieve values representing overall metrics for a requested volume footprint, as shown above, others retrieve the IDs of [volume\_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row) objects that contain data for _individual rows_ from the footprint for more detailed analysis. For instance, the [footprint.poc()](https://www.tradingview.com/pine-script-reference/v6/#fun_footprint.poc) function retrieves the ID of the [volume\_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row) object that contains data for a footprint’s _Point of Control_ row (i.e., the row with the highest total volume), and the [footprint.rows()](https://www.tradingview.com/pine-script-reference/v6/#fun_footprint.rows) function constructs an [array](/pine-script-docs/language/arrays/) containing the [volume\_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row) IDs for _every_ row within a footprint.
+While some of the `footprint.*()` functions retrieve values representing overall metrics for a requested volume footprint, as shown above, others retrieve the IDs of [volume_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row) objects that contain data for _individual rows_ from the footprint for more detailed analysis. For instance, the [footprint.poc()](https://www.tradingview.com/pine-script-reference/v6/#fun_footprint.poc) function retrieves the ID of the [volume_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row) object that contains data for a footprint’s _Point of Control_ row (i.e., the row with the highest total volume), and the [footprint.rows()](https://www.tradingview.com/pine-script-reference/v6/#fun_footprint.rows) function constructs an [array](/pine-script-docs/language/arrays/) containing the [volume_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row) IDs for _every_ row within a footprint.
 
-Scripts can use non-na IDs of the [volume\_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row) type in calls to the built-in `volume_row.*()` functions to retrieve data for a specific footprint row, including the row’s price levels, volume sums, volume delta, and buy or sell imbalances.
+Scripts can use non-na IDs of the [volume_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row) type in calls to the built-in `volume_row.*()` functions to retrieve data for a specific footprint row, including the row’s price levels, volume sums, volume delta, and buy or sell imbalances.
 
-The advanced example below retrieves and displays detailed volume footprint information for visible chart bars. On each visible bar, the script requests a [footprint](https://www.tradingview.com/pine-script-reference/v6/#type_footprint) ID using [request.footprint()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.footprint). If the ID is not [na](https://www.tradingview.com/pine-script-reference/v6/#var_na), the script calls [footprint.rows()](https://www.tradingview.com/pine-script-reference/v6/#fun_footprint.rows) to create an array containing the [volume\_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row) IDs for all rows in the footprint, and uses other `footprint.*()` calls to retrieve the individual IDs for the footprint’s POC and Value Area rows.
+The advanced example below retrieves and displays detailed volume footprint information for visible chart bars. On each visible bar, the script requests a [footprint](https://www.tradingview.com/pine-script-reference/v6/#type_footprint) ID using [request.footprint()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.footprint). If the ID is not [na](https://www.tradingview.com/pine-script-reference/v6/#var_na), the script calls [footprint.rows()](https://www.tradingview.com/pine-script-reference/v6/#fun_footprint.rows) to create an array containing the [volume_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row) IDs for all rows in the footprint, and uses other `footprint.*()` calls to retrieve the individual IDs for the footprint’s POC and Value Area rows.
 
 Afterward, the script loops through the array using a [`for...in` loop](/pine-script-docs/language/loops/#forin-loops). It calls multiple `volume_row.*()` functions within the loop to retrieve price levels, categorized volume values, volume delta, and imbalance states for each row. On each iteration, the script formats the retrieved “buy” and “sell” volume, volume delta, and imbalance information for the current row into a string, and then displays the text in a box drawn at the row’s price range in a separate pane. Each box uses a gradient background color based on the row’s volume delta and its total volume relative to the POC row’s total volume. The text color of each box is the chart’s foreground color if the row is the POC, purple if the row is a VA boundary, and gray otherwise.
 
@@ -2861,10 +2867,10 @@ plot(vaLow,   "VAH bottom", color.purple,  3, plot.style_circles, force
 Note that:
 
 - As with the built-in functions for most other [reference types](/pine-script-docs/language/type-system/#reference-types), scripts can call `footprint.*()` and `volume_row.*()` built-ins as functions or [methods](/pine-script-docs/language/methods/). This script calls the built-ins using _method syntax_.
-- The array created by [footprint.rows()](https://www.tradingview.com/pine-script-reference/v6/#fun_footprint.rows) sorts its elements in _ascending order_ by price level, where the first element refers to the [volume\_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row) object for the row with the lowest prices, and the last refers to the one for the row with the highest prices.
-- The results of [volume\_row.has\_buy\_imbalance()](https://www.tradingview.com/pine-script-reference/v6/#fun_volume_row.has_buy_imbalance) and [volume\_row.has\_sell\_imbalance()](https://www.tradingview.com/pine-script-reference/v6/#fun_volume_row.has_sell_imbalance) calls depend on the `imbalance_percent` argument of the [request.footprint()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.footprint) call that creates the parent [footprint](https://www.tradingview.com/pine-script-reference/v6/#type_footprint) object. In this example, the “Imbalance percentage” input controls the argument, and therefore controls the behavior of the script’s `volume_row.has_*_imbalance()` calls.
+- The array created by [footprint.rows()](https://www.tradingview.com/pine-script-reference/v6/#fun_footprint.rows) sorts its elements in _ascending order_ by price level, where the first element refers to the [volume_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row) object for the row with the lowest prices, and the last refers to the one for the row with the highest prices.
+- The results of [volume_row.has_buy_imbalance()](https://www.tradingview.com/pine-script-reference/v6/#fun_volume_row.has_buy_imbalance) and [volume_row.has_sell_imbalance()](https://www.tradingview.com/pine-script-reference/v6/#fun_volume_row.has_sell_imbalance) calls depend on the `imbalance_percent` argument of the [request.footprint()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.footprint) call that creates the parent [footprint](https://www.tradingview.com/pine-script-reference/v6/#type_footprint) object. In this example, the “Imbalance percentage” input controls the argument, and therefore controls the behavior of the script’s `volume_row.has_*_imbalance()` calls.
 
-To learn more about the [footprint](https://www.tradingview.com/pine-script-reference/v6/#type_footprint) and [volume\_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row) types, and the available functions in their namespaces, refer to the [footprint and volume\_row](/pine-script-docs/language/type-system/#footprint-and-volume_row) section of the [Type system](/pine-script-docs/language/type-system/) page.
+To learn more about the [footprint](https://www.tradingview.com/pine-script-reference/v6/#type_footprint) and [volume_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row) types, and the available functions in their namespaces, refer to the [footprint and volume_row](/pine-script-docs/language/type-system/#footprint-and-volume_row) section of the [Type system](/pine-script-docs/language/type-system/) page.
 
 For more information about volume footprints and how they work, refer to the [Volume footprint charts](https://www.tradingview.com/support/solutions/43000726164-volume-footprint-charts-a-complete-guide/) article in our Help Center.
 
@@ -2886,9 +2892,9 @@ The `source` parameter specifies the unique name of the user-maintained GitHub r
 
 The `symbol` parameter represents the file name from the “data/” directory of the `source` repository, excluding the “.csv” file extension. See [this page](https://github.com/tradingview-pine-seeds/docs/blob/main/data.md) for information about the structure of the data stored in repositories.
 
-The `expression` parameter is the series to evaluate using data extracted from the requested context. It is similar to the equivalent in [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) and [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf). Data feeds stored in user-maintained repos contain [time](https://www.tradingview.com/pine-script-reference/v6/#var_time), [open](https://www.tradingview.com/pine-script-reference/v6/#var_open), [high](https://www.tradingview.com/pine-script-reference/v6/#var_high), [low](https://www.tradingview.com/pine-script-reference/v6/#var_low), [close](https://www.tradingview.com/pine-script-reference/v6/#var_close), and [volume](https://www.tradingview.com/pine-script-reference/v6/#var_volume) information, meaning the `expression` argument can use the corresponding built-in variables, including variables derived from them (e.g., [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index), [ohlc4](https://www.tradingview.com/pine-script-reference/v6/#var_ohlc4), etc.) to request their values from the context of the custom data.
+The `expression` parameter is the series to evaluate using data extracted from the requested context. It is similar to the equivalent in [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) and [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf). Data feeds stored in user-maintained repos contain [time](https://www.tradingview.com/pine-script-reference/v6/#var_time), [open](https://www.tradingview.com/pine-script-reference/v6/#var_open), [high](https://www.tradingview.com/pine-script-reference/v6/#var_high), [low](https://www.tradingview.com/pine-script-reference/v6/#var_low), [close](https://www.tradingview.com/pine-script-reference/v6/#var_close), and [volume](https://www.tradingview.com/pine-script-reference/v6/#var_volume) information, meaning the `expression` argument can use the corresponding built-in variables, including variables derived from them (e.g., [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index), [ohlc4](https://www.tradingview.com/pine-script-reference/v6/#var_ohlc4), etc.) to request their values from the context of the custom data.
 
-The script below visualizes sample data from the [seed\_crypto\_santiment](https://github.com/tradingview-pine-seeds/seed_crypto_santiment) demo repository. It uses two calls to [request.seed()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.seed) to retrieve the [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) values from the repository’s [BTC\_SENTIMENT\_POSITIVE\_TOTAL](https://github.com/tradingview-pine-seeds/seed_crypto_santiment/blob/master/data/BTC_SENTIMENT_POSITIVE_TOTAL.csv) and [BTC\_SENTIMENT\_NEGATIVE\_TOTAL](https://github.com/tradingview-pine-seeds/seed_crypto_santiment/blob/master/data/BTC_SENTIMENT_NEGATIVE_TOTAL.csv) data feeds and [plots](/pine-script-docs/visuals/plots/) the results on the chart as step lines:
+The script below visualizes sample data from the [seed_crypto_santiment](https://github.com/tradingview-pine-seeds/seed_crypto_santiment) demo repository. It uses two calls to [request.seed()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.seed) to retrieve the [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) values from the repository’s [BTC_SENTIMENT_POSITIVE_TOTAL](https://github.com/tradingview-pine-seeds/seed_crypto_santiment/blob/master/data/BTC_SENTIMENT_POSITIVE_TOTAL.csv) and [BTC_SENTIMENT_NEGATIVE_TOTAL](https://github.com/tradingview-pine-seeds/seed_crypto_santiment/blob/master/data/BTC_SENTIMENT_NEGATIVE_TOTAL.csv) data feeds and [plots](/pine-script-docs/visuals/plots/) the results on the chart as step lines:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Other-timeframes-and-data-Request-seed-1.8Jb0VyN__ZS6XAH.webp)
 

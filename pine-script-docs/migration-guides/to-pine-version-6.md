@@ -120,6 +120,7 @@ In Pine v5, values of “int” and “float” types can be implicitly cast to 
 For example, take a look at this conditional expression:
 
 ```color expr = bar_index ? color.green : color.red
+
 ```
 
 It assigns `color.red` to `expr` on the _first_ bar of the chart, because that bar has a `bar_index` of 0, and then assigns `color.green` on _every_ following bar, because any _non-zero_ value is `true`. The ternary operator [?:](https://www.tradingview.com/pine-script-reference/v6/#op_?:) expects a “bool” expression for its condition, but in v5 it can also accept a numeric value as its conditional expression, which it automatically converts (implicitly casts) to a “bool”.
@@ -129,6 +130,7 @@ In v6, scripts must _explicitly_ cast a numeric value to “bool” to use it wh
 **Fix:** Wrap the numeric value with the [bool()](https://www.tradingview.com/pine-script-reference/v6/#fun_bool) function to cast it explicitly.
 
 ```color expr = bool(bar_index) ? color.green : color.red
+
 ```
 
 ### Boolean values cannot be ​`na`​
@@ -207,6 +209,7 @@ if barstate.isfirst
 To adapt our code to Pine v6, we must first remove the following line to resolve the initial compilation error:
 
 ```na(isLong)      => color.new(color.red, 40)
+
 ```
 
 In v6, the undefined condition (`strategy.position_size == 0`) now returns `false` instead of `na`. Consequently, the script _incorrectly_ highlights the bars where there are _no_ trade positions the same color as those where there are _short_ positions, since `isLong` has the same `false` result for both conditions:
@@ -268,7 +271,7 @@ if barstate.islastconfirmedhistory
 
 ### Unique parameters cannot be ​`na`​
 
-Some Pine Script function parameters expect values of _unique_ types. For example, the `style` parameter of the [plot()](https://www.tradingview.com/pine-script-reference/v6/#fun_plot) function expects a value of the “input plot\_style” qualified type, which must be one of the constants in the `plot.style_*` group.
+Some Pine Script function parameters expect values of _unique_ types. For example, the `style` parameter of the [plot()](https://www.tradingview.com/pine-script-reference/v6/#fun_plot) function expects a value of the “input plot_style” qualified type, which must be one of the constants in the `plot.style_*` group.
 
 In v5, passing [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) to the [plot()](https://www.tradingview.com/pine-script-reference/v6/#fun_plot) function’s `style` parameter simply plots a line using the default style `plot.style_line`, without raising an error.
 
@@ -444,7 +447,7 @@ if barstate.islastconfirmedhistory
 
 ### Removal of ​`when`​ parameter
 
-The `when` parameter for order creation functions was deprecated in v5 and is removed in v6. An order is created only if the `when` condition is `true`, which is its default value. This parameter affects the following functions: [strategy.entry()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.entry), [strategy.order()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.order), [strategy.exit()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.exit), [strategy.close()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.close), [strategy.close\_all()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.close_all), [strategy.cancel()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.cancel), and [strategy.cancel\_all()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.cancel_all).
+The `when` parameter for order creation functions was deprecated in v5 and is removed in v6. An order is created only if the `when` condition is `true`, which is its default value. This parameter affects the following functions: [strategy.entry()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.entry), [strategy.order()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.order), [strategy.exit()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.exit), [strategy.close()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.close), [strategy.close_all()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.close_all), [strategy.cancel()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.cancel), and [strategy.cancel_all()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy.cancel_all).
 
 The following example strategy shows the use of the `when` parameter, and works in v5 but not v6.
 
@@ -530,7 +533,7 @@ else
 
 In v6, when the total number of orders exceeds 9000, the strategy does _not_ halt. Instead, the orders are _trimmed_ from the beginning until the limit is reached, meaning that the strategy only stores the information for the most recent orders.
 
-Trimmed orders no longer show in the Strategy Tester, and referencing them using the `strategy.closedtrades.*` functions returns [na](https://www.tradingview.com/pine-script-reference/v6/#var_na). Use [strategy.closedtrades.first\_index](https://www.tradingview.com/pine-script-reference/v6/#var_strategy.closedtrades.first_index) to get the index of the first _non-trimmed_ trade:
+Trimmed orders no longer show in the Strategy Tester, and referencing them using the `strategy.closedtrades.*` functions returns [na](https://www.tradingview.com/pine-script-reference/v6/#var_na). Use [strategy.closedtrades.first_index](https://www.tradingview.com/pine-script-reference/v6/#var_strategy.closedtrades.first_index) to get the index of the first _non-trimmed_ trade:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/MigrationGuideTov6-Order-trimming.CFIVLCGx_Z2iQqmO.webp)
 
@@ -874,7 +877,8 @@ In v5, you can specify the same parameter in a function more than once. However,
 
 ```// In v5, compiles but raises warning. Only uses first value, so plot color will be `blue`.
 plot(close, "Close", color = color.blue, linewidth = 2, color = color.red)
-```
+
+````
 
 In v6, you can specify a parameter only _once_, and doing otherwise will result in a _compilation error_.
 
@@ -882,7 +886,7 @@ In v6, you can specify a parameter only _once_, and doing otherwise will result 
 
 ```// In v6, script will not compile if parameter is specified more than once.
 plot(close, "Close", color = color.blue, linewidth = 2)
-```
+````
 
 ## No series ​`offset`​ values
 

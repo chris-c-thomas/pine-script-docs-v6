@@ -87,11 +87,11 @@ By default, scripts use the precision of the price scale. To display more decima
 
 ## How can I control the precision of values used in my calculations?
 
-The `math.round(number, precision)` variation of the [math.round()](https://www.tradingview.com/pine-script-reference/v6/#fun_math.round) function rounds values according to a specified precision. Alternatively, the [math.round\_to\_mintick()](https://www.tradingview.com/pine-script-reference/v6/#fun_math.round_to_mintick) function rounds values to the nearest tick precision of the chart’s symbol.
+The `math.round(number, precision)` variation of the [math.round()](https://www.tradingview.com/pine-script-reference/v6/#fun_math.round) function rounds values according to a specified precision. Alternatively, the [math.round_to_mintick()](https://www.tradingview.com/pine-script-reference/v6/#fun_math.round_to_mintick) function rounds values to the nearest tick precision of the chart’s symbol.
 
 ## How can I round to ticks?
 
-To round values to the tick precision of a chart’s symbol, use the function [math.round\_to\_mintick()](https://www.tradingview.com/pine-script-reference/v6/#fun_math.round_to_mintick). To convert the resulting number to a string, use `str.tostring(myValue, format.mintick)` to first round the number to tick precision and then return its string representation, where `myValue` is the number to convert into a rounded string.
+To round values to the tick precision of a chart’s symbol, use the function [math.round_to_mintick()](https://www.tradingview.com/pine-script-reference/v6/#fun_math.round_to_mintick). To convert the resulting number to a string, use `str.tostring(myValue, format.mintick)` to first round the number to tick precision and then return its string representation, where `myValue` is the number to convert into a rounded string.
 
 ## How can I abbreviate large values?
 
@@ -192,7 +192,7 @@ The example script below imports a [library](/pine-script-docs/concepts/librarie
 - The `avgWhen()` function calculates the average volume of session opening bars across the entire dataset.
 - The `avgWhenLast()` function averages the opening volumes for the last five session opening bars.
 
-The condition for these conditional averages is _session opening bars_, which we determine using the [session.isfirstbar\_regular](https://www.tradingview.com/pine-script-reference/v6/#var_session.isfirstbar_regular) variable.
+The condition for these conditional averages is _session opening bars_, which we determine using the [session.isfirstbar_regular](https://www.tradingview.com/pine-script-reference/v6/#var_session.isfirstbar_regular) variable.
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Functions-How-can-i-calculate-an-average-only-when-a-certain-condition-is-true-1.zmzMnsL2_2dPpkK.webp)
 
@@ -218,7 +218,7 @@ plot(PCca.avgWhenLast(source = volume, condition = session.isfirstbar_regul
 
 **Tip**
 
-Some built-in functions, such as [ta.sma()](https://www.tradingview.com/pine-script-reference/v6/#fun_ta.sma) _ignore_ the bars with [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) values in their calculations. Therefore, it is possible to perform some condition-based calculations using these functions. For example, the call `ta.sma(session.isfirstbar_regular ? volume : na, 5)` returns the same result as the `PCca.avgWhenLast()` call in the example above, because its calculation includes only the [volume](https://www.tradingview.com/pine-script-reference/v6/#var_volume) values from the latest five bars where the value of [session.isfirstbar\_regular](https://www.tradingview.com/pine-script-reference/v6/#var_session.isfirstbar_regular) is `true`.
+Some built-in functions, such as [ta.sma()](https://www.tradingview.com/pine-script-reference/v6/#fun_ta.sma) _ignore_ the bars with [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) values in their calculations. Therefore, it is possible to perform some condition-based calculations using these functions. For example, the call `ta.sma(session.isfirstbar_regular ? volume : na, 5)` returns the same result as the `PCca.avgWhenLast()` call in the example above, because its calculation includes only the [volume](https://www.tradingview.com/pine-script-reference/v6/#var_volume) values from the latest five bars where the value of [session.isfirstbar_regular](https://www.tradingview.com/pine-script-reference/v6/#var_session.isfirstbar_regular) is `true`.
 
 ## How can I generate a random number?
 
@@ -274,4 +274,5 @@ plot(dependentCalculation, title="Average Bar Range")
 The [nz()](https://www.tradingview.com/pine-script-reference/v6/#fun_nz) function is also useful to protect against any potential divide-by-zero errors. It guarantees a return value even when an equation unintentionally features a zero in the denominator. Consider the following code snippet that intentionally creates a divide-by-zero scenario by setting the denominator to zero. Without the [nz()](https://www.tradingview.com/pine-script-reference/v6/#fun_nz) function, this expression would return [na](https://www.tradingview.com/pine-script-reference/v6/#var_na), instead of zero:
 
 ```float dbzTest = nz(close / (close - close))
+
 ```

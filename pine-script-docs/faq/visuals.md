@@ -412,7 +412,7 @@ Scripts can assign different colors to variables based on logical conditions. Pr
 
 **Gradient transitions**
 
-The [color.from\_gradient()](https://www.tradingview.com/pine-script-reference/v6/#fun_color%7Bdot%7Dfrom_gradient) function creates color gradients that can highlight shifts in data values while ensuring a smooth transition between colors. For detailed guidance and innovative examples on implementing gradients, consult the [Color Gradient Framework](https://www.tradingview.com/script/hqH4YIFa-Color-Gradient-Framework-PineCoders/) by PineCoders.
+The [color.from_gradient()](https://www.tradingview.com/pine-script-reference/v6/#fun_color%7Bdot%7Dfrom_gradient) function creates color gradients that can highlight shifts in data values while ensuring a smooth transition between colors. For detailed guidance and innovative examples on implementing gradients, consult the [Color Gradient Framework](https://www.tradingview.com/script/hqH4YIFa-Color-Gradient-Framework-PineCoders/) by PineCoders.
 
 **Fills**
 
@@ -502,6 +502,7 @@ Note that:
 By default, new scripts display in a separate pane. To make a script display in the main chart pane instead, use `overlay = true` in the [strategy()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy) or [indicator()](https://www.tradingview.com/pine-script-reference/v6/#fun_indicator) declaration statement:
 
 ```indicator("My Script", overlay = true)
+
 ```
 
 The default value of the `overlay` parameter is `false`. If a programmer changes the value of the `overlay` parameter _after_ an indicator was already added to the chart, they need to remove the indicator and add it to the chart again for the change to take effect.
@@ -578,13 +579,13 @@ h3 = hline(price = 30, color = chart.fg_color, display = showHlineInpu
 
 ## How can I draw lines or labels into the future?
 
-Individual _plotted_ lines and shapes cannot be drawn into the future — only the entire series can be offset. By contrast, scripts can extend any _drawn_ lines or boxes, or position drawn labels, at an arbitrary distance beyond the last data point. There are two ways to achieve this: using [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) and using [xloc.bar\_time](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_time).
+Individual _plotted_ lines and shapes cannot be drawn into the future — only the entire series can be offset. By contrast, scripts can extend any _drawn_ lines or boxes, or position drawn labels, at an arbitrary distance beyond the last data point. There are two ways to achieve this: using [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) and using [xloc.bar_time](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_time).
 
-### Using bar\_index
+### Using bar_index
 
-The [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) built-in variable represents the sequential number of the current bar, starting from zero for the first bar in the chart history and incrementing by 1 for each subsequent bar. Drawing objects with their `xloc` parameter set to [xloc.bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_index) can use a `bar_index` as their x coordinates. If the `xloc` parameter is not specified, it defaults to [xloc.bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_index).
+The [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) built-in variable represents the sequential number of the current bar, starting from zero for the first bar in the chart history and incrementing by 1 for each subsequent bar. Drawing objects with their `xloc` parameter set to [xloc.bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_index) can use a `bar_index` as their x coordinates. If the `xloc` parameter is not specified, it defaults to [xloc.bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_index).
 
-To project a certain number of bars into the future or past, simply add or subtract that number from the current [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index). For instance, `bar_index + 20` positions the object 20 bars into the future.
+To project a certain number of bars into the future or past, simply add or subtract that number from the current [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index). For instance, `bar_index + 20` positions the object 20 bars into the future.
 
 NoticeScripts can position drawings a [maximum of 500 bars](/pine-script-docs/writing/limitations/#maximum-bars-forward) into the future or [10,000 bars into the past](/pine-script-docs/writing/limitations/#maximum-bars-back) using this method.
 
@@ -634,7 +635,7 @@ Note that:
 
 ### Using time
 
-Drawing objects can also be positioned based on UNIX time values, by using [xloc.bar\_time](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_time) for an object’s `xloc` parameter. The time values can be timestamps, or a bar’s open time, or any other calculated time.
+Drawing objects can also be positioned based on UNIX time values, by using [xloc.bar_time](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_time) for an object’s `xloc` parameter. The time values can be timestamps, or a bar’s open time, or any other calculated time.
 
 By using time to position objects, there is no limitation as to how far into the future objects can display. Any valid timestamp positions the object accordingly.
 

@@ -129,6 +129,7 @@ The operator `not` is unary. When applied to a `true`, operand the result will b
 The [?:](https://www.tradingview.com/pine-script-reference/v6/#op_%7Bquestion%7D%7Bcolon%7D) ternary operator is used to create expressions of the form:
 
 ```condition ? valueWhenConditionIsTrue : valueWhenConditionIsFalse
+
 ```
 
 The ternary operator returns a result that depends on the value of `condition`. If it is `true`, then it returns `valueWhenConditionIsTrue`. Otherwise, if `condition` is `false`, then it returns `valueWhenConditionIsFalse`.
@@ -136,6 +137,7 @@ The ternary operator returns a result that depends on the value of `condition`. 
 A combination of ternary expressions can be used to achieve the same effect as a [switch](https://www.tradingview.com/pine-script-reference/v6/#kw_switch) structure, e.g.:
 
 ```timeframe.isintraday ? color.red : timeframe.isdaily ? color.green : timeframe.ismonthly ? color.blue : na
+
 ```
 
 The example is calculated from left to right:
@@ -160,7 +162,7 @@ In the Pine Script runtime environment, as your code is executed once for each h
 
 When the market for the chart’s symbol is open and the script is executing on the chart’s last bar, the _realtime bar_, [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) returns the value of the current price. It will only contain the actual closing price of the realtime bar the last time the script is executed on that bar, when it closes.
 
-Pine Script has a variable that contains the number of the bar the script is executing on: [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index). On the first bar, [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) is equal to 0 and it increases by 1 on each successive bar the script executes on. On the last bar, [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) is equal to the number of bars in the dataset minus one.
+Pine Script has a variable that contains the number of the bar the script is executing on: [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index). On the first bar, [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) is equal to 0 and it increases by 1 on each successive bar the script executes on. On the last bar, [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) is equal to the number of bars in the dataset minus one.
 
 There is another important consideration to keep in mind when using the `[]` operator in Pine Script. We have seen cases when a history reference may return the [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) value. [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) represents a value which is not a number and using it in any expression will produce a result that is also [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) (similar to [NaN](https://en.wikipedia.org/wiki/NaN)). Such cases often happen during the script’s calculations in the early bars of the dataset, but can also occur in later bars under certain conditions. If your code does not explicitly handle these special cases using the [na()](https://www.tradingview.com/pine-script-reference/v6/#fun_na) and [nz()](https://www.tradingview.com/pine-script-reference/v6/#fun_nz) functions, [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) values can introduce invalid results in your script’s calculations that can affect calculations all the way to the realtime bar.
 
@@ -175,6 +177,7 @@ close > nz(close[1], open)
 Note that the [\[\]](https://www.tradingview.com/pine-script-reference/v6/#op_%5B%5D) operator can only be used once on the same value. This is not allowed:
 
 ```close[1][2] // Error: incorrect use of [] operator
+
 ```
 
 ## Operator precedence

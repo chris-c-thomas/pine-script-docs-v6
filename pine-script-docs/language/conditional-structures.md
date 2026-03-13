@@ -40,7 +40,7 @@ where:
 
 - Parts enclosed in square brackets (`[]`) can appear zero or one time, and those enclosed in curly braces (`{}`) can appear zero or more times.
 - \<expression> must be of “bool” type or be auto-castable to that type, which is only possible for “int” or “float” values (see the [Type system](/pine-script-docs/language/type-system/#types) page).
-- \<local\_block> consists of zero or more statements followed by a return value, which can be a tuple of values. It must be indented by four spaces or a tab.
+- \<local_block> consists of zero or more statements followed by a return value, which can be a tuple of values. It must be indented by four spaces or a tab.
 - There can be zero or more `else if` clauses.
 - There can be zero or one `else` clause.
 
@@ -79,7 +79,7 @@ Note that:
 - What happens next is that on each successive bar the Pine Script runtime will skip the initialization of `ourLabel`, and the [if](https://www.tradingview.com/pine-script-reference/v6/#kw_if) structure’s condition ([barstate.islast](https://www.tradingview.com/pine-script-reference/v6/#var_barstate%7Bdot%7Dislast)) is evaluated. It returns `false` on all bars until the last one, so the script does nothing on most historical bars after bar zero.
 - On the last bar, [barstate.islast](https://www.tradingview.com/pine-script-reference/v6/#var_barstate%7Bdot%7Dislast) becomes true and the structure’s local block executes, modifying on each chart update the properties of our label, which displays the number of bars in the dataset.
 - We want to display the label’s text without a background, so we make the label’s background [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) in the [label.new()](https://www.tradingview.com/pine-script-reference/v6/#fun_label%7Bdot%7Dnew) function call, and we use `hl2[1]` for the label’s _y_ position because we don’t want it to move all the time. By using the average of the **previous** bar’s [high](https://www.tradingview.com/pine-script-reference/v6/#var_high) and [low](https://www.tradingview.com/pine-script-reference/v6/#var_low) values, the label doesn’t move until the moment when the next realtime bar opens.
-- We use `bar_index + 2` in our [label.set\_xy()](https://www.tradingview.com/pine-script-reference/v6/#fun_label%7Bdot%7Dset_xy) call to offset the label to the right by two bars.
+- We use `bar_index + 2` in our [label.set_xy()](https://www.tradingview.com/pine-script-reference/v6/#fun_label%7Bdot%7Dset_xy) call to offset the label to the right by two bars.
 
 ### ​`if`​ used to return a value
 
@@ -97,12 +97,12 @@ An [if](https://www.tradingview.com/pine-script-reference/v6/#kw_if) structure u
 where:
 
 - Parts enclosed in square brackets (`[]`) can appear zero or one time, and those enclosed in curly braces (`{}`) can appear zero or more times.
-- \<declaration\_mode> is the variable’s [declaration mode](/pine-script-docs/language/variable-declarations/#declaration-modes)
+- \<declaration_mode> is the variable’s [declaration mode](/pine-script-docs/language/variable-declarations/#declaration-modes)
 - \<type> is optional, as in almost all Pine Script variable declarations (see [types](/pine-script-docs/language/type-system/#types))
 - \<identifier> is the variable’s [name](/pine-script-docs/language/identifiers/)
 - \<expression> can be a literal, a variable, an expression or a function call.
-- \<local\_block> consists of zero or more statements followed by a return value, which can be a tuple of values. It must be indented by four spaces or a tab.
-- The value assigned to the variable is the return value of the \<local\_block>, or [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) if no local block is executed. If other local blocks return “bool” values, [false](https://www.tradingview.com/pine-script-reference/v6/#const_false) will be returned instead.
+- \<local_block> consists of zero or more statements followed by a return value, which can be a tuple of values. It must be indented by four spaces or a tab.
+- The value assigned to the variable is the return value of the \<local_block>, or [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) if no local block is executed. If other local blocks return “bool” values, [false](https://www.tradingview.com/pine-script-reference/v6/#const_false) will be returned instead.
 
 This is an example:
 
@@ -167,12 +167,12 @@ The other form does not use an expression as a key; it switches on the evaluatio
 where:
 
 - Parts enclosed in square brackets (`[]`) can appear zero or one time, and those enclosed in curly braces (`{}`) can appear zero or more times.
-- \<declaration\_mode> is the variable’s [declaration mode](/pine-script-docs/language/variable-declarations/#declaration-modes)
+- \<declaration_mode> is the variable’s [declaration mode](/pine-script-docs/language/variable-declarations/#declaration-modes)
 - \<type> is optional, as in almost all Pine Script variable declarations (see [types](/pine-script-docs/language/type-system/#types))
 - \<identifier> is the variable’s [name](/pine-script-docs/language/identifiers/)
 - \<expression> can be a literal, a variable, an expression or a function call.
-- \<local\_block> consists of zero or more statements followed by a return value, which can be a tuple of values. It must be indented by four spaces or a tab.
-- The value assigned to the variable is the return value of the \<local\_block>, or [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) if no local block is executed.
+- \<local_block> consists of zero or more statements followed by a return value, which can be a tuple of values. It must be indented by four spaces or a tab.
+- The value assigned to the variable is the return value of the \<local_block>, or [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) if no local block is executed.
 - The `=> <local_block>` at the end allows you to specify a return value which acts as a default to be used when no other case in the structure is executed.
 
 Only one local block of a [switch](https://www.tradingview.com/pine-script-reference/v6/#kw_switch) structure is executed. It is thus a _structured switch_ that doesn’t _fall through_ cases. Consequently, `break` statements are unnecessary.

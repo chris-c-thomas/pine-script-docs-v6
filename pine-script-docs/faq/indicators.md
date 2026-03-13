@@ -8,7 +8,7 @@ section: "faq"
 
 ## Can I create an indicator that plots like the built-in Volume or Volume Profile indicators?
 
-The [Volume](https://www.tradingview.com/scripts/volumestudies/?script_type=indicators\&solution=43000591617) and [Visible Range Volume Profile](https://www.tradingview.com/scripts/volumestudies/?script_type=indicators\&solution=43000703076) indicators (along with some other built-in indicators) are written in Java. They display data on the main chart pane in a unique way:
+The [Volume](https://www.tradingview.com/scripts/volumestudies/?script_type=indicators&solution=43000591617) and [Visible Range Volume Profile](https://www.tradingview.com/scripts/volumestudies/?script_type=indicators&solution=43000703076) indicators (along with some other built-in indicators) are written in Java. They display data on the main chart pane in a unique way:
 
 - The bars are anchored to the bottom or right edge of the chart, not to an absolute x or y value.
 - The length of the bars is a relative percentage of the available space and is not an absolute price or number of bars.
@@ -17,7 +17,7 @@ The [Volume](https://www.tradingview.com/scripts/volumestudies/?script_type=indi
 
 It is difficult for Pine Script® indicators to plot values in the same way.
 
-**Limitations of \`plot.style\_columns\`**
+**Limitations of \`plot.style_columns\`**
 
 If [volume](https://www.tradingview.com/pine-script-reference/v6/#var_volume), or another series, plotted as columns, it is anchored to the bottom of the chart, and the width and length of the bars can adjust dynamically. However, the tops of the bars are defined by absolute price values. This means that it is not possible for the series to be plotted on the main chart without distorting the price scale. Also, plots must be defined during processing of the bar they are plotted on, and cannot be plotted retroactively.
 
@@ -25,12 +25,12 @@ If [volume](https://www.tradingview.com/pine-script-reference/v6/#var_volume), o
 
 Drawing objects such as [lines and boxes](/pine-script-docs/visuals/lines-and-boxes/#lines-and-boxes) are anchored to an absolute price scale, not to the edge of the chart. Drawing objects do not adjust their length automatically. Lines do not adjust their width automatically. Although boxes can be drawn exactly one bar wide, and so adjust their width automatically, they cannot be drawn so as to fit exactly in one bar; they always draw from the middle of one bar to the middle of another.
 
-The following example script demonstrates some techniques for approximating the way that the built-in [Volume](https://www.tradingview.com/scripts/volumestudies/?script_type=indicators\&solution=43000591617) indicator displays.
+The following example script demonstrates some techniques for approximating the way that the built-in [Volume](https://www.tradingview.com/scripts/volumestudies/?script_type=indicators&solution=43000591617) indicator displays.
 
-- We use the [chart.right\_visible\_bar\_time](https://www.tradingview.com/pine-script-reference/v6/#var_chart.right_visible_bar_time) and [chart.left\_visible\_bar\_time](https://www.tradingview.com/pine-script-reference/v6/#var_chart.left_visible_bar_time) built-in variables, through the PineCoders’ [VisibleChart library](https://www.tradingview.com/script/j7vCseM2-VisibleChart/), to define the bars that are visible. Then we calculate the highest and lowest price, and the highest [volume](https://www.tradingview.com/pine-script-reference/v6/#var_volume), for that period.
+- We use the [chart.right_visible_bar_time](https://www.tradingview.com/pine-script-reference/v6/#var_chart.right_visible_bar_time) and [chart.left_visible_bar_time](https://www.tradingview.com/pine-script-reference/v6/#var_chart.left_visible_bar_time) built-in variables, through the PineCoders’ [VisibleChart library](https://www.tradingview.com/script/j7vCseM2-VisibleChart/), to define the bars that are visible. Then we calculate the highest and lowest price, and the highest [volume](https://www.tradingview.com/pine-script-reference/v6/#var_volume), for that period.
 - We plot lines retroactively, after the visible window and all related values are known.
 - We anchor the lines below the lowest visible price, so that it looks as if they are anchored to the bottom edge of the chart.
-- We scale the length of all the [volume](https://www.tradingview.com/pine-script-reference/v6/#var_volume) bars so that the longest bar in the set is approximately 30% of the screen height, similar to the built-in [Volume](https://www.tradingview.com/scripts/volumestudies/?script_type=indicators\&solution=43000591617) indicator.
+- We scale the length of all the [volume](https://www.tradingview.com/pine-script-reference/v6/#var_volume) bars so that the longest bar in the set is approximately 30% of the screen height, similar to the built-in [Volume](https://www.tradingview.com/scripts/volumestudies/?script_type=indicators&solution=43000591617) indicator.
 - We adjust the width of the lines depending on how many bars are visible.
 
 **Tip**
@@ -81,7 +81,7 @@ if time == chart.right_visible_bar_time
 This script has some other limitations:
 
 - The lines do not begin from the bottom of the chart if other indicators display plots or drawings below that level.
-- In common with any script that uses the [chart.right\_visible\_bar\_time](https://www.tradingview.com/pine-script-reference/v6/#var_chart.right_visible_bar_time) or [chart.left\_visible\_bar\_time](https://www.tradingview.com/pine-script-reference/v6/#var_chart.left_visible_bar_time) built-in variables, the script must refresh each time the chart is moved or a new bar appears.
+- In common with any script that uses the [chart.right_visible_bar_time](https://www.tradingview.com/pine-script-reference/v6/#var_chart.right_visible_bar_time) or [chart.left_visible_bar_time](https://www.tradingview.com/pine-script-reference/v6/#var_chart.left_visible_bar_time) built-in variables, the script must refresh each time the chart is moved or a new bar appears.
 - There is a maximum [limit](/pine-script-docs/writing/limitations/#line-box-polyline-and-label-limits) of 500 lines per script.
 - The width of the lines is calculated based on how many bars are visible. However, a Pine script has no way of knowing how much blank space there is to the right of the final bar. If the user scrolls to the right, the lines can appear too wide and overlap each other.
 
@@ -117,6 +117,7 @@ To include specific information in the CSV file, ensure that it is plotted by th
 Here is an example plot that displays the close only in the Data Window. The plot title “No chart display” becomes the column header for this value in the CSV file.
 
 ```plot(close * 0.5, "No chart display", display = display.data_window)
+
 ```
 
 Alternatively, the “Scale price chart only” in the chart settings maintains the script’s scale. To access these settings, right-click on the chart’s price scale.

@@ -143,9 +143,9 @@ bgcolor(xUp ? color.new(color.lime, 80) : xDn ? color.new(color.fuchsia,�
 
 The [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) function behaves differently on historical and realtime bars. On historical bars, it only returns _confirmed_ values from its requested context, wheras it can return _unconfirmed_ values on realtime bars. When the script restarts its execution, the bars that had a realtime state become historical bars, and will therefore only contain the values it confirmed on those bars. If the values returned by [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) fluctuate on realtime bars without confirmation from the context, the script will repaint them when it restarts its execution. See the [Historical and realtime behavior](/pine-script-docs/concepts/other-timeframes-and-data/#historical-and-realtime-behavior) section of the [Other timeframes and data](/pine-script-docs/concepts/other-timeframes-and-data/) page for a detailed explanation.
 
-One can ensure higher-timeframe data requests only return confirmed values on all bars, regardless of bar state, by offsetting the `expression` argument by at least one bar with the history-referencing operator [\[\]](https://www.tradingview.com/pine-script-reference/v6/#op_%5B%5D) and using [barmerge.lookahead\_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on) for the `lookahead` argument in the [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) call, as explained [here](/pine-script-docs/concepts/other-timeframes-and-data/#higher-timeframe-data).
+One can ensure higher-timeframe data requests only return confirmed values on all bars, regardless of bar state, by offsetting the `expression` argument by at least one bar with the history-referencing operator [\[\]](https://www.tradingview.com/pine-script-reference/v6/#op_%5B%5D) and using [barmerge.lookahead_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on) for the `lookahead` argument in the [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) call, as explained [here](/pine-script-docs/concepts/other-timeframes-and-data/#higher-timeframe-data).
 
-The script below demonstrates the difference between repainting and non-repainting HTF data requests. It contains two [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) calls. The first function call requests [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) data from the `higherTimeframe` without additional specification, and the second call requests the same series with an offset and [barmerge.lookahead\_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on).
+The script below demonstrates the difference between repainting and non-repainting HTF data requests. It contains two [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) calls. The first function call requests [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) data from the `higherTimeframe` without additional specification, and the second call requests the same series with an offset and [barmerge.lookahead_on](https://www.tradingview.com/pine-script-reference/v6/#var_barmerge.lookahead_on).
 
 As we see on all realtime bars (the ones with an orange background), the `repaintingClose` series contains values that fluctuate without confirmation from the `higherTimeframe` context, meaning the results will _repaint_ after the script restarts its executions. The `nonRepaintingClose`, on the other hand, behaves the same on realtime and historical bars, i.e., it only changes its value when new, confirmed data is available:
 
@@ -189,7 +189,8 @@ For the sake of easy reusability, below is a simple a `noRepaintSecurity()` func
 ```//@function Requests non-repainting `expression` values from the context of the `symbol` and `timeframe`.
 noRepaintSecurity(symbol, timeframe, expression) =>
     request.security(symbol, timeframe, expression[1], lookahead = barmerge.lookahead_on)
-```
+
+````
 
 Note that:
 
@@ -221,7 +222,7 @@ This is an example:
 indicator("Future leak", "", true)
 futureHigh = request.security(syminfo.tickerid, "1D", high, lookahead = barmerge.lookahead_on)
 plot(futureHigh)
-```
+````
 
 Note how the higher timeframe line is showing the timeframe’s [high](https://www.tradingview.com/pine-script-reference/v6/#var_high) value before it occurs. The solution to avoid this effect is to use the function as demonstrated in [this previous section](/pine-script-docs/concepts/repainting/#repainting-requestsecurity-calls).
 

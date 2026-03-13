@@ -125,6 +125,7 @@ Scripts can use _line wrapping_ to define a long _single line_ of code across _m
 For example, consider the following line of code:
 
 ```float x = open + high + low + close
+
 ```
 
 We can distribute any part of this single line of code across two or more lines. Within a wrapped statement or expression, the subsequent lines can use different indentation lengths, and can also include [comments](/pine-script-docs/language/script-structure/#comments) without disrupting the code:

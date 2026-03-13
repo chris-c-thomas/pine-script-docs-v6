@@ -6,17 +6,17 @@ section: "faq"
 
 # Techniques
 
-## How can I prevent the “Bar index value of the ​`x`​ argument is too far from the current bar index. Try using ​`time`​ instead” and “Objects positioned using xloc.bar\_index cannot be drawn further than X bars into the future” errors?
+## How can I prevent the “Bar index value of the ​`x`​ argument is too far from the current bar index. Try using ​`time`​ instead” and “Objects positioned using xloc.bar_index cannot be drawn further than X bars into the future” errors?
 
 Both these errors occur when creating objects too distant from the current bar. An x point on a [line](/pine-script-docs/visuals/lines-and-boxes/#lines), [label](/pine-script-docs/visuals/text-and-shapes/#labels), or [box](/pine-script-docs/visuals/lines-and-boxes/#boxes) can not be more than 9999 bars in the past or more than 500 bars in the future relative to the bar on which the script draws it.
 
-Scripts _can_ draw objects beyond these limits, however, using [xloc.bar\_time](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_time) instead of the `xloc` parameter, and [time](https://www.tradingview.com/pine-script-reference/v6/#fun_time) as an alternative to [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) for the `x` arguments.
+Scripts _can_ draw objects beyond these limits, however, using [xloc.bar_time](https://www.tradingview.com/pine-script-reference/v6/#var_xloc.bar_time) instead of the `xloc` parameter, and [time](https://www.tradingview.com/pine-script-reference/v6/#fun_time) as an alternative to [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) for the `x` arguments.
 
 Note that, by default, all drawings use `xloc.bar_index`, which means that the values passed to their `x`-coordinates are treated as if they are bar indices. If drawings use a `time`-based value without specifying `xloc = xloc.bar_time`, the timestamp — which is usually an `int` value of trillions of milliseconds — is treated as an index of a bar in the future, and inevitably exceeds the 500 future bars limit. To use `time`-based values for drawings, always specify `xloc.bar_time`.
 
 ## How can I update the right side of all lines or boxes?
 
-Scripts can update the `x2` value of all lines or boxes by storing them in an array and using a [for…in](https://www.tradingview.com/pine-script-reference/v6/#op_for...in) loop to iterate over each object. Update the `x2` value using the [line.set\_x2()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_x2) or [box.set\_right()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_right) functions.
+Scripts can update the `x2` value of all lines or boxes by storing them in an array and using a [for…in](https://www.tradingview.com/pine-script-reference/v6/#op_for...in) loop to iterate over each object. Update the `x2` value using the [line.set_x2()](https://www.tradingview.com/pine-script-reference/v6/#fun_line.set_x2) or [box.set_right()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_right) functions.
 
 In the example below, we create a custom array and go over it to extend lines with each new bar:
 
@@ -131,7 +131,7 @@ if barstate.islastconfirmedhistory
 
 ## How can I plot the highest and lowest visible candle values?
 
-To plot the highest [high](https://www.tradingview.com/pine-script-reference/v6/#var_high) and lowest [low](https://www.tradingview.com/pine-script-reference/v6/#var_low) within the range of visible bars, a script can use the [chart.left\_visible\_bar\_time](https://www.tradingview.com/pine-script-reference/v6/#var_chart.left_visible_bar_time) and [chart.right\_visible\_bar\_time](https://www.tradingview.com/pine-script-reference/v6/#var_chart.right_visible_bar_time) built-ins. These variables allow the script to identify the times of the earliest and latest visible bars on the chart and calculate the maximum or minimum values within that range.
+To plot the highest [high](https://www.tradingview.com/pine-script-reference/v6/#var_high) and lowest [low](https://www.tradingview.com/pine-script-reference/v6/#var_low) within the range of visible bars, a script can use the [chart.left_visible_bar_time](https://www.tradingview.com/pine-script-reference/v6/#var_chart.left_visible_bar_time) and [chart.right_visible_bar_time](https://www.tradingview.com/pine-script-reference/v6/#var_chart.right_visible_bar_time) built-ins. These variables allow the script to identify the times of the earliest and latest visible bars on the chart and calculate the maximum or minimum values within that range.
 
 The [VisibleChart](https://www.tradingview.com/script/j7vCseM2-VisibleChart/) library by [PineCoders](https://www.tradingview.com/u/PineCoders/) offers such functionality with its `high()` and `low()` functions, which dynamically calculate the highest and lowest values of the currently visible bars.
 
@@ -168,7 +168,7 @@ Note that:
 
 **Note**
 
-Scripts that use [chart.left\_visible\_bar\_time](https://www.tradingview.com/pine-script-reference/v6/#var_chart.left_visible_bar_time) or [chart.right\_visible\_bar\_time](https://www.tradingview.com/pine-script-reference/v6/#var_chart.right_visible_bar_time) recalculate their results on _every bar_ each time the user scrolls or zooms the chart.
+Scripts that use [chart.left_visible_bar_time](https://www.tradingview.com/pine-script-reference/v6/#var_chart.left_visible_bar_time) or [chart.right_visible_bar_time](https://www.tradingview.com/pine-script-reference/v6/#var_chart.right_visible_bar_time) recalculate their results on _every bar_ each time the user scrolls or zooms the chart.
 
 For more information, refer to the [VisibleChart](https://www.tradingview.com/script/j7vCseM2-VisibleChart/) library’s documentation.
 
@@ -178,7 +178,7 @@ Scripts can store the number of bars between the current bar and a bar on which 
 
 - Using [ta.barssince()](https://www.tradingview.com/pine-script-reference/v6/#fun_ta.barssince). This built-in function is the simplest way to track the distance from the condition.
 - Manually replicating the functionality of [ta.barssince()](https://www.tradingview.com/pine-script-reference/v6/#fun_ta.barssince) by initializing the distance to zero when the condition occurs, then incrementing it by one on each bar, resetting it if the condition occurs again.
-- Saving the [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) when the condition occurs, and calculating the difference from the current [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index).
+- Saving the [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) when the condition occurs, and calculating the difference from the current [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index).
 
 Programmers can then use the number of bars with the [history-referencing operator \[\]](https://www.tradingview.com/pine-script-reference/v6/#op_%5B%5D) to retrieve the value of a variable, such as the [close](https://www.tradingview.com/pine-script-reference/v6/#var_close), on that bar.
 
@@ -538,7 +538,7 @@ Programmers can measure the time that a script takes to run and see detailed inf
 
 ## How can I save a value when an event occurs?
 
-To save a value when an event occurs, use a _persistent variable_. Scripts declare persistent variables by using the [var](/pine-script-docs/language/variable-declarations/#var) keyword. Such variables are initialized only once, at [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) zero, instead of on each bar, and maintain the same value after that unless changed.
+To save a value when an event occurs, use a _persistent variable_. Scripts declare persistent variables by using the [var](/pine-script-docs/language/variable-declarations/#var) keyword. Such variables are initialized only once, at [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) zero, instead of on each bar, and maintain the same value after that unless changed.
 
 In the following example script, the [var](/pine-script-docs/language/variable-declarations/#var) keyword allows the `priceAtCross` variable to maintain its value between bars until a crossover event occurs, when the script updates the variable with the current close price. The [:=](/pine-script-docs/language/operators/#-reassignment-operator) reassignment operator ensures that the global variable `priceAtCross` is modified. Using the [=](/pine-script-docs/language/operators/#-assignment-operator) assignment operator instead would create a new local variable that is inaccessible outside the [if](/pine-script-docs/language/conditional-structures/#if-structure) block. The new local variable would have the same name as the global variable, which is called _shadowing_. The compiler warns about shadow variables.
 
@@ -647,7 +647,7 @@ The [Pine Profiler](/pine-script-docs/writing/profiling-and-optimization/) analy
 - Become familiar with the Pine [execution model](/pine-script-docs/language/execution-model/) and [time series](/pine-script-docs/language/execution-model/#time-series) to structure code effectively.
 - Declare variables with the [var](/pine-script-docs/language/variable-declarations/#var) keyword when initialization involves time-consuming operations like complex functions, arrays, objects, or string manipulations.
 - Keep operations on strings to a necessary minimum, because they can be more resource-intensive than operations on other types.
-- Using built-in functions is usually faster than writing custom functions that do the same thing. Sometimes, alternative logic can be more efficient than using standard functions. For example, use a persistent variable when an event occurs, to avoid using [ta.valuewhen()](https://www.tradingview.com/pine-script-reference/v6/#fun_ta.valuewhen), as described in the FAQ entry [How can I save a value when an event occurs?](/pine-script-docs/faq/techniques/#how-can-i-save-a-value-when-an-event-occurs). Or save the [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) when a condition occurs to avoid using [ta.barssince()](https://www.tradingview.com/pine-script-reference/v6/#fun_ta.barssince), as described in the FAQ entry [How to remember the last time a condition occurred?](/pine-script-docs/faq/techniques/#how-to-remember-the-last-time-a-condition-occurred).
+- Using built-in functions is usually faster than writing custom functions that do the same thing. Sometimes, alternative logic can be more efficient than using standard functions. For example, use a persistent variable when an event occurs, to avoid using [ta.valuewhen()](https://www.tradingview.com/pine-script-reference/v6/#fun_ta.valuewhen), as described in the FAQ entry [How can I save a value when an event occurs?](/pine-script-docs/faq/techniques/#how-can-i-save-a-value-when-an-event-occurs). Or save the [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) when a condition occurs to avoid using [ta.barssince()](https://www.tradingview.com/pine-script-reference/v6/#fun_ta.barssince), as described in the FAQ entry [How to remember the last time a condition occurred?](/pine-script-docs/faq/techniques/#how-to-remember-the-last-time-a-condition-occurred).
 
 ## How can I access a stock’s financial information?
 

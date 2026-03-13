@@ -62,7 +62,6 @@ NoticeScripts evaluate the visual settings in the [indicator()](https://www.trad
 The outputs of the following functions are classified as plot visuals:
 
 - All `plot*()` functions:
-
   - Data series [plots](/pine-script-docs/visuals/plots/) using [plot()](https://www.tradingview.com/pine-script-reference/v6/#fun_plot)
   - [Shape](/pine-script-docs/visuals/text-and-shapes/#plotshape) plots using [plotshape()](https://www.tradingview.com/pine-script-reference/v6/#fun_plotshape)
   - [Character](/pine-script-docs/visuals/text-and-shapes/#plotchar) plots using [plotchar()](https://www.tradingview.com/pine-script-reference/v6/#fun_plotchar)
@@ -326,7 +325,8 @@ int mySeries = testCondition ? 1 : 0 
 
 // To verify `mySeries`, plot a "!" character at the bottom of the pane only if `mySeries` is `1`.
 plotchar(mySeries, "Debugging series", "!", location = location.bottom)
-```
+
+````
 
 The [plotshape()](https://www.tradingview.com/pine-script-reference/v6/#fun_plotshape) and [plotchar()](https://www.tradingview.com/pine-script-reference/v6/#fun_plotchar) functions can also display text alongside their shapes. Unlike for [labels](/pine-script-docs/visuals/overview/#labels), the string must be of type “const”, so the value cannot be dynamic and cannot represent series: the _same_ text appears for all the points in the plot.
 
@@ -351,7 +351,7 @@ indicator("`plotarrow()` demo", overlay = true)
 //@variable The difference between the current `open` and previous `close`.
 float barGap = open - close[1]
 plotarrow(barGap, "Bar gap", color.rgb(0, 187, 212, 40), color.rgb(223, 64, 251, 40))
-```
+````
 
 ### ​`plotbar()`​ and ​`plotcandle()`​
 
@@ -395,7 +395,7 @@ By contrast, the [barcolor()](https://www.tradingview.com/pine-script-reference/
 
 As [barcolor()](https://www.tradingview.com/pine-script-reference/v6/#fun_barcolor) only affects the main chart series, scripts cannot use it to alter the colors of new bars or candles created using [plotbar()](https://www.tradingview.com/pine-script-reference/v6/#fun_plotbar) or [plotcandle()](https://www.tradingview.com/pine-script-reference/v6/#fun_plotcandle).
 
-This simple example uses arbitrary [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) and price conditions to set conditional background and bar colors:
+This simple example uses arbitrary [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) and price conditions to set conditional background and bar colors:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Visuals-overview-When-to-use-Background-and-bar-coloring-2.DoJ1F0LQ_Z1veDeb.webp)
 
@@ -447,7 +447,7 @@ Like other [drawing visuals](/pine-script-docs/visuals/overview/#drawing-visuals
 
 Programmers can specify a line’s start and end coordinates using any of the following:
 
-- A [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) x-coordinate and price y-coordinate.
+- A [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) x-coordinate and price y-coordinate.
 - A [UNIX timestamp](/pine-script-docs/concepts/time/#unix-timestamps) x-coordinate and price y-coordinate.
 - A [chart point](/pine-script-docs/language/type-system/#chart-points) object, where the x-coordinate is a bar index or time value.
 
@@ -513,7 +513,7 @@ if barstate.islastconfirmedhistory
 
 Note that:
 
-- To avoid [runtime errors](/pine-script-docs/faq/techniques/#how-can-i-prevent-the-bar-index-value-of-the-x-argument-is-too-far-from-the-current-bar-index-try-using-time-instead-and-objects-positioned-using-xlocbar_index-cannot-be-drawn-further-than-x-bars-into-the-future-errors) due to the polyline trying to draw points more than approximately 9999 bars back from the current bar, one alternative is to use [chart.point.from\_time()](https://www.tradingview.com/pine-script-reference/v6/#fun_chart.point.from_time) to set x-coordinates with [UNIX timestamps](/pine-script-docs/concepts/time/#unix-timestamps). Here, we instead use a [loop](/pine-script-docs/language/loops/) to remove [chart.point](https://www.tradingview.com/pine-script-reference/v6/#type_chart.point) objects that are too far from the current bar, before drawing the polyline. Note that to accurately remove more than one element from an array using a loop, scripts must iterate _backwards_ through the array.
+- To avoid [runtime errors](/pine-script-docs/faq/techniques/#how-can-i-prevent-the-bar-index-value-of-the-x-argument-is-too-far-from-the-current-bar-index-try-using-time-instead-and-objects-positioned-using-xlocbar_index-cannot-be-drawn-further-than-x-bars-into-the-future-errors) due to the polyline trying to draw points more than approximately 9999 bars back from the current bar, one alternative is to use [chart.point.from_time()](https://www.tradingview.com/pine-script-reference/v6/#fun_chart.point.from_time) to set x-coordinates with [UNIX timestamps](/pine-script-docs/concepts/time/#unix-timestamps). Here, we instead use a [loop](/pine-script-docs/language/loops/) to remove [chart.point](https://www.tradingview.com/pine-script-reference/v6/#type_chart.point) objects that are too far from the current bar, before drawing the polyline. Note that to accurately remove more than one element from an array using a loop, scripts must iterate _backwards_ through the array.
 - A polyline’s `curved` parameter accepts a “series” argument, so scripts can use [Boolean inputs](/pine-script-docs/concepts/inputs/#boolean-input) like `isCurvedPolyline` in our example to easily switch between straight or curved line drawings from an indicator’s settings.
 
 Scripts can fill the closed space of a polyline drawing using the [polyline.new()](https://www.tradingview.com/pine-script-reference/v6/#fun_polyline.new) function’s `fill_color` parameter. To fill the space between two [lines](/pine-script-docs/visuals/lines-and-boxes/#lines) with a specified color, use linefill objects, which are described in the next section.
@@ -536,7 +536,7 @@ Linefills can fill the space only between two “line” objects. For [polylines
 
 Scripts can use [boxes](/pine-script-docs/visuals/lines-and-boxes/#boxes) to create custom rectangle drawings on the chart. Like other [drawing visuals](/pine-script-docs/visuals/overview/#drawing-visuals), a box is a flexible object type, not a series visual, so a script can draw multiple boxes on the same bar, and can set box coordinates at any allowed chart locations ahead or behind the current bar.
 
-Programmers can specify box coordinates using either two diagonal corner points or all four edges of the box, and can define the x-coordinates using [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) or [UNIX timestamp](/pine-script-docs/concepts/time/#unix-timestamps) values.
+Programmers can specify box coordinates using either two diagonal corner points or all four edges of the box, and can define the x-coordinates using [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) or [UNIX timestamp](/pine-script-docs/concepts/time/#unix-timestamps) values.
 
 Boxes can be useful for highlighting chart areas of interest, showing price ranges, or visually grouping bars. For example, the built-in [Multi-time period charts](https://www.tradingview.com/support/solutions/43000502591-multi-time-period-charts/) indicator overlays boxes on the current chart to visualize the corresponding higher timeframe candles:
 
@@ -556,7 +556,7 @@ In the built-in [Zig Zag](https://www.tradingview.com/support/solutions/43000591
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Visuals-overview-When-to-use-Labels-1.BeK-v0k1_ZY9PPU.webp)
 
-Many `label.style_*` options are available to customize a label’s visual appearance, including standard pointing labels and shape-based labels like crosses, triangles, arrows, or flags. The indicator above uses the [label.style\_none](https://www.tradingview.com/pine-script-reference/v6/#const_label.style_none) style to display the text on the chart without a visible label shape or outline. See the table in the [positioning labels](/pine-script-docs/visuals/text-and-shapes/#positioning-labels) section of the [Text and shapes](/pine-script-docs/visuals/text-and-shapes/) page for all available label styles.
+Many `label.style_*` options are available to customize a label’s visual appearance, including standard pointing labels and shape-based labels like crosses, triangles, arrows, or flags. The indicator above uses the [label.style_none](https://www.tradingview.com/pine-script-reference/v6/#const_label.style_none) style to display the text on the chart without a visible label shape or outline. See the table in the [positioning labels](/pine-script-docs/visuals/text-and-shapes/#positioning-labels) section of the [Text and shapes](/pine-script-docs/visuals/text-and-shapes/) page for all available label styles.
 
 The versatility of labels also makes them particularly useful for [debugging](/pine-script-docs/writing/debugging/#labels) scripts. A label can easily show calculated numeric values, strings, or test conditions directly on the chart with little extra code. Scripts can even display empty labels without text to create quick visual markers, for example, to verify that conditions occur on their expected bars.
 

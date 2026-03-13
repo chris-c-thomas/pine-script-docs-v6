@@ -75,6 +75,7 @@ Programmers can also place the [method](https://www.tradingview.com/pine-script-
 Below is an example of a simple function header. The header declares that the function’s name is `myFunction`, and that the function has two parameters named `param1` and `param2`:
 
 ```myFunction(param1, param2) =>
+
 ```
 
 Note that:
@@ -101,6 +102,7 @@ Where:
 The following example defines an `add()` function in single-line format. The function includes two parameters named `val1` and `val2`. The body of the function contains a single [+](https://www.tradingview.com/pine-script-reference/v6/#op_+) operation that _adds_ or [concatenates](/pine-script-docs/concepts/strings/#concatenation) the parameter values, depending on their [types](/pine-script-docs/language/type-system/#types). Each call to the function returns the result of that operation:
 
 ```add(val1, val2) => val1 + val2
+
 ```
 
 A script that includes this function definition can call `add()` with different arguments for `val1` and `val2`. The type of value returned by each call depends on these arguments. For example, the script below executes a few calls to `add()`, then passes their results to the `series`, `title`, and `linewidth` parameters in a call to [plot()](https://www.tradingview.com/pine-script-reference/v6/#fun_plot):
@@ -250,7 +252,8 @@ For example, the `sumDiff()` function below calculates both the sum and differen
 ```//@function Returns a tuple containing the sum and difference between the `val1` and `val2` values, respectively.
 sumDiff(float val1, float val2) =>
     [val1 + val2, val1 - val2]
-```
+
+````
 
 Note that:
 
@@ -275,7 +278,7 @@ sumDiff(float val1, float val2) =>
 // Plot the `sum` and `diff` series.
 plot(sum,  "Sum",        color.teal,   3)
 plot(diff, "Difference", color.maroon, 3)
-```
+````
 
 In some cases, a script might not require _all_ the results from the tuple returned by a function call. Instead of writing unique identifiers for every variable in the tuple declaration, programmers can [use an underscore](/pine-script-docs/language/variable-declarations/#using-an-underscore-as-an-identifier) as the identifier for each variable that the script does not require. All variables with the name `_` are _not usable_ in the script’s calculations.
 
@@ -336,7 +339,7 @@ plotDisplay = pass(display.all - display.status_line) // "const plot_disp
 plot(plotSeries, plotTitle, plotColor, lineWidth, display = plotDisplay)
 ```
 
-We can restrict the `source` parameter’s type, and thus the arguments it can accept, by including a type keyword in its declaration. For example, in the modified script below, we added the [int](https://www.tradingview.com/pine-script-reference/v6/#fun_int) keyword to the declaration to specify that the parameter’s type is “int”. With this change, the last three `pass()` calls now cause a compilation error, because the parameter no longer allows “string”, “color”, or “plot\_display” arguments:
+We can restrict the `source` parameter’s type, and thus the arguments it can accept, by including a type keyword in its declaration. For example, in the modified script below, we added the [int](https://www.tradingview.com/pine-script-reference/v6/#fun_int) keyword to the declaration to specify that the parameter’s type is “int”. With this change, the last three `pass()` calls now cause a compilation error, because the parameter no longer allows “string”, “color”, or “plot_display” arguments:
 
 ```pine
 //@version=6
@@ -406,7 +409,8 @@ To demonstrate these behaviors, let’s revisit the `pass()` function from the [
 //          Each written call to the function can accept an argument of *any* type except for "void".
 pass(source) =>
     source
-```
+
+````
 
 The script below calls `pass()` using an “int” value with the “const” qualifier, then uses the returned value as the `length` argument in a call to [ta.ema()](https://www.tradingview.com/pine-script-reference/v6/#fun_ta.ema) and plots the result. This script compiles successfully because our `pass()` call returns the same qualified type as its argument (“const int”), and the `length` parameter of [ta.ema()](https://www.tradingview.com/pine-script-reference/v6/#fun_ta.ema) can accept a value of that type:
 
@@ -433,7 +437,7 @@ float emaDiff = ta.ema(close - open, length = lengthVal)
 
 // Plot the `emaDiff` series.
 plot(emaDiff, "Smoothed difference", color.purple, 3)
-```
+````
 
 If we add [int](https://www.tradingview.com/pine-script-reference/v6/#fun_int) to the `source` declaration, the parameter then requires an “int” value, but it **does not** directly inherit the _same_ type qualifier as its argument. Instead, the compiler first checks if it can assign _“series”_ to the parameter, then tries using _“simple”_ if “series” does not work.
 
@@ -496,7 +500,8 @@ calcAvg(float source, int length, string avgType) =>
         "sma" => ta.sma(source, length)
         "wma" => ta.wma(source, length)
         "hma" => ta.hma(source, length)
-```
+
+````
 
 The compiler raises a _warning_ about this function’s structure inside the Pine Editor, because using `calcAvg()` with a _dynamic_ `avgType` argument can cause _unintended results_. If the `ta.*()` call executed by the function changes on any bar, it affects the _history_ of values used in the average calculations. See the [Time series in scopes](/pine-script-docs/language/execution-model/#time-series-in-scopes) section of the [Execution model](/pine-script-docs/language/execution-model/) page for advanced details about this behavior.
 
@@ -526,7 +531,7 @@ float avg2 = calcAvg(close, 10, bar_index % 2 == 0 ? "ema" : "sma")
 // Plot `avg1` and `avg2` for comparison.
 plot(avg1, "Consistent EMA", color.blue, 4)
 plot(avg2, "Inconsistent EMA/SMA", color.purple, 3)
-```
+````
 
 To ensure that any `calcAvg()` call calculates consistent averages without modifying the function’s logic, we can prevent it from using _dynamic_ `avgType` arguments by prefixing the parameter declaration with the [simple](https://www.tradingview.com/pine-script-reference/v6/#type_simple) keyword. With this change, the compiler does _not_ raise a warning about the function — as long as the script evaluates calls to the function on _every bar_ — because any `calcAvg()` call must always use the same `ta.*()` function. Now, if the script attempts to pass a “series string” value to `avgType`, a compilation error occurs:
 
@@ -594,7 +599,8 @@ mixEMA(float source, int length, float mix = 1.0) =>
     float ma = ta.ema(source, length)
     // Mix the `source` and `ma` values and return the result.
     float result = (1.0 - mix) * source + mix * ma
-```
+
+````
 
 Note that:
 
@@ -620,7 +626,7 @@ mixEMA(float source, int length, float mix = 1.0) =>
     float ma = ta.ema(source, length)
     // Mix the `source` and `ma` values and return the result.
     float result = (1.0 - mix) * source + mix * ma
-```
+````
 
 Note that each separate comment line in an annotation block _does not_ typically create a new line of text in the displayed description. Programmers can create annotations with _multiline_ descriptions by adding _empty_ comment lines to the annotation block. For example:
 
@@ -637,7 +643,8 @@ mixEMA(float source, int length, float mix = 1.0) =>
     float ma = ta.ema(source, length)
     // Mix the `source` and `ma` values and return the result.
     float result = (1.0 - mix) * source + mix * ma
-```
+
+````
 
 Annotations support a limited range of [Markdown](https://en.wikipedia.org/wiki/Markdown#Examples) syntax, which enables _custom text formats_ in the Pine Editor’s pop-up window. The example below shows some of the syntax that the window can render. To view the annotation’s results, copy the code and hover over the `f` identifier inside the Pine Editor:
 
@@ -692,7 +699,7 @@ Annotations support a limited range of [Markdown](https://en.wikipedia.org/wiki/
 //
 // ---
 f() => int(na)
-```
+````
 
 **Note**
 

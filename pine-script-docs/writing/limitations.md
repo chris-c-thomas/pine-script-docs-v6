@@ -205,7 +205,7 @@ plot(shortCondition ? 1 : 0)
 
 ### Table limits
 
-Scripts can display a maximum of nine [tables](/pine-script-docs/visuals/tables/) on the chart, one for each of the possible locations: [position.bottom\_center](https://www.tradingview.com/pine-script-reference/v6/#const_position%7Bdot%7Dbottom_center), [position.bottom\_left](https://www.tradingview.com/pine-script-reference/v6/#const_position%7Bdot%7Dbottom_left), [position.bottom\_right](https://www.tradingview.com/pine-script-reference/v6/#const_position%7Bdot%7Dbottom_right), [position.middle\_center](https://www.tradingview.com/pine-script-reference/v6/#const_position%7Bdot%7Dmiddle_center), [position.middle\_left](https://www.tradingview.com/pine-script-reference/v6/#const_position%7Bdot%7Dmiddle_left), [position.middle\_right](https://www.tradingview.com/pine-script-reference/v6/#const_position%7Bdot%7Dmiddle_right), [position.top\_center](https://www.tradingview.com/pine-script-reference/v6/#const_position%7Bdot%7Dtop_center), [position.top\_left](https://www.tradingview.com/pine-script-reference/v6/#const_position%7Bdot%7Dtop_left), and [position.top\_right](https://www.tradingview.com/pine-script-reference/v6/#const_position%7Bdot%7Dtop_right). When attempting to place two tables in the same location, only the newest instance will show on the chart.
+Scripts can display a maximum of nine [tables](/pine-script-docs/visuals/tables/) on the chart, one for each of the possible locations: [position.bottom_center](https://www.tradingview.com/pine-script-reference/v6/#const_position%7Bdot%7Dbottom_center), [position.bottom_left](https://www.tradingview.com/pine-script-reference/v6/#const_position%7Bdot%7Dbottom_left), [position.bottom_right](https://www.tradingview.com/pine-script-reference/v6/#const_position%7Bdot%7Dbottom_right), [position.middle_center](https://www.tradingview.com/pine-script-reference/v6/#const_position%7Bdot%7Dmiddle_center), [position.middle_left](https://www.tradingview.com/pine-script-reference/v6/#const_position%7Bdot%7Dmiddle_left), [position.middle_right](https://www.tradingview.com/pine-script-reference/v6/#const_position%7Bdot%7Dmiddle_right), [position.top_center](https://www.tradingview.com/pine-script-reference/v6/#const_position%7Bdot%7Dtop_center), [position.top_left](https://www.tradingview.com/pine-script-reference/v6/#const_position%7Bdot%7Dtop_left), and [position.top_right](https://www.tradingview.com/pine-script-reference/v6/#const_position%7Bdot%7Dtop_right). When attempting to place two tables in the same location, only the newest instance will show on the chart.
 
 ## ​`request.*()`​ calls
 
@@ -214,8 +214,8 @@ Scripts can display a maximum of nine [tables](/pine-script-docs/visuals/tables/
 A script can use up to 40 _unique_ calls to the functions in the `request.*()` namespace, or up to 64 unique calls if the user has the [Ultimate plan](https://www.tradingview.com/pricing/). A subsequent call to the same `request.*()` function with the same arguments is not typically unique. This limitation applies when using any `request.*()` functions, including:
 
 - [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security)
-- [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf)
-- [request.currency\_rate()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.currency_rate)
+- [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf)
+- [request.currency_rate()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.currency_rate)
 - [request.dividends()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.dividends)
 - [request.splits()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.splits)
 - [request.earnings()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.earnings)
@@ -266,7 +266,7 @@ Note that:
 
 ### Intrabars
 
-Scripts can retrieve up to the most recent 200,000 _intrabars_ (lower-timeframe bars) via the [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) or [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) functions, depending on the user’s plan:
+Scripts can retrieve up to the most recent 200,000 _intrabars_ (lower-timeframe bars) via the [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) or [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) functions, depending on the user’s plan:
 
 - All non-professional plans — Basic, Essential, Plus, and Premium — can request up to 100K bars of data.
 - Expert plans have access to 125K bars of data.
@@ -377,13 +377,13 @@ Pine Script collections ([arrays](/pine-script-docs/language/arrays/), [matrices
 
 References to past values using the [\[\]](https://www.tradingview.com/pine-script-reference/v6/#op_%5B%5D) [history-referencing operator](/pine-script-docs/language/operators/#-history-referencing-operator) are dependent on the size of the [historical buffer](/pine-script-docs/language/execution-model/#historical-buffers) maintained by the Pine Script runtime, which is limited to a maximum of 5000 bars for most series. Some built-in series like [open](https://www.tradingview.com/pine-script-reference/v6/#var_open), [high](https://www.tradingview.com/pine-script-reference/v6/#var_high), [low](https://www.tradingview.com/pine-script-reference/v6/#var_low), [close](https://www.tradingview.com/pine-script-reference/v6/#var_close), and [time](https://www.tradingview.com/pine-script-reference/v6/#var_time) have larger historical buffers that can reference up to 10,000 bars.
 
-If a script references values beyond the historical buffer’s limit, it causes a runtime error. For more information about this error, refer to [this section](/pine-script-docs/error-messages/#the-requested-historical-offset-x-is-beyond-the-historical-buffers-limit-y) of the [Error messages](/pine-script-docs/error-messages/) page, which discusses the historical buffer and how to change its size using either the [max\_bars\_back()](https://www.tradingview.com/pine-script-reference/v6/#fun_max_bars_back) function or the `max_bars_back` parameter of the [indicator()](https://www.tradingview.com/pine-script-reference/v6/#fun_indicator) or [strategy()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy) declaration statement.
+If a script references values beyond the historical buffer’s limit, it causes a runtime error. For more information about this error, refer to [this section](/pine-script-docs/error-messages/#the-requested-historical-offset-x-is-beyond-the-historical-buffers-limit-y) of the [Error messages](/pine-script-docs/error-messages/) page, which discusses the historical buffer and how to change its size using either the [max_bars_back()](https://www.tradingview.com/pine-script-reference/v6/#fun_max_bars_back) function or the `max_bars_back` parameter of the [indicator()](https://www.tradingview.com/pine-script-reference/v6/#fun_indicator) or [strategy()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy) declaration statement.
 
-Drawings using [xloc.bar\_index](https://www.tradingview.com/pine-script-reference/v6/#const_xloc.bar_index) can be positioned a maximum of 10,000 bars in the past.
+Drawings using [xloc.bar_index](https://www.tradingview.com/pine-script-reference/v6/#const_xloc.bar_index) can be positioned a maximum of 10,000 bars in the past.
 
 ### Maximum bars forward
 
-When positioning drawings using [xloc.bar\_index](https://www.tradingview.com/pine-script-reference/v6/#const_xloc.bar_index), it is possible to use bar index values greater than that of the current bar as _x_ coordinates. A maximum of 500 bars in the future can be referenced.
+When positioning drawings using [xloc.bar_index](https://www.tradingview.com/pine-script-reference/v6/#const_xloc.bar_index), it is possible to use bar index values greater than that of the current bar as _x_ coordinates. A maximum of 500 bars in the future can be referenced.
 
 This example shows how we use the `maxval` parameter in our [input.int()](https://www.tradingview.com/pine-script-reference/v6/#fun_input%7Bdot%7Dint) function call to cap the user-defined number of bars forward we draw a projection line so that it never exceeds the limit:
 
@@ -426,6 +426,6 @@ The number of bars appearing on charts is dependent on the amount of historical 
 
 ### Trade orders in backtesting
 
-A script can place a maximum of 9000 orders when backtesting strategies. Once it reaches that limit, the earlier orders are _trimmed_ to store the information of new orders. Programmers can use the [strategy.closedtrades.first\_index](https://www.tradingview.com/pine-script-reference/v6/#var_strategy.closedtrades.first_index) variable to reference the index of the earliest untrimmed trade.
+A script can place a maximum of 9000 orders when backtesting strategies. Once it reaches that limit, the earlier orders are _trimmed_ to store the information of new orders. Programmers can use the [strategy.closedtrades.first_index](https://www.tradingview.com/pine-script-reference/v6/#var_strategy.closedtrades.first_index) variable to reference the index of the earliest untrimmed trade.
 
 When using Deep Backtesting, the order limit is 1,000,000.

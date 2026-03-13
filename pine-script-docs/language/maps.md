@@ -35,6 +35,7 @@ When initializing a map variable using [na](https://www.tradingview.com/pine-scr
 The following line of code declares a `myMap` variable with an initial reference of [na](https://www.tradingview.com/pine-script-reference/v6/#var_na). The variable declaration includes the type identifier `map<string, float>`, which tells the compiler that the variable can accept the ID of a map containing “string” keys and corresponding “float” values:
 
 ```map<string, float> myMap = na
+
 ```
 
 If a map variable is not initialized with [na](https://www.tradingview.com/pine-script-reference/v6/#var_na), specifying the type identifier is optional, because the compiler can automatically determine the variable’s accepted type from the assigned map ID.
@@ -42,6 +43,7 @@ If a map variable is not initialized with [na](https://www.tradingview.com/pine-
 For example, the following line calls `map.new<string, float>()` to create an empty map that stores “string” keys and “float” values, then assigns the resulting ID to the `myMap` variable. An explicit type identifier is optional in this variable declaration, because the compiler uses the assigned ID to determine that the variable’s type is `map<string, float>`:
 
 ```myMap = map.new<string, float>()
+
 ```
 
 ### Using ​`var`​ and ​`varip`​ keywords
@@ -84,7 +86,7 @@ Notice
 Map variables declared using [varip](https://www.tradingview.com/pine-script-reference/v6/#kw_varip) behave similarly to those declared using [var](https://www.tradingview.com/pine-script-reference/v6/#kw_var), with two key differences. Firstly, the maps that they reference can finalize updates to their key-value pairs on _any_ available tick — not only on a bar’s closing tick. Secondly, maps referenced by [varip](https://www.tradingview.com/pine-script-reference/v6/#kw_varip) variables can store only the following types of data:
 
 - Values of any [fundamental type](/pine-script-docs/language/type-system/#types).
-- IDs of the [chart.point](https://www.tradingview.com/pine-script-reference/v6/#type_chart.point), [footprint](https://www.tradingview.com/pine-script-reference/v6/#type_footprint), or [volume\_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row) type.
+- IDs of the [chart.point](https://www.tradingview.com/pine-script-reference/v6/#type_chart.point), [footprint](https://www.tradingview.com/pine-script-reference/v6/#type_footprint), or [volume_row](https://www.tradingview.com/pine-script-reference/v6/#type_volume_row) type.
 - References to objects of a [user-defined type](/pine-script-docs/language/type-system/#user-defined-types) that have fields for storing only data of either of the above types or the IDs of other [collections](/pine-script-docs/language/type-system/#collections) containing only these types.
 
 ## Reading and writing
@@ -97,7 +99,7 @@ If the `key` argument in the [map.put()](https://www.tradingview.com/pine-script
 
 To retrieve the value from a map `id` associated with a given `key`, use [map.get()](https://www.tradingview.com/pine-script-reference/v6/#fun_map.get). This function returns the value if the `id` map [contains](https://www.tradingview.com/pine-script-reference/v6/#fun_map.contains) the `key`. Otherwise, it returns [na](https://www.tradingview.com/pine-script-reference/v6/#var_na).
 
-The following example calculates the difference between the [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) values from when [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) was last rising and falling over a given `length` with the help of [map.put()](https://www.tradingview.com/pine-script-reference/v6/#fun_map.put) and [map.get()](https://www.tradingview.com/pine-script-reference/v6/#fun_map.get) methods. The script puts a `("Rising", bar_index)` pair into the `data` map when the price is rising and puts a `("Falling", bar_index)` pair into the map when the price is falling. It then puts a pair containing the “Difference” between the “Rising” and “Falling” values into the map and plots that pair’s value on the chart:
+The following example calculates the difference between the [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) values from when [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) was last rising and falling over a given `length` with the help of [map.put()](https://www.tradingview.com/pine-script-reference/v6/#fun_map.put) and [map.get()](https://www.tradingview.com/pine-script-reference/v6/#fun_map.get) methods. The script puts a `("Rising", bar_index)` pair into the `data` map when the price is rising and puts a `("Falling", bar_index)` pair into the map when the price is falling. It then puts a pair containing the “Difference” between the “Rising” and “Falling” values into the map and plots that pair’s value on the chart:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Maps-Reading-and-writing-Putting-and-getting-key-value-pairs-1.CnULguMa_ZMFlOi.webp)
 
@@ -370,9 +372,9 @@ Note that:
 
 ### Combining maps
 
-Scripts can combine two maps via [map.put\_all()](https://www.tradingview.com/pine-script-reference/v6/#fun_map.put_all). This function puts _all_ key-value pairs from the `id2` map, in their insertion order, into the `id1` map. As with [map.put()](https://www.tradingview.com/pine-script-reference/v6/#fun_map.put), if any keys in `id2` are also present in `id1`, this function **replaces** the key-value pairs that contain those keys without affecting their initial insertion order.
+Scripts can combine two maps via [map.put_all()](https://www.tradingview.com/pine-script-reference/v6/#fun_map.put_all). This function puts _all_ key-value pairs from the `id2` map, in their insertion order, into the `id1` map. As with [map.put()](https://www.tradingview.com/pine-script-reference/v6/#fun_map.put), if any keys in `id2` are also present in `id1`, this function **replaces** the key-value pairs that contain those keys without affecting their initial insertion order.
 
-This example contains a user-defined `hexMap()` function that maps decimal [int](https://www.tradingview.com/pine-script-reference/v6/#type_int) keys to [string](https://www.tradingview.com/pine-script-reference/v6/#type_string) representations of their [hexadecimal](https://en.wikipedia.org//wiki/Hexadecimal) forms. The script uses this function to create two maps, `mapA` and `mapB`, then calls [map.put\_all()](https://www.tradingview.com/pine-script-reference/v6/#fun_map.put_all) as a method to put all key-value pairs from `mapB` into `mapA`.
+This example contains a user-defined `hexMap()` function that maps decimal [int](https://www.tradingview.com/pine-script-reference/v6/#type_int) keys to [string](https://www.tradingview.com/pine-script-reference/v6/#type_string) representations of their [hexadecimal](https://en.wikipedia.org//wiki/Hexadecimal) forms. The script uses this function to create two maps, `mapA` and `mapB`, then calls [map.put_all()](https://www.tradingview.com/pine-script-reference/v6/#fun_map.put_all) as a method to put all key-value pairs from `mapB` into `mapA`.
 
 The script uses a custom `debugLabel()` function to display labels showing the [keys](https://www.tradingview.com/pine-script-reference/v6/#fun_map.keys) and [values](https://www.tradingview.com/pine-script-reference/v6/#fun_map.values) of `mapA` and `mapB`, then another label displaying the contents of `mapA` after putting all key-value pairs from `mapB` into it:
 
@@ -450,6 +452,7 @@ However, we recommend using a [\`for…in\` loop](/pine-script-docs/language/loo
 For example, this line of code loops through each key and value in `thisMap`, starting from the first key-value pair put into it:
 
 ```for [key, value] in thisMap
+
 ```
 
 Let’s use this structure to write a script that displays a map’s key-value pairs in a [table](https://www.tradingview.com/pine-script-reference/v6/#type_table). In the example below, we’ve defined a custom `toTable()` method that creates a [table](https://www.tradingview.com/pine-script-reference/v6/#type_table), then uses a `for...in` loop to iterate over the map’s key-value pairs and populate the table’s cells. The script uses this method to visualize a map containing `length`-bar averages of price and volume data:
@@ -705,12 +708,13 @@ For example, suppose we want to create a “2D” map that uses [string](https:/
 ```//@type A wrapper type for maps with `string` keys and `float` values.
 type Wrapper
     map<string, float> data
-```
+
+````
 
 With our `Wrapper` type defined, we can create maps containing [string](https://www.tradingview.com/pine-script-reference/v6/#type_string) keys and `Wrapper` references as values, where the `data` field of each object referenced by the map points to a `map<string, float>` instance:
 
 ```mapOfMaps = map.new<string, Wrapper>()
-```
+````
 
 The script below uses this concept to construct a map to reference other maps that hold OHLCV data requested from multiple tickers. The user-defined `requestData()` function requests price and volume data from a ticker, creates a `<string, float>` map, [puts](/pine-script-docs/language/maps/#putting-and-getting-key-value-pairs) the data into it, then returns a `Wrapper` instance containing the new map.
 

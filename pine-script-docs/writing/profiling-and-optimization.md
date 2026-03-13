@@ -16,7 +16,7 @@ This page covers how to profile and monitor a script’s runtime and executions 
 
 For a quick introduction, see the following video, where we profile an example script and optimize it step-by-step, examining several common script inefficiencies and explaining how to avoid them along the way:
 
-[]()[Play](https://www.youtube-nocookie.com/embed/dQ7sbzWL0Dk?autoplay=1\&playsinline=1)
+[]()[Play](https://www.youtube-nocookie.com/embed/dQ7sbzWL0Dk?autoplay=1&playsinline=1)
 
 ## Pine Profiler
 
@@ -110,6 +110,7 @@ Here, we hovered the pointer over the space next to line 12 of our profiled code
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Profiling-and-optimization-Pine-profiler-Interpreting-profiled-results-Single-line-results-1.DxmafMJF_Z1xuVkr.webp)
 
 ```float upperPercentile = ta.percentile_linear_interpolation(close, lengthInput, upperPercentInput)
+
 ```
 
 Note that:
@@ -124,6 +125,7 @@ For instance, this global line from our initial example includes two [variable d
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Profiling-and-optimization-Pine-profiler-Interpreting-profiled-results-Single-line-results-2.CGsjIphG_1lBWSK.webp)
 
 ```var upperDistances = array.new<float>(lengthInput), var lowerDistances = array.new<float>(lengthInput)
+
 ```
 
 Note that:
@@ -847,7 +849,7 @@ Restarting the script again yields another new result. On the third run, the scr
 
 After repeating this process several times and documenting the results from each run, one can manually calculate their _average_ to estimate the script’s expected total runtime:
 
-```AverageTime = (time1 + time2 + ... + timeN) / N`
+`AverageTime = (time1 + time2 + ... + timeN) / N`
 
 NoticeWhether profiling a single script run or multiple, it’s crucial to understand that **results will vary**. Averaging results across several profiled script runs can help programmers derive more stable performance estimates. However, those estimates do not necessarily indicate how the script will perform in the future.
 
@@ -878,7 +880,8 @@ pineHighest(float source, int length) =>
             for i = 1 to length - 1
                 result := math.max(result, source[i])
     result
-```
+
+````
 
 Alternatively, one might devise a more optimized Pine function by reducing the number of times the loop executes, as iterating over the history of the `source` to achieve the result is only necessary when specific conditions occur:
 
@@ -895,7 +898,7 @@ fasterPineHighest(float source, int length) =>
     else
         result := math.max(result, source)
     result
-```
+````
 
 The built-in [ta.highest()](https://www.tradingview.com/pine-script-reference/v6/#fun_ta.highest) function will outperform **both** of these implementations, as its internal calculations are highly optimized for efficient execution. Below, we created a script that plots the results of calling `pineHighest()`, `fasterPineHighest()`, and [ta.highest()](https://www.tradingview.com/pine-script-reference/v6/#fun_ta.highest) to compare their performance using the [Profiler](/pine-script-docs/writing/profiling-and-optimization/#pine-profiler):
 
@@ -1060,7 +1063,7 @@ The built-in functions in the `request.*()` namespace allow scripts to retrieve 
 
 A single script can contain up to 40 unique calls to the `request.*()` family of functions, or up to 64 if the user has the [Ultimate plan](https://www.tradingview.com/pricing/). However, we recommend programmers aim to keep their scripts’ `request.*()` calls far _below_ this limit to keep the performance impact of their data requests as low as possible.
 
-When a script requests the values of several expressions from the _same_ context with multiple [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) or [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) calls, one effective way to optimize such requests is to _condense_ them into a single `request.*()` call that uses a [tuple](/pine-script-docs/concepts/other-timeframes-and-data/#tuples) as its `expression` argument. This optimization not only helps improve the runtime of the requests; it also helps reduce the script’s _memory usage_ and compiled size.
+When a script requests the values of several expressions from the _same_ context with multiple [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security) or [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) calls, one effective way to optimize such requests is to _condense_ them into a single `request.*()` call that uses a [tuple](/pine-script-docs/concepts/other-timeframes-and-data/#tuples) as its `expression` argument. This optimization not only helps improve the runtime of the requests; it also helps reduce the script’s _memory usage_ and compiled size.
 
 As a simple example, the following script requests nine [ta.percentrank()](https://www.tradingview.com/pine-script-reference/v6/#fun_ta.percentrank) values with different lengths from a specified symbol using nine separate calls to [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security). It then [plots](/pine-script-docs/visuals/plots/) all nine requested values on the chart to utilize them in the outputs:
 
@@ -1136,7 +1139,7 @@ Note that:
 
 - The computational resources available to a script **fluctuate** over time. As such, it’s typically a good idea to profile a script [multiple times](/pine-script-docs/writing/profiling-and-optimization/#repetitive-profiling) to help solidify performance conclusions.
 - Another way to request multiple values from the same context with a single `request.*()` call is to pass an [object](/pine-script-docs/language/objects/) of a [user-defined type (UDT)](/pine-script-docs/language/type-system/#user-defined-types) as the `expression` argument. See [this section](/pine-script-docs/concepts/other-timeframes-and-data/#user-defined-types) of the [Other timeframes and data](/pine-script-docs/concepts/other-timeframes-and-data/) page to learn more about requesting [UDTs](/pine-script-docs/language/type-system/#user-defined-types).
-- Programmers can also reduce the total runtime of a [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security), [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf), or [request.seed()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.seed) call by passing an argument to the function’s `calc_bars_count` parameter, which _restricts_ the number of _historical_ data points it can access from a context and execute required calculations on. In general, if calls to these `request.*()` functions retrieve _more_ historical data than what a script _needs_, limiting the requests with `calc_bars_count` can help improve the script’s performance.
+- Programmers can also reduce the total runtime of a [request.security()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security), [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf), or [request.seed()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.seed) call by passing an argument to the function’s `calc_bars_count` parameter, which _restricts_ the number of _historical_ data points it can access from a context and execute required calculations on. In general, if calls to these `request.*()` functions retrieve _more_ historical data than what a script _needs_, limiting the requests with `calc_bars_count` can help improve the script’s performance.
 
 ### Avoiding redrawing
 
@@ -1146,7 +1149,7 @@ Most [drawing types](/pine-script-docs/language/type-system/#drawing-types), exc
 
 For example, the script below compares deleting and redrawing [boxes](/pine-script-docs/visuals/lines-and-boxes/#boxes) to using `box.set*()` functions. On the first bar, it declares the `redrawnBoxes` and `updatedBoxes` [arrays](/pine-script-docs/language/arrays/) and executes a [loop](/pine-script-docs/language/loops/) to push 25 [box](https://www.tradingview.com/pine-script-reference/v6/#type_box) elements into them.
 
-The script uses a separate [for](https://www.tradingview.com/pine-script-reference/v6/#kw_for) loop to iterate across the [arrays](/pine-script-docs/language/arrays/) and update the drawings on each execution. It _recreates_ the [boxes](/pine-script-docs/visuals/lines-and-boxes/#boxes) in the `redrawnBoxes` array using [box.delete()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.delete) and [box.new()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.new), whereas it _directly modifies_ the properties of the [boxes](/pine-script-docs/visuals/lines-and-boxes/#boxes) in the `updatedBoxes` array using [box.set\_lefttop()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_lefttop) and [box.set\_rightbottom()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_rightbottom). Both approaches achieve the same visual result. However, the latter is more efficient:
+The script uses a separate [for](https://www.tradingview.com/pine-script-reference/v6/#kw_for) loop to iterate across the [arrays](/pine-script-docs/language/arrays/) and update the drawings on each execution. It _recreates_ the [boxes](/pine-script-docs/visuals/lines-and-boxes/#boxes) in the `redrawnBoxes` array using [box.delete()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.delete) and [box.new()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.new), whereas it _directly modifies_ the properties of the [boxes](/pine-script-docs/visuals/lines-and-boxes/#boxes) in the `updatedBoxes` array using [box.set_lefttop()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_lefttop) and [box.set_rightbottom()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_rightbottom). Both approaches achieve the same visual result. However, the latter is more efficient:
 
 ```pine
 //@version=6
@@ -1179,7 +1182,7 @@ for i = 0 to 24
     box.set_rightbottom(updatedBox, x, 0.0)
 ```
 
-The results from [profiling this script](/pine-script-docs/writing/profiling-and-optimization/#profiling-a-script) show that line 24, which contains the [box.new()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.new) call, is the _heaviest_ line in the [code block](/pine-script-docs/writing/profiling-and-optimization/#code-block-results) that executes on each bar, with a runtime close to **double** the combined time spent on the [box.set\_lefttop()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_lefttop) and [box.set\_rightbottom()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_rightbottom) calls on lines 27 and 28:
+The results from [profiling this script](/pine-script-docs/writing/profiling-and-optimization/#profiling-a-script) show that line 24, which contains the [box.new()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.new) call, is the _heaviest_ line in the [code block](/pine-script-docs/writing/profiling-and-optimization/#code-block-results) that executes on each bar, with a runtime close to **double** the combined time spent on the [box.set_lefttop()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_lefttop) and [box.set_rightbottom()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.set_rightbottom) calls on lines 27 and 28:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Profiling-and-optimization-Optimization-Avoiding-redrawing-1.CVCJc2lm_ZJcTqr.webp)
 
@@ -1401,22 +1404,26 @@ Since we use the `lengthInput` as the `length` argument in the `avgDifference()`
 
 As we see from these results, the `avgDifference()` function can be costly to call, depending on the specified `lengthInput` value, due to its [for](https://www.tradingview.com/pine-script-reference/v6/#kw_for) loop that executes on each bar. However, [loops](/pine-script-docs/language/loops/) are **not** necessary to achieve the output. To understand why, let’s take a closer look at the loop’s calculations. We can represent them with the following expression:
 
-`(source - source[1]) + (source - source[2]) + ... + (source - source[length])
+```(source - source[1]) + (source - source[2]) + ... + (source - source[length])
+
 ```
 
 Notice that it adds the _current_ `source` value `length` times. These iterative additions are not necessary. We can simplify that part of the expression to `source * length`, which reduces it to the following:
 
 ```source * length - source[1] - source[2] - ... - source[length]
+
 ```
 
 or equivalently:
 
 ```source * length - (source[1] + source[2] + ... + source[length])
+
 ```
 
 After simplifying and rearranging this representation of the loop’s calculations, we see that we can compute the result in a simpler way and **eliminate** the loop by subtracting the previous bar’s rolling sum ([math.sum()](https://www.tradingview.com/pine-script-reference/v6/#fun_math.sum)) of `source` values from the `source * length` value, i.e.:
 
 ```source * length - math.sum(source, length)[1]
+
 ```
 
 The `fastAvgDifference()` function below is a **loop-free** alternative to the original `avgDifference()` function that uses the above expression to calculate the sum of `source` differences, then divides the expression by the `length` to return the average difference:
@@ -1426,7 +1433,8 @@ The `fastAvgDifference()` function below is a **loop-free** alternative to the o
 //          `(x - x[1]) + (x - x[2]) + ... + (x - x[n]) = x * n - math.sum(x, n)[1]`.
 fastAvgDifference(float source, int length) =>
     (source * length - math.sum(source, length)[1]) / length
-```
+
+````
 
 Now that we’ve identified a potential optimized solution, we can compare the performance of `fastAvgDifference()` to the original `avgDifference()` function. The script below is a modified form of the previous version that plots the results from calling both functions with the `lengthInput` as the `length` argument:
 
@@ -1452,7 +1460,7 @@ fastAvgDifference(float source, int length) =>
 
 plot(avgDifference(close, lengthInput))
 plot(fastAvgDifference(close, lengthInput))
-```
+````
 
 The [profiled results](/pine-script-docs/writing/profiling-and-optimization/#interpreting-profiled-results) for the script with the default `lengthInput` of 20 show a substantial difference in runtime spent on the two function calls. The call to the original function took about 47.3 milliseconds to execute 20,157 times on this run, whereas our optimized function only took 4.5 milliseconds:
 
@@ -1535,6 +1543,7 @@ The above code demonstrates suboptimal usage of a [for…in](https://www.trading
 To eliminate this costly call from our [for…in](https://www.tradingview.com/pine-script-reference/v6/#kw_for...in) loop, we can use the _second form_ of the structure, which produces a _tuple_ containing the **index** and the element’s value on each iteration:
 
 ```for [index, item] in data
+
 ```
 
 In this version of the script, we removed the [array.indexof()](https://www.tradingview.com/pine-script-reference/v6/#fun_array.indexof) call on line 22 since it is **not** necessary to achieve the intended result, and we changed the [for…in](https://www.tradingview.com/pine-script-reference/v6/#kw_for...in) loop to use the alternative form:
@@ -1658,7 +1667,7 @@ Pine scripts create _historical buffers_ for all variables and function calls th
 
 A script _automatically_ determines the required buffer size for all its variables and function calls by analyzing the historical references executed during the **first 244 bars** in a dataset. When a script only references the history of a calculated value _after_ those initial bars, it will **restart** its executions repetitively across previous bars with successively larger historical buffers until it either determines the appropriate size or raises a runtime error. Those repetitive executions can significantly increase a script’s runtime in some cases.
 
-When a script _excessively_ executes across a dataset to calculate historical buffers, one effective way to improve its performance is _explicitly_ defining suitable buffer sizes using the [max\_bars\_back()](https://www.tradingview.com/pine-script-reference/v6/#fun_max_bars_back) function. With appropriate buffer sizes declared explicitly, the script does not need to re-execute across past data to determine the sizes.
+When a script _excessively_ executes across a dataset to calculate historical buffers, one effective way to improve its performance is _explicitly_ defining suitable buffer sizes using the [max_bars_back()](https://www.tradingview.com/pine-script-reference/v6/#fun_max_bars_back) function. With appropriate buffer sizes declared explicitly, the script does not need to re-execute across past data to determine the sizes.
 
 For example, the script below uses a [polyline](/pine-script-docs/visuals/lines-and-boxes/#polylines) to draw a basic histogram representing the distribution of calculated `source` values over 500 bars. On the [last available bar](/pine-script-docs/concepts/bar-states/#barstateislast), the script uses a [for](https://www.tradingview.com/pine-script-reference/v6/#kw_for) loop to look back through historical values of the calculated `source` series and determine the [chart points](/pine-script-docs/language/type-system/#chart-points) used by the [polyline](https://www.tradingview.com/pine-script-reference/v6/#type_polyline) drawing. It also [plots](/pine-script-docs/visuals/plots/) the value of `bar_index + 1` to verify the number of bars it executed across:
 
@@ -1712,9 +1721,9 @@ As we see from the [profiled results](/pine-script-docs/writing/profiling-and-op
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Profiling-and-optimization-Optimization-Minimizing-historical-buffer-calculations-1.Cyx3FoQJ_Z1xcPM1.webp)
 
-This script will only reference the most recent 500 `source` values on the last historical bar and all realtime bars. Therefore, we can help it establish the correct buffer _without_ re-execution by defining a 500-bar referencing length with [max\_bars\_back()](https://www.tradingview.com/pine-script-reference/v6/#fun_max_bars_back).
+This script will only reference the most recent 500 `source` values on the last historical bar and all realtime bars. Therefore, we can help it establish the correct buffer _without_ re-execution by defining a 500-bar referencing length with [max_bars_back()](https://www.tradingview.com/pine-script-reference/v6/#fun_max_bars_back).
 
-In the following script version, we added [max\_bars\_back(source, 500)](https://www.tradingview.com/pine-script-reference/v6/#fun_max_bars_back) after the variable declaration to explicitly specify that the script will access up to 500 historical `source` values throughout its executions:
+In the following script version, we added [max_bars_back(source, 500)](https://www.tradingview.com/pine-script-reference/v6/#fun_max_bars_back) after the variable declaration to explicitly specify that the script will access up to 500 historical `source` values throughout its executions:
 
 ```pine
 //@version=6
@@ -1772,7 +1781,7 @@ Note that:
 
 Notice
 
-When using [max\_bars\_back()](https://www.tradingview.com/pine-script-reference/v6/#fun_max_bars_back) to explicitly define the buffer size for a series, ensure that the script **does not** reference more past bars than specified during its executions. If the specified buffer size is insufficient, the runtime system still re-executes the script across historical bars to calculate an appropriate size, leading to increased resource use.
+When using [max_bars_back()](https://www.tradingview.com/pine-script-reference/v6/#fun_max_bars_back) to explicitly define the buffer size for a series, ensure that the script **does not** reference more past bars than specified during its executions. If the specified buffer size is insufficient, the runtime system still re-executes the script across historical bars to calculate an appropriate size, leading to increased resource use.
 
 Additionally, it’s crucial to understand that large buffers elevate a script’s _memory use_. Choosing buffer sizes that are larger than what a script needs is a suboptimal practice that yields no benefit. In some cases, excessively large buffers can cause a script to exceed its memory limits. Therefore, when defining a buffer’s size, choose the **smallest** possible size that accommodates the script’s historical references. For example, if a script requires only 500 past values from a series, set the buffer’s size to 500 bars. Setting the buffer to include 5000 bars in such a case causes the script to use significantly more memory than necessary.
 
@@ -1792,7 +1801,7 @@ Reducing the number of data points works in most cases because it directly decre
 
 As a demonstration, this script contains a `gcd()` function that uses a _naive_ algorithm to calculate the [greatest common divisor](https://en.wikipedia.org/wiki/Greatest_common_divisor) of two integers. The function initializes its `result` using the smallest absolute value of the two numbers. Then, it reduces the value of the `result` by one within a [while](https://www.tradingview.com/pine-script-reference/v6/#kw_while) loop until it can divide both numbers without remainders. This structure entails that the loop will iterate up to _N_ times, where _N_ is the smallest of the two arguments.
 
-In this example, the script plots the value of `gcd(10000, 10000 + bar_index)`. The smallest of the two arguments is always 10,000 in this case, meaning the [while](https://www.tradingview.com/pine-script-reference/v6/#kw_while) loop within the function will require up to 10,000 iterations per script execution, depending on the [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) value:
+In this example, the script plots the value of `gcd(10000, 10000 + bar_index)`. The smallest of the two arguments is always 10,000 in this case, meaning the [while](https://www.tradingview.com/pine-script-reference/v6/#kw_while) loop within the function will require up to 10,000 iterations per script execution, depending on the [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) value:
 
 ```pine
 //@version=6

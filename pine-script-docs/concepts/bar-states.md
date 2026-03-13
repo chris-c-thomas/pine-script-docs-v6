@@ -26,7 +26,7 @@ bgcolor(barstate.islast ? color.silver : na)
 
 ### ​`barstate.isfirst`​
 
-[barstate.isfirst](https://www.tradingview.com/pine-script-reference/v6/#var_barstate%7Bdot%7Disfirst) is only `true` on the dataset’s first bar, i.e., when [bar\_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) is zero.
+[barstate.isfirst](https://www.tradingview.com/pine-script-reference/v6/#var_barstate%7Bdot%7Disfirst) is only `true` on the dataset’s first bar, i.e., when [bar_index](https://www.tradingview.com/pine-script-reference/v6/#var_bar_index) is zero.
 
 It can be useful to initialize variables on the first bar only, e.g.:
 
@@ -143,7 +143,6 @@ Note that:
 - Each state’s name will appear in the label’s text when it is `true`.
 
 - There are five possible colors for the label’s background:
-
   - fuchsia on the first bar
   - silver on historical bars
   - gray on the last confirmed historical bar

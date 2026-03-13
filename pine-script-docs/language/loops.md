@@ -606,9 +606,10 @@ The code below shows a [for](https://www.tradingview.com/pine-script-reference/v
 In contrast, a [for…in](https://www.tradingview.com/pine-script-reference/v6/#kw_for...in) loop automatically validates an array’s size and _directly_ accesses its elements, providing a more convenient solution than a traditional [for](https://www.tradingview.com/pine-script-reference/v6/#kw_for) loop. The line below achieves the _same effect_ as the code above without requiring the programmer to define boundaries explicitly or use the [array.get()](https://www.tradingview.com/pine-script-reference/v6/#fun_array.get) function to access each element:
 
 ```for element in myArray
+
 ```
 
-The following example examines bars on a lower timeframe to gauge the strength of _intrabar_ trends within each chart bar. The script uses a [request.security\_lower\_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) call to retrieve an [array](https://www.tradingview.com/pine-script-reference/v6/#type_array) of intrabar [hl2](https://www.tradingview.com/pine-script-reference/v6/#var_hl2) prices from a calculated `lowerTimeframe`. Then, it uses a [for…in](https://www.tradingview.com/pine-script-reference/v6/#kw_for...in) loop to access each `price` within the `intrabarPrices` array and compare the value to the current [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) to calculate the bar’s `strength`. The script plots the `strength` as columns in a separate pane:
+The following example examines bars on a lower timeframe to gauge the strength of _intrabar_ trends within each chart bar. The script uses a [request.security_lower_tf()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.security_lower_tf) call to retrieve an [array](https://www.tradingview.com/pine-script-reference/v6/#type_array) of intrabar [hl2](https://www.tradingview.com/pine-script-reference/v6/#var_hl2) prices from a calculated `lowerTimeframe`. Then, it uses a [for…in](https://www.tradingview.com/pine-script-reference/v6/#kw_for...in) loop to access each `price` within the `intrabarPrices` array and compare the value to the current [close](https://www.tradingview.com/pine-script-reference/v6/#var_close) to calculate the bar’s `strength`. The script plots the `strength` as columns in a separate pane:
 
 ![image](https://www.tradingview.com/pine-script-docs/_astro/Loops-For-in-loops-Looping-through-arrays-1.D-rbYJQk_ZdCBAV.webp)
 
@@ -643,6 +644,7 @@ plot(strength, "Intrabar strength", strengthColor, 1, plot.style_columns)
 The [second form](/pine-script-docs/language/loops/#forin-loops) of the [for…in](https://www.tradingview.com/pine-script-reference/v6/#kw_for...in) loop is a convenient solution when a script’s calculations require accessing each element _and_ corresponding index within an [array](https://www.tradingview.com/pine-script-reference/v6/#type_array):
 
 ```for [index, element] in myArray
+
 ```
 
 For example, suppose we want to display a _numerated_ list of [array](https://www.tradingview.com/pine-script-reference/v6/#type_array) elements within a [label](https://www.tradingview.com/pine-script-reference/v6/#type_label) while excluding values at specific indices. We can use the second form of the [for…in](https://www.tradingview.com/pine-script-reference/v6/#kw_for...in) loop structure to accomplish this task. The simple script below declares a `stringArray` variable that references an [array](https://www.tradingview.com/pine-script-reference/v6/#type_array) of predefined “string” values. On the last historical bar, the script uses a [for…in](https://www.tradingview.com/pine-script-reference/v6/#kw_for...in) loop to access each `index` and `element` in the `stringArray` to construct the `labelText`, which it uses in a [label.new()](https://www.tradingview.com/pine-script-reference/v6/#fun_label.new) call after the loop ends:
@@ -767,11 +769,13 @@ Note that:
 The [for…in](https://www.tradingview.com/pine-script-reference/v6/#kw_for...in) loop statement is the more convenient approach to loop over and access the rows of a [matrix](https://www.tradingview.com/pine-script-reference/v6/#type_matrix) in order, as it automatically validates the number of rows and retrieves an [array](https://www.tradingview.com/pine-script-reference/v6/#type_array) of the current row’s elements on each iteration:
 
 ```for rowArray in myMatrix
+
 ```
 
 When a script’s calculations require access to each row from a matrix and its corresponding _index_, programmers can use the [second form](/pine-script-docs/language/loops/#forin-loops) of the [for…in](https://www.tradingview.com/pine-script-reference/v6/#kw_for...in) loop:
 
 ```for [rowIndex, rowArray] in myMatrix
+
 ```
 
 Note that:
@@ -891,6 +895,7 @@ One way to access the data from a [map](https://www.tradingview.com/pine-script-
 However, the more convenient, _recommended_ approach is to loop through a [map](https://www.tradingview.com/pine-script-reference/v6/#type_map) directly _without_ creating new [arrays](/pine-script-docs/language/arrays/). To loop through a [map](https://www.tradingview.com/pine-script-reference/v6/#type_map) directly, use the [second form](/pine-script-docs/language/loops/#forin-loops) of the [for…in](https://www.tradingview.com/pine-script-reference/v6/#kw_for...in) loop statement. Using this loop with a [map](https://www.tradingview.com/pine-script-reference/v6/#type_map) creates a [tuple](/pine-script-docs/language/type-system/#tuples) containing a _key_ and respective _value_ on each iteration. As when looping through a [map.keys()](https://www.tradingview.com/pine-script-reference/v6/#fun_map.keys) array, this _direct_ [for…in](https://www.tradingview.com/pine-script-reference/v6/#kw_for...in) loop iterates through a map’s contents in their insertion order:
 
 ```for [key, value] in myMap
+
 ```
 
 Note that:
