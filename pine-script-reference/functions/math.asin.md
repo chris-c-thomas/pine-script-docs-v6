@@ -1,0 +1,35 @@
+---
+title: "math.asin()"
+source: "https://www.tradingview.com/pine-script-reference/v6/#fun_math.asin"
+category: "Functions"
+---
+
+# math.asin()
+
+The asin function returns the arcsine (in radians) of number such that sin(asin(y)) = y for y in range \[-1, 1].
+
+## Syntax & Overloads
+
+```
+math.asin(angle) → const float
+```
+
+```
+math.asin(angle) → input float
+```
+
+```
+math.asin(angle) → simple float
+```
+
+```
+math.asin(angle) → series float
+```
+
+## Arguments
+
+**angle (const int/float)** The value, in radians, to use in the calculation.
+
+## Returns
+
+The arcsine of a value; the returned angle is in the range \[-Pi/2, Pi/2], or [na](https://www.tradingview.com/pine-script-reference/v6/#var_na) if y is outside of range \[-1, 1].

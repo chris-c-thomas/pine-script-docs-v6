@@ -1,0 +1,17 @@
+---
+title: "currency.CNY"
+source: "https://www.tradingview.com/pine-script-reference/v6/#const_currency.CNY"
+category: "Constants"
+---
+
+# currency.CNY
+
+Chinese Yuan.
+
+## Type
+
+const string
+
+## See also
+
+- [strategy()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy)

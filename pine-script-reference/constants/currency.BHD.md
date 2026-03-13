@@ -1,0 +1,17 @@
+---
+title: "currency.BHD"
+source: "https://www.tradingview.com/pine-script-reference/v6/#const_currency.BHD"
+category: "Constants"
+---
+
+# currency.BHD
+
+Bahraini Dinar.
+
+## Type
+
+const string
+
+## See also
+
+- [strategy()](https://www.tradingview.com/pine-script-reference/v6/#fun_strategy)

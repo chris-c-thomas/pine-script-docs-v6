@@ -1,0 +1,19 @@
+---
+title: "text.format_none"
+source: "https://www.tradingview.com/pine-script-reference/v6/#const_text.format_none"
+category: "Constants"
+---
+
+# text.format_none
+
+A named constant for use with the `text_formatting` parameter of the `label.new()`, `box.new()`, `table.cell()`, and `*set_text_formatting()` functions. Signifies no special text formatting.
+
+## Type
+
+const text_format
+
+## See also
+
+- [label.new()](https://www.tradingview.com/pine-script-reference/v6/#fun_label.new)
+- [box.new()](https://www.tradingview.com/pine-script-reference/v6/#fun_box.new)
+- [table.cell()](https://www.tradingview.com/pine-script-reference/v6/#fun_table.cell)

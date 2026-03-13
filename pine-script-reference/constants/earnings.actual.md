@@ -1,0 +1,17 @@
+---
+title: "earnings.actual"
+source: "https://www.tradingview.com/pine-script-reference/v6/#const_earnings.actual"
+category: "Constants"
+---
+
+# earnings.actual
+
+A named constant for the [request.earnings()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.earnings) function. Is used to request the earnings value as it was reported.
+
+## Type
+
+const string
+
+## See also
+
+- [request.earnings()](https://www.tradingview.com/pine-script-reference/v6/#fun_request.earnings)

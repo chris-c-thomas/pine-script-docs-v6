@@ -1,0 +1,44 @@
+---
+title: "ta.pivotlow()"
+source: "https://www.tradingview.com/pine-script-reference/v6/#fun_ta.pivotlow"
+category: "Functions"
+---
+
+# ta.pivotlow()
+
+This function returns price of the pivot low point. It returns 'NaN', if there was no pivot low point.
+
+## Syntax & Overloads
+
+```
+ta.pivotlow(leftbars, rightbars) → series float
+```
+
+```
+ta.pivotlow(source, leftbars, rightbars) → series float
+```
+
+## Arguments
+
+**leftbars (series int/float)** Left strength.
+
+**rightbars (series int/float)** Right strength.
+
+## Example
+
+```pine
+//@version=6
+indicator("PivotLow", overlay=true)
+leftBars = input(2)
+rightBars=input(2)
+pl = ta.pivotlow(close, leftBars, rightBars)
+plot(pl, style=plot.style_cross, linewidth=3, color= color.blue, offset=-rightBars)
+```
+
+## Returns
+
+Price of the point or 'NaN'.
+
+## Remarks
+
+If parameters 'leftbars' or 'rightbars' are series you should use [max_bars_back()](https://www.tradingview.com/pine-script-reference/v6/#fun_max_bars_back) function for the 'source' variable.
