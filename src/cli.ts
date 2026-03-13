@@ -3,6 +3,7 @@
 import { chromium } from "playwright";
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
+import { format } from "prettier";
 import { discoverPages } from "./pages.js";
 import { scrapeAllPages } from "./crawler.js";
 import { convertAllPages } from "./converter.js";
@@ -50,12 +51,16 @@ async function scrape() {
     console.log(`\n[3/3] Converting to Markdown...`);
     const convertedPages = await convertAllPages(scrapedPages);
 
-    // Write output files
-    console.log(`\nWriting ${convertedPages.length} files...`);
+    // Format and write output files
+    console.log(`\nFormatting and writing ${convertedPages.length} files...`);
     for (const converted of convertedPages) {
       const filePath = join(DOCS_OUTPUT_DIR, converted.outputPath);
       await mkdir(dirname(filePath), { recursive: true });
-      await writeFile(filePath, converted.markdown, "utf-8");
+      const formatted = await format(converted.markdown, {
+        parser: "markdown",
+        proseWrap: "preserve",
+      });
+      await writeFile(filePath, formatted, "utf-8");
       console.log(`  Wrote: ${converted.outputPath}`);
     }
 

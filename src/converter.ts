@@ -69,10 +69,23 @@ export async function convertPage(scraped: ScrapedPage): Promise<ConvertedPage> 
  * - Cleans up heading anchor artifacts
  * - Normalizes whitespace
  */
-// Matches a single-backtick fence opener: exactly "`" or "`lang" with no
-// spaces or other content (e.g. "`pine", "`js"). Won't match inline code
-// like "`foo` is a variable".
-const singleBacktickFenceOpenRe = /^`[A-Za-z0-9+-]*$/;
+/**
+ * Detects if a line is a single-backtick fence opener from remark-stringify.
+ * Two patterns:
+ *   1. Exactly "`" or "`lang" (fence-only line, e.g. "`", "`pine")
+ *   2. "`<code...>" where code starts on the same line and there is NO
+ *      closing backtick on that line (distinguishes from inline code like
+ *      "`foo` is a variable").
+ */
+function isSingleBacktickFenceOpen(line: string): boolean {
+  if (!line.startsWith("`") || line.startsWith("``")) return false;
+  const afterBacktick = line.slice(1);
+  // Pattern 1: fence-only line (empty or just a lang tag)
+  if (/^[A-Za-z0-9+-]*$/.test(afterBacktick)) return true;
+  // Pattern 2: code starts on the same line — no closing backtick present
+  if (!afterBacktick.includes("`")) return true;
+  return false;
+}
 
 function fixSingleBacktickFences(md: string): string {
   // remark-stringify sometimes uses single-backtick fences for code blocks.
@@ -96,15 +109,11 @@ function fixSingleBacktickFences(md: string): string {
     const line = lines[i];
 
     if (!inCodeBlock) {
-      // Only treat dedicated fence lines (exactly "`" or "`lang") as openers
-      if (singleBacktickFenceOpenRe.test(line)) {
+      if (isSingleBacktickFenceOpen(line) && hasFutureClosing[i + 1]) {
         const content = line.slice(1);
-        // Only treat this as a fence if there is a matching closing ` later
-        if (hasFutureClosing[i + 1]) {
-          inCodeBlock = true;
-          result.push("```" + content);
-          continue;
-        }
+        inCodeBlock = true;
+        result.push("```" + content);
+        continue;
       }
     } else {
       // Inside code block: look for closing single-backtick fence
