@@ -22,3 +22,14 @@ export interface ConvertedPage {
   /** Output file path relative to docs root */
   outputPath: string;
 }
+
+export interface ReferenceEntry {
+  /** Entry ID, e.g. "var_bar_index", "fun_ta.sma" */
+  id: string;
+  /** Display name, e.g. "bar_index", "ta.sma()" */
+  name: string;
+  /** Category, e.g. "Variables", "Functions" */
+  category: string;
+  /** Cleaned inner HTML of the entry */
+  html: string;
+}

@@ -10,6 +10,7 @@
     "build": "tsc",
     "start": "node --enable-source-maps dist/cli.js",
     "scrape": "node --enable-source-maps dist/cli.js scrape",
+    "reference": "node --enable-source-maps dist/cli.js reference",
     "dev": "tsc && node --enable-source-maps dist/cli.js"
   },
   "dependencies": {
