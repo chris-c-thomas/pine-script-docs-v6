@@ -1,5 +1,5 @@
 {
-  "name": "pine-script-docs-v6",
+  "name": "pine-script-v6",
   "version": "1.0.0",
   "description": "CLI tool to scrape Pine Script v6 documentation into structured Markdown",
   "type": "module",
@@ -22,6 +22,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
+    "prettier": "^3.8.1",
     "typescript": "^5.7.0"
   }
 }
